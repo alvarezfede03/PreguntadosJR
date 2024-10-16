@@ -1,7 +1,7 @@
 <?php
 include_once("helper/MysqlDatabase.php");
 include_once("helper/MysqlObjectDatabase.php");
-include_once("helper/IncludeFilePresenter.php");
+//include_once("helper/IncludeFilePresenter.php");
 include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
 

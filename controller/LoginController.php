@@ -19,13 +19,15 @@ class LoginController{
 
         if ($validation) {
             $_SESSION['user'] = $user;
+            header('location: /home');
+        }else {
+            $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
+            header('location: /login');
         }
-
-        header('location: /login');
         exit();
     }
 
-    public function list()
+    /*public function list()
     {
         if (isset($_SESSION['user'])) {
             $data['user'] = $_SESSION['user'];
@@ -34,6 +36,36 @@ class LoginController{
         else{
             $this->presenter->show('login');
         }
+    }*/
+
+    public function list()
+    {
+        $data = [];
+
+        // Verificar si hay un mensaje de error en la sesión
+        if (isset($_SESSION['error'])) {
+            $data['error'] = $_SESSION['error']; // Pasar el mensaje de error
+            unset($_SESSION['error']); // Limpiar el mensaje de error de la sesión
+        }
+
+        // Verificamos si el usuario está logueado
+        if (isset($_SESSION['user'])) {
+            $data['user'] = $_SESSION['user'];  // Pasamos el nombre de usuario a la vista
+            $data['logged_in'] = true;
+            $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
+        } else {
+            $data['logged_in'] = false;
+            $this->presenter->show('login', $data);  // Redirigimos al formulario de login si no está logueado
+        }
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_unset();
+        session_destroy();
+        header('Location: /login');  // Redirige al formulario de login
+        exit();
     }
 
 }
