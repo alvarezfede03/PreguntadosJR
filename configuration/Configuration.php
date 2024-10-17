@@ -8,10 +8,10 @@ include_once("helper/MustachePresenter.php");
 //include_once("model/PokedexModel.php");
 //include_once("controller/PokedexController.php");
 
-include_once("controller/LoginController.php");
-include_once ("model/LoginModel.php");
-//include_once("controller/UsuarioController.php");
-//include_once("model/UsuarioModel.php");
+include_once("controller/UsuarioController.php");
+include_once("model/UsuarioModel.php");
+//include_once("controller/UsuarioPokedexController.php");
+//include_once("model/UsuarioPokedexModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 
@@ -21,22 +21,22 @@ class Configuration
     {
     }
 
-    public function getPokedexController(){
+    /*public function getPokedexController(){
         return new PokedexController($this->getPokedexModel(), $this->getPresenter());
-    }
-
-    /*public function getUsuarioController(){
-        return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
     }*/
 
-    public function getLoginController(){
-        return new LoginController($this->getLoginModel(), $this->getPresenter());
+    /*public function getUsuarioPokedexController(){
+        return new UsuarioPokedexController($this->getUsuarioPokedexModel(), $this->getPresenter());
+    }*/
+
+    public function getUsuarioController(){
+        return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
     }
 
-    private function getPokedexModel()
+    /*private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
-    }
+    }*/
 
 
     private function getPresenter()
@@ -59,15 +59,15 @@ class Configuration
 
     public function getRouter()
     {
-        return new Router($this, "getLoginController", "list");
+        return new Router($this, "getUsuarioController", "login");
     }
 
-    /*private function getUsuarioModel()
+    /*private function getUsuarioPokedexModel()
+    {
+        return new UsuarioPokedexModel($this->getDatabase());
+    }*/
+    private function getUsuarioModel()
     {
         return new UsuarioModel($this->getDatabase());
-    }*/
-    private function getLoginModel()
-    {
-        return new LoginModel($this->getDatabase());
     }
 }
