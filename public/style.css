@@ -8,10 +8,12 @@
 }
 
 .login-container {
+    background-color: rgba(255, 255, 255, 0.7);
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
     padding: 20px;
+    backdrop-filter: blur(10px);
 }
 
 .header-gradient {
@@ -36,7 +38,9 @@ footer {
 }
 
 body{
-    background-color: lightgray;
+    background: url("5134336.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .dashboard-container {
