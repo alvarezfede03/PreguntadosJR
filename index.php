@@ -9,5 +9,3 @@ $methodName = isset( $_GET['action'])? $_GET['action']:"";
 // el : es para si la condicion es falsa
 // si es verdadera devuelve $_GET['action'], si es falsa devuelve nada
 $router->route($_GET['page'], $methodName);
-
-//testeo

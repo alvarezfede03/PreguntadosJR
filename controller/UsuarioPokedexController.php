@@ -1,6 +1,8 @@
 <?php
 
-class LoginController{
+class UsuarioPokedexController
+{
+
     private $model;
     private $presenter;
 
@@ -15,25 +17,13 @@ class LoginController{
         $user = $_POST['username'];
         $pass = $_POST['password'];
 
-        $validation = $this->model->validate2($user, $pass);
+        $validation = $this->model->validate($user, $pass);
 
         if ($validation) {
             $_SESSION['user'] = $user;
         }
 
-        header('location: /login');
+        header('location: /pokedex');
         exit();
     }
-
-    public function list()
-    {
-        if (isset($_SESSION['user'])) {
-            $data['user'] = $_SESSION['user'];
-            $this->presenter->show('home');
-        }
-        else{
-            $this->presenter->show('login');
-        }
-    }
-
 }
