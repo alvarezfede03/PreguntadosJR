@@ -14,6 +14,13 @@ class MustachePresenter{
     }
 
     public function show($contentFile , $data = array() ){
+        if (isset($_SESSION['user'])) {
+            $data['user'] = $_SESSION['user'];  // Pasamos el nombre de usuario a la vista
+            $data['logged_in'] = true;  // Indicamos que el usuario está logueado
+        } else {
+            $data['logged_in'] = false;
+        }
+
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }
 

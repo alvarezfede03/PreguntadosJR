@@ -22,5 +22,13 @@ class UsuarioModel
         //return $usuario2 = 1;
     }
 
+    public function filter($user)
+    {
+        $sql = "SELECT nombre_completo, año_nacimiento, sexo, pais, ciudad, foto_perfil
+                FROM usuarios 
+                WHERE nombre_usuario = '" . $user. "'";
+        $data["usuario"] =$this->database->query($sql);
+        return $data;
+    }
 
 }

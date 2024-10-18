@@ -36,7 +36,6 @@ class UsuarioController{
             $data['error'] = $_SESSION['error']; // Pasar el mensaje de error
             unset($_SESSION['error']); // Limpiar el mensaje de error de la sesión
         }
-
         // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
             $data['user'] = $_SESSION['user'];  // Pasamos el nombre de usuario a la vista
@@ -45,6 +44,13 @@ class UsuarioController{
         } else {
             $data['logged_in'] = false;
             $this->presenter->show('login', $data);  // Redirigimos al formulario de login si no está logueado
+        }
+    }
+
+    public function search(){
+        if (isset($_SESSION['user'])) {
+            $data = $this->model->filter($_SESSION['user']);
+            $this->presenter->show('perfilUsuario', $data);
         }
     }
 
