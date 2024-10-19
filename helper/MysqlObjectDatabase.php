@@ -16,9 +16,13 @@ class MysqlObjectDatabase
         $this->conn->query($sql);
         return $this->conn->affected_rows;
     }
-
     public function __destruct()
     {
         $this->conn->close();
     }
+    public function prepare($sql) {
+        return $this->conn->prepare($sql); // Asume que $this->conn es una instancia de PDO
+    }
+
+
 }

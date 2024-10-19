@@ -67,27 +67,30 @@ class UsuarioController{
     // Nueva función para registrar usuario usando GET
     public function registrarUsuario()
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Generar UUID
             $uuid = uniqid(time(), true);
 
-            // Guardar foto de perfil (si es parte del GET, debe manejarse de otra forma, aquí se ignora por ahora)
-            $fotoPerfilPath = isset($_GET['foto_perfil']) ? $_GET['foto_perfil'] : null;
+            // En el caso de GET, no podemos manejar archivos. Así que la foto se pasará como una ruta preexistente.
+            $fotoPerfilPath = isset($_POST['foto_perfil']) ? $_POST['foto_perfil'] : null;
 
             // Obtener datos del formulario usando GET
             $data = [
                 'uuid' => $uuid,
-                'nombre_usuario' => $_GET['nombre_usuario'],
-                'contraseña' => password_hash($_GET['contraseña'], PASSWORD_DEFAULT),
-                'nombre_completo' => $_GET['nombre_completo'],
-                'anio_nacimiento' => $_GET['anio_nacimiento'],
-                'sexo' => $_GET['sexo'],
-                'pais' => $_GET['pais'],
-                'ciudad' => $_GET['ciudad'],
-                'mail' => $_GET['mail'],
-                'foto_perfil' => $fotoPerfilPath,
-                'tipo_usuario' => $_GET['tipo_usuario']
+                'nombre_usuario' => $_POST['nombre_usuario'],
+                'contraseña' => password_hash($_POST['contraseña'], PASSWORD_DEFAULT),
+                'nombre_completo' => $_POST['nombre_completo'],
+                'anio_nacimiento' => $_POST['anio_nacimiento'],
+                'sexo' => $_POST['sexo'],
+                //'pais' => $_GET['pais'],
+                //'ciudad' => $_GET['ciudad'],
+                'mail' => $_POST['mail'],
+                //'foto_perfil' => $fotoPerfilPath
             ];
+
+            // Depurar los datos antes de enviarlos al modelo
+            var_dump($data);  // Asegúrate de que los datos sean correctos
+
 
             // Registrar usuario en la base de datos
             $registroExitoso = $this->model->registrarUsuario($data);
@@ -102,6 +105,8 @@ class UsuarioController{
             exit();
         } else {
             $this->mostrarFormularioRegistro();
+
         }
     }
+
 }

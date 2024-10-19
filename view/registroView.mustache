@@ -1,4 +1,4 @@
-<form action="/UsuarioController/registrarUsuario" method="GET" enctype="multipart/form-data">
+<form action="/Usuario/registrarUsuario" method="POST" enctype="multipart/form-data">
     <label for="nombre_usuario">Nombre de usuario:</label>
     <input type="text" id="nombre_usuario" name="nombre_usuario" required><br>
 
@@ -16,22 +16,16 @@
     <input type="radio" id="sexo_f" name="sexo" value="F" required> Femenino<br>
 
     <label for="pais">País:</label>
-    <input type="text" id="pais" name="pais" required><br>
-
+   <!-- <input type="text" id="pais" name="pais" required><br> --!>
+    <br>
     <label for="ciudad">Ciudad:</label>
-    <input type="text" id="ciudad" name="ciudad" required><br>
-
+   <!-- <input type="text" id="ciudad" name="ciudad" required><br> --!>
+    <br>
     <label for="mail">Correo electrónico:</label>
     <input type="email" id="mail" name="mail" required><br>
 
     <label for="foto_perfil">Foto de perfil:</label>
-    <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*" required><br>
-
-    <label for="tipo_usuario">Tipo de usuario:</label>
-    <select id="tipo_usuario" name="tipo_usuario">
-        <option value="admin">Administrador</option>
-        <option value="editor">Editor</option>
-        <option value="jugador">Jugador</option>
-    </select><br>
+    <!--<input type="file" id="foto_perfil" name="foto_perfil" accept="image/*" required><br>--!>
+    <br>
     <button type="submit">Registrar</button>
 </form>
