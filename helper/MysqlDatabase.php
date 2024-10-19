@@ -25,4 +25,9 @@ class MysqlDatabase
     {
         mysqli_close($this->conn);
     }
+
+    public function prepare($sql) {
+        return $this->conn->prepare($sql);  // Asume que $this->conn es una instancia de PDO
+    }
+
 }

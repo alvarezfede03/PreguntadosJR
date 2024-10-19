@@ -63,4 +63,56 @@ class UsuarioController{
         exit();
     }
 
+    // Nueva función para mostrar el formulario de registro
+    public function mostrarFormularioRegistro()
+    {
+        $data=[];
+        $this->presenter->show('registro', []);
+    }
+
+    // Nueva función para registrar usuario usando GET
+    public function registrarUsuario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Generar UUID
+            $uuid = uniqid(time(), true);
+
+            // En el caso de GET, no podemos manejar archivos. Así que la foto se pasará como una ruta preexistente.
+            $fotoPerfilPath = isset($_POST['foto_perfil']) ? $_POST['foto_perfil'] : null;
+
+            // Obtener datos del formulario usando GET
+            $data = [
+                'uuid' => $uuid,
+                'nombre_usuario' => $_POST['nombre_usuario'],
+                'contraseña' => password_hash($_POST['contraseña'], PASSWORD_DEFAULT),
+                'nombre_completo' => $_POST['nombre_completo'],
+                'anio_nacimiento' => $_POST['anio_nacimiento'],
+                'sexo' => $_POST['sexo'],
+                //'pais' => $_GET['pais'],
+                //'ciudad' => $_GET['ciudad'],
+                'mail' => $_POST['mail'],
+                //'foto_perfil' => $fotoPerfilPath
+            ];
+
+            // Depurar los datos antes de enviarlos al modelo
+            var_dump($data);  // Asegúrate de que los datos sean correctos
+
+
+            // Registrar usuario en la base de datos
+            $registroExitoso = $this->model->registrarUsuario($data);
+
+            if ($registroExitoso) {
+                $_SESSION['success'] = "Usuario registrado con éxito.";
+                header('location: /login');  // Redirige al login después del registro exitoso
+            } else {
+                $_SESSION['error'] = "Error al registrar usuario.";
+                header('location: /registro');  // Redirige al formulario de registro en caso de error
+            }
+            exit();
+        } else {
+            $this->mostrarFormularioRegistro();
+
+        }
+    }
+
 }
