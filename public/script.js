@@ -1,5 +1,5 @@
 // Inicializar el mapa centrado en una ubicación por defecto
-var map = L.map('map').setView([51.505, -0.09], 2);
+var map = L.map('map').setView([-34.6037, -58.3816], 4);
 
 // Añadir una capa de OpenStreetMap
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -7,7 +7,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // Añadir un marcador que puede ser arrastrado
-var marker = L.marker([51.505, -0.09], {draggable: true}).addTo(map);
+var marker = L.marker([-34.6037, -58.3816], {draggable: true}).addTo(map);
 
 // Evento para cuando el marcador sea arrastrado
 marker.on('dragend', function(e) {

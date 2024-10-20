@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 00:13:41
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 20-10-2024 a las 23:00:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -124,7 +124,7 @@ CREATE TABLE `usuarios` (
   `ciudad` varchar(50) DEFAULT NULL,
   `mail` varchar(100) NOT NULL,
   `foto_perfil` varchar(255) DEFAULT NULL,
-  `tipo_usuario` enum('admin','editor','jugador') NOT NULL,
+  `tipo_usuario` enum('admin','editor','jugador') NOT NULL DEFAULT 'jugador',
   `fecha_registro` date NOT NULL DEFAULT curdate(),
   `ultimo_login` date DEFAULT NULL,
   `nivel` tinyint(3) UNSIGNED DEFAULT 0
@@ -135,15 +135,12 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `UUID`, `nombre_usuario`, `contraseña`, `nombre_completo`, `año_nacimiento`, `sexo`, `pais`, `ciudad`, `mail`, `foto_perfil`, `tipo_usuario`, `fecha_registro`, `ultimo_login`, `nivel`) VALUES
-(1, '315e849d-8b33-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminpass1', 'Administrador Uno', '1980-05-12', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', 'foto1.jpg', 'admin', '2024-10-15', '2024-10-15', 0),
-(2, '315e950f-8b33-11ef-ba48-e0d55e04b0c6', 'admin2', 'adminpass2', 'Administrador Dos', '1985-08-20', 'F', 'España', 'Madrid', 'admin2@example.com', 'foto2.jpg', 'admin', '2024-10-15', '2024-10-15', 0),
-(3, '3cbb3965-8b33-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminpass1', 'Administrador Uno', '1980-05-12', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', 'foto1.jpg', 'admin', '2024-10-15', '2024-10-15', 0),
-(4, '3cbb498d-8b33-11ef-ba48-e0d55e04b0c6', 'admin2', 'adminpass2', 'Administrador Dos', '1985-08-20', 'F', 'España', 'Madrid', 'admin2@example.com', 'foto2.jpg', 'admin', '2024-10-15', '2024-10-15', 0),
-(5, '79fa179d-8b35-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminPass123', 'Administrador Uno', '1980-02-15', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', 'admin1.jpg', 'admin', '2024-10-15', '2024-10-15', 0),
-(6, '79fa418b-8b35-11ef-ba48-e0d55e04b0c6', 'editor1', 'editorPass456', 'Editor Uno', '1990-06-30', 'F', 'España', 'Madrid', 'editor1@example.com', 'editor1.jpg', 'editor', '2024-10-15', '2024-10-15', 0),
-(7, '79fa4247-8b35-11ef-ba48-e0d55e04b0c6', 'editor2', 'editorPass789', 'Editor Dos', '1992-11-22', 'M', 'México', 'Ciudad de México', 'editor2@example.com', 'editor2.jpg', 'editor', '2024-10-15', '2024-10-15', 0),
-(8, '79fa4289-8b35-11ef-ba48-e0d55e04b0c6', 'jugador1', 'jugadorPass123', 'Jugador Uno', '1995-08-10', 'M', 'Chile', 'Santiago', 'jugador1@example.com', 'jugador1.jpg', 'jugador', '2024-10-15', '2024-10-15', 10),
-(9, '79fa42c8-8b35-11ef-ba48-e0d55e04b0c6', 'jugador2', 'jugadorPass456', 'Jugador Dos', '1998-12-05', 'F', 'Colombia', 'Bogotá', 'jugador2@example.com', 'jugador2.jpg', 'jugador', '2024-10-15', '2024-10-15', 20);
+(1, '315e849d-8b33-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminpass1', 'Administrador Uno', '1980-05-12', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', '../public/perfiles/admin1.svg', 'admin', '2024-10-15', '2024-10-15', 0),
+(2, '315e950f-8b33-11ef-ba48-e0d55e04b0c6', 'admin2', 'adminpass2', 'Administrador Dos', '1985-08-20', 'F', 'España', 'Madrid', 'admin2@example.com', '../public/perfiles/admin2.svg', 'admin', '2024-10-15', '2024-10-15', 0),
+(6, '79fa418b-8b35-11ef-ba48-e0d55e04b0c6', 'editor1', 'editorPass456', 'Editor Uno', '1990-06-30', 'F', 'España', 'Madrid', 'editor1@example.com', '../public/perfiles/editor1.svg', 'editor', '2024-10-15', '2024-10-15', 0),
+(7, '79fa4247-8b35-11ef-ba48-e0d55e04b0c6', 'editor2', 'editorPass789', 'Editor Dos', '1992-11-22', 'M', 'México', 'Ciudad de México', 'editor2@example.com', '../public/perfiles/editor2.svg', 'editor', '2024-10-15', '2024-10-15', 0),
+(8, '79fa4289-8b35-11ef-ba48-e0d55e04b0c6', 'jugador1', 'jugadorPass123', 'Jugador Uno', '1995-08-10', 'M', 'Chile', 'Santiago', 'jugador1@example.com', '../public/perfiles/jugador1.svg', 'jugador', '2024-10-15', '2024-10-15', 10),
+(9, '79fa42c8-8b35-11ef-ba48-e0d55e04b0c6', 'jugador2', 'jugadorPass456', 'Jugador Dos', '1998-12-05', 'F', 'Colombia', 'Bogotá', 'jugador2@example.com', '../public/perfiles/jugador2.svg', 'jugador', '2024-10-15', '2024-10-15', 20);
 
 --
 -- Índices para tablas volcadas
@@ -188,7 +185,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Restricciones para tablas volcadas

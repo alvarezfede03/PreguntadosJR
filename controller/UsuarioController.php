@@ -84,13 +84,15 @@ class UsuarioController{
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             // Llamar a la función que valida la imagen
             $resultadoImagen = $this->validarImagen($_FILES['image']);
-
             if ($resultadoImagen['valid']) {
-                // Definir la ruta para guardar la imagen
-                $rutaImagen = "/public/perfiles/" . $username . "." . $resultadoImagen['extension'];
+                // Definir la ruta relativa para la URL pública (lo que se almacena en la base de datos)
+                $urlImagen = "../public/perfiles/" . $username . "." . $resultadoImagen['extension'];
 
+                // Definir la ruta absoluta para guardar la imagen físicamente
+                $rutaImagen = $_SERVER['DOCUMENT_ROOT'] . $urlImagen;
                 // Mover el archivo subido a la carpeta destino
                 move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagen);
+
             } else {
                 // Si hay un problema con la imagen, redirigir con mensaje de error
                 $_SESSION['error'] = $resultadoImagen['message'];
@@ -104,7 +106,7 @@ class UsuarioController{
 
 
         // Guardar los datos del usuario en la base de datos
-        $resultado = $this->model->crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen);
+        $resultado = $this->model->crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
 
         if ($resultado) {
             // Redirigir a una página de registro exitoso
