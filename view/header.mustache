@@ -53,7 +53,9 @@
                 <div class="d-flex align-items-center ms-auto"> <!-- Alinear verticalmente -->
                     {{#logged_in}}
                         <span class="me-2">
-                        <img src="ruta_a_icono_usuario.png" alt="Usuario" width="30" height="30">
+                        {{#usuario}}
+                        <img src="{{foto_perfil}}" alt="Usuario" width="30" height="30">
+                        {{/usuario}}
                     </span>
                         <span class="me-3 text-light">{{user}}</span> <!-- Nombre de usuario -->
                     {{/logged_in}}

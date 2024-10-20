@@ -38,7 +38,8 @@ class UsuarioController{
         }
         // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
-            $data['user'] = $_SESSION['user'];  // Pasamos el nombre de usuario a la vista
+            $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
+            //$data['user'] = $_SESSION['user'];  // Pasamos el nombre de usuario a la vista
             $data['logged_in'] = true;
             $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
         } else {
@@ -79,8 +80,31 @@ class UsuarioController{
         $country = $_POST['country'];
         $city = $_POST['city'];
 
+        // Validar imagen de perfil
+        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+            // Llamar a la función que valida la imagen
+            $resultadoImagen = $this->validarImagen($_FILES['image']);
+
+            if ($resultadoImagen['valid']) {
+                // Definir la ruta para guardar la imagen
+                $rutaImagen = "/public/perfiles/" . $username . "." . $resultadoImagen['extension'];
+
+                // Mover el archivo subido a la carpeta destino
+                move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagen);
+            } else {
+                // Si hay un problema con la imagen, redirigir con mensaje de error
+                $_SESSION['error'] = $resultadoImagen['message'];
+                header("Location: /registro");
+                exit();
+            }
+        } else {
+            // Si no se ha cargado ninguna imagen o hubo un error
+            $rutaImagen = null; // O una imagen por defecto si lo prefieres
+        }
+
+
         // Guardar los datos del usuario en la base de datos
-        $resultado = $this->model->crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city);
+        $resultado = $this->model->crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen);
 
         if ($resultado) {
             // Redirigir a una página de registro exitoso
@@ -90,6 +114,22 @@ class UsuarioController{
             $_SESSION['error'] = "Hubo un problema al registrar el usuario.";
             header("Location: /registrar");
         }
+    }
+
+    // Función para validar la imagen
+    private function validarImagen($file) {
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if (in_array($extension, $allowed_extensions) && $file['size'] <= 2 * 1024 * 1024) {
+            return ['valid' => true, 'extension' => $extension];
+        }
+
+        $errorMessage = (in_array($extension, $allowed_extensions))
+            ? 'El tamaño de la imagen debe ser de 2MB o menos.'
+            : 'Formato de imagen no permitido. Solo se permiten: jpg, jpeg, png, gif, svg.';
+
+        return ['valid' => false, 'message' => $errorMessage];
     }
 
 }

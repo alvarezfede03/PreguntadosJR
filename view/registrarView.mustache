@@ -1,7 +1,7 @@
 <body>
 <div class="container mt-5">
     <h2>Formulario de Registro</h2>
-    <form action="/usuario/procesarRegistro" method="POST">
+    <form action="/usuario/procesarRegistro" method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
             <label for="username" class="form-label">Nombre de Usuario</label>
@@ -20,7 +20,7 @@
 
         <div class="mb-3">
             <label for="birthyear" class="form-label">Año de Nacimiento</label>
-            <input type="number" class="form-control" id="birthyear" name="birthyear" min="1900" max="2024" required>
+            <input type="date" class="form-control" id="birthyear" name="birthyear" min="1900" max="2024" required>
         </div>
 
         <div class="mb-3">
@@ -54,6 +54,11 @@
         <div class="mb-3">
             <label for="selectedProvince" class="form-label">Ciudad</label>
             <input type="text" class="form-control" id="selectedCity" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="image">Suba la imagen de su perfil:</label>
+            <input type="file" class="form-control" id="image" name="image" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Registrarse</button>
