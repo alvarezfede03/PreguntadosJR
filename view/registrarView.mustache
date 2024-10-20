@@ -1,0 +1,61 @@
+<body>
+<div class="container mt-5">
+    <h2>Formulario de Registro</h2>
+    <form action="/usuario/procesarRegistro" method="POST">
+
+        <div class="mb-3">
+            <label for="username" class="form-label">Nombre de Usuario</label>
+            <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="fullname" class="form-label">Nombre Completo</label>
+            <input type="text" class="form-control" id="fullname" name="fullname" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="birthyear" class="form-label">Año de Nacimiento</label>
+            <input type="number" class="form-control" id="birthyear" name="birthyear" min="1900" max="2024" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="sexo" class="form-label">Sexo</label>
+            <select class="form-select" id="sexo" name="sexo" required>
+                <option value="">Selecciona tu sexo</option>
+                <option value="M">Masculino</option>
+                <option value="F">Femenino</option>
+                <option value="O">Otro</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <!-- Mapa para seleccionar país y provincia -->
+        <div class="mb-3">
+            <label class="form-label">Selecciona tu País y Ciudad</label>
+            <div id="map"></div>
+            <input type="hidden" id="country" name="country">
+            <input type="hidden" id="city" name="city">
+        </div>
+
+        <div class="mb-3">
+            <label for="selectedCountry" class="form-label">País</label>
+            <input type="text" class="form-control" id="selectedCountry" readonly>
+        </div>
+
+        <div class="mb-3">
+            <label for="selectedProvince" class="form-label">Ciudad</label>
+            <input type="text" class="form-control" id="selectedCity" readonly>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+</div>

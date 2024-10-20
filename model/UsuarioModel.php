@@ -31,4 +31,11 @@ class UsuarioModel
         return $data;
     }
 
+    public function crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city)
+    {
+        $sql = "INSERT INTO usuarios (nombre_usuario, contraseña, nombre_completo, año_nacimiento, sexo, mail, pais, ciudad) VALUES ('" . $username . "', '" . $password . "', '" . $fullname . "', '" . $birthyear . "', '" . $sexo . "', '" . $email . "', '" . $country . "', '" . $city . "');";
+        return $this->database->execute($sql);
+    }
+
+
 }

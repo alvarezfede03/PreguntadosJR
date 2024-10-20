@@ -63,4 +63,33 @@ class UsuarioController{
         exit();
     }
 
+    public function registrar() {
+        $data = [];  // Si necesitas pasar datos a la vista, lo haces aquí
+        $this->presenter->show('registrar', $data);  // Renderiza la vista 'registrar.mustache'
+    }
+
+    public function procesarRegistro() {
+        // Recibir los datos del formulario
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        $fullname = $_POST['fullname'];
+        $birthyear = $_POST['birthyear'];
+        $sexo = $_POST['sexo'];
+        $email = $_POST['email'];
+        $country = $_POST['country'];
+        $city = $_POST['city'];
+
+        // Guardar los datos del usuario en la base de datos
+        $resultado = $this->model->crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city);
+
+        if ($resultado) {
+            // Redirigir a una página de registro exitoso
+            header("Location: /login");
+        } else {
+            // Si falla, redirigir al formulario de registro con un mensaje de error
+            $_SESSION['error'] = "Hubo un problema al registrar el usuario.";
+            header("Location: /registrar");
+        }
+    }
+
 }
