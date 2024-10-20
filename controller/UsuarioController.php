@@ -108,6 +108,7 @@ class UsuarioController{
 
         if ($resultado) {
             // Redirigir a una página de registro exitoso
+            $_SESSION['succes'] = "Usuario registrado exitosamente.";
             header("Location: /login");
         } else {
             // Si falla, redirigir al formulario de registro con un mensaje de error

@@ -1,6 +1,7 @@
 <body>
-<div class="container mt-5">
-    <h2>Formulario de Registro</h2>
+<div class="container my-5 ">
+    <div class="form-container">
+        <h2 class="text-center mb-4">Formulario de Registro</h2>
     <form action="/usuario/procesarRegistro" method="POST" enctype="multipart/form-data">
 
         <div class="mb-3">
@@ -60,7 +61,10 @@
             <label class="form-label" for="image">Suba la imagen de su perfil:</label>
             <input type="file" class="form-control" id="image" name="image" required>
         </div>
-
-        <button type="submit" class="btn btn-primary">Registrarse</button>
+        <div class="btn-center">
+            <button type="submit" class="btn btn-primary w-25 mx-2">Registrarse</button>
+            <button type="button" class="btn btn-secondary w-25 mx-2" onclick="window.location.href='/usuario/login'">Volver</button>
+        </div>
     </form>
+</div>
 </div>
