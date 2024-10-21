@@ -36,6 +36,11 @@ class UsuarioController{
             $data['error'] = $_SESSION['error']; // Pasar el mensaje de error
             unset($_SESSION['error']); // Limpiar el mensaje de error de la sesión
         }
+        // Verificar si hay un mensaje de éxito en la sesión
+        if (isset($_SESSION['success'])) {
+            $data['success'] = $_SESSION['success'];
+            unset($_SESSION['success']);  // Limpiar el mensaje de éxito
+        }
         // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
@@ -110,7 +115,7 @@ class UsuarioController{
 
         if ($resultado) {
             // Redirigir a una página de registro exitoso
-            $_SESSION['succes'] = "Usuario registrado exitosamente.";
+            $_SESSION['success'] = "Usuario registrado exitosamente.";
             header("Location: /login");
         } else {
             // Si falla, redirigir al formulario de registro con un mensaje de error
