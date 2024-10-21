@@ -33,8 +33,8 @@ class UsuarioModel
 
     public function registrarUsuario($data)
     {
-        $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contraseña, nombre_completo, anio_nacimiento, sexo, mail, tipo_usuario, fecha_registro, ultimo_login, nivel)
-            VALUES (?, ?, ?, ?, ?, ?, ?, 'jugador', NOW(), NOW(), 0)";
+        $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contraseña, nombre_completo, anio_nacimiento, sexo, mail, tipo_usuario, fecha_registro, ultimo_login, nivel, foto_perfil)
+            VALUES (?, ?, ?, ?, ?, ?, ?, 'jugador', NOW(), NOW(), 0, ?)";
         $stmt = $this->database->prepare($sql);
 
         // Verificar si la consulta fue preparada correctamente
@@ -43,14 +43,15 @@ class UsuarioModel
         }
 
         $stmt->bind_param(
-            'sssssss',
+            'ssssssss',
             $data['uuid'],
             $data['nombre_usuario'],
             $data['contraseña'],
             $data['nombre_completo'],
             $data['anio_nacimiento'],
             $data['sexo'],
-            $data['mail']
+            $data['mail'],
+            $data['foto_perfil']  // Aquí se incluye la ruta de la imagen
         );
 
         if (!$stmt->execute()) {
@@ -58,4 +59,5 @@ class UsuarioModel
         }
         return true;
     }
+
 }
