@@ -14,18 +14,18 @@ class UsuarioController{
     {
         $user = $_POST['username'];
         $pass = $_POST['password'];
-
         $validation = $this->model->validate2($user, $pass);
 
         if ($validation) {
             $_SESSION['user'] = $user;
             header('location: /home');
-        }else {
+        } else {
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
             header('location: /login');
         }
         exit();
     }
+
 
     public function login()
     {
@@ -59,28 +59,53 @@ class UsuarioController{
         session_start();
         session_unset();
         session_destroy();
-        header('Location: /login');  // Redirige al formulario de login
+        header('Location: /login');
         exit();
     }
 
-    // Nueva función para mostrar el formulario de registro
     public function mostrarFormularioRegistro()
     {
         $data=[];
         $this->presenter->show('registro', []);
     }
 
-    // Nueva función para registrar usuario usando GET
     public function registrarUsuario()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Generar UUID
             $uuid = uniqid(time(), true);
 
-            // En el caso de GET, no podemos manejar archivos. Así que la foto se pasará como una ruta preexistente.
-            $fotoPerfilPath = isset($_POST['foto_perfil']) ? $_POST['foto_perfil'] : null;
+            // Verificar si se ha subido un archivo de imagen
+            if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
+                $fotoPerfil = $_FILES['foto_perfil'];
 
-            // Obtener datos del formulario usando GET
+                // Validar tipo de archivo permitido (jpg, png, svg)
+                $allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml'];
+                $fileType = mime_content_type($fotoPerfil['tmp_name']);
+
+                if (!in_array($fileType, $allowedTypes)) {
+                    $_SESSION['error'] = "Formato de imagen no permitido. Solo se aceptan archivos .jpg, .png o .svg.";
+                    header('location: /registro');
+                    exit();
+                }
+
+                // Definir la ruta donde se guardará la imagen
+                $fileName = basename($fotoPerfil['name']);
+                $uploadDir = './public/perfiles/';
+                $uploadFilePath = $uploadDir . $fileName;
+
+                // Mover el archivo subido a la carpeta
+                if (!move_uploaded_file($fotoPerfil['tmp_name'], $uploadFilePath)) {
+                    $_SESSION['error'] = "Error al subir la imagen.";
+                    header('location: /registro');
+                    exit();
+                }
+            } else {
+                $_SESSION['error'] = "No se ha subido ninguna imagen.";
+                header('location: /registro');
+                exit();
+            }
+
+            // Registrar el usuario con la ruta de la imagen
             $data = [
                 'uuid' => $uuid,
                 'nombre_usuario' => $_POST['nombre_usuario'],
@@ -88,30 +113,23 @@ class UsuarioController{
                 'nombre_completo' => $_POST['nombre_completo'],
                 'anio_nacimiento' => $_POST['anio_nacimiento'],
                 'sexo' => $_POST['sexo'],
-                //'pais' => $_GET['pais'],
-                //'ciudad' => $_GET['ciudad'],
                 'mail' => $_POST['mail'],
-                //'foto_perfil' => $fotoPerfilPath
+                'foto_perfil' => $uploadFilePath // Guardar la ruta de la imagen en la BD
             ];
 
-            // Depurar los datos antes de enviarlos al modelo
-            var_dump($data);  // Asegúrate de que los datos sean correctos
-
-
-            // Registrar usuario en la base de datos
+            var_dump($data);
             $registroExitoso = $this->model->registrarUsuario($data);
 
             if ($registroExitoso) {
                 $_SESSION['success'] = "Usuario registrado con éxito.";
-                header('location: /login');  // Redirige al login después del registro exitoso
+                header('location: /login');
             } else {
                 $_SESSION['error'] = "Error al registrar usuario.";
-                header('location: /registro');  // Redirige al formulario de registro en caso de error
+                header('location: /registro');
             }
             exit();
         } else {
             $this->mostrarFormularioRegistro();
-
         }
     }
 

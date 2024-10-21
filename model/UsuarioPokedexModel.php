@@ -1,7 +1,6 @@
 <?php
 
-class UsuarioPokedexModel
-{
+class UsuarioPokedexModel{
     private $database;
 
     public function __construct($database)
@@ -15,10 +14,7 @@ class UsuarioPokedexModel
                 FROM usuario 
                 WHERE username = '" . $user. "' 
                 AND password = '" . $pass . "'";
-
         $usuario = $this->database->query($sql);
-
         return sizeof($usuario) == 1;
     }
-
 }

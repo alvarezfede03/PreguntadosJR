@@ -1,6 +1,5 @@
 <?php
-class MysqlObjectDatabase
-{
+class MysqlObjectDatabase{
     private $conn;
     public function __construct($host, $port, $username, $password, $database)
     {
@@ -21,7 +20,7 @@ class MysqlObjectDatabase
         $this->conn->close();
     }
     public function prepare($sql) {
-        return $this->conn->prepare($sql); // Asume que $this->conn es una instancia de PDO
+        return $this->conn->prepare($sql);
     }
 
 

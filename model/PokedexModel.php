@@ -1,5 +1,4 @@
 <?php
-
 class PokedexModel
 {
     private $database;
@@ -12,7 +11,6 @@ class PokedexModel
     public function getPokemons()
     {
         $pokemons = $this->database->query("SELECT * FROM pokemon order by number");
-
         return $this->trasnformImagePaths($pokemons);
     }
 
@@ -24,7 +22,6 @@ class PokedexModel
                 OR number  LIKE '" . $filter . "'
                 OR type  LIKE '%" . $filter . "%'
                 order by number";
-
         $pokemons = $this->database->query($sql);
 
         if ( sizeof($pokemons) == 0 ) {
@@ -34,7 +31,6 @@ class PokedexModel
 
         $data["pokemons"] = $this->trasnformImagePaths($pokemons);
         $data["message"] = $message;
-
         return $data;
     }
 

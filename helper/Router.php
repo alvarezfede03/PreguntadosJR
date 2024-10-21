@@ -1,5 +1,4 @@
 <?php
-// No tocar nada!!
 class Router
 {
     private $defaultController;
