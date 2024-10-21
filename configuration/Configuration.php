@@ -4,17 +4,13 @@ include_once("helper/MysqlObjectDatabase.php");
 //include_once("helper/IncludeFilePresenter.php");
 include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
-
 //include_once("model/PokedexModel.php");
 //include_once("controller/PokedexController.php");
-
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 //include_once("controller/UsuarioPokedexController.php");
 //include_once("model/UsuarioPokedexModel.php");
-
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
-
 class Configuration
 {
     public function __construct()
@@ -33,17 +29,20 @@ class Configuration
         return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
     }
 
+    private function getUsuarioModel()
+    {
+        return new UsuarioModel($this->getDatabase());
+    }
+
     /*private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
     }*/
 
-
     private function getPresenter()
     {
         return new MustachePresenter("./view");
     }
-
 
     private function getDatabase()
     {
@@ -66,8 +65,4 @@ class Configuration
     {
         return new UsuarioPokedexModel($this->getDatabase());
     }*/
-    private function getUsuarioModel()
-    {
-        return new UsuarioModel($this->getDatabase());
-    }
 }

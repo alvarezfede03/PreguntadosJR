@@ -14,7 +14,6 @@ class UsuarioController{
     {
         $user = $_POST['username'];
         $pass = $_POST['password'];
-
         $validation = $this->model->validate2($user, $pass);
 
         if ($validation) {
@@ -53,28 +52,22 @@ class UsuarioController{
         session_start();
         session_unset();
         session_destroy();
-        header('Location: /login');  // Redirige al formulario de login
+        header('Location: /login');
         exit();
     }
 
-    // Nueva función para mostrar el formulario de registro
     public function mostrarFormularioRegistro()
     {
         $data=[];
         $this->presenter->show('registro', []);
     }
 
-    // Nueva función para registrar usuario usando GET
     public function registrarUsuario()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Generar UUID
             $uuid = uniqid(time(), true);
-
-            // En el caso de GET, no podemos manejar archivos. Así que la foto se pasará como una ruta preexistente.
             $fotoPerfilPath = isset($_POST['foto_perfil']) ? $_POST['foto_perfil'] : null;
 
-            // Obtener datos del formulario usando GET
             $data = [
                 'uuid' => $uuid,
                 'nombre_usuario' => $_POST['nombre_usuario'],
@@ -88,25 +81,19 @@ class UsuarioController{
                 //'foto_perfil' => $fotoPerfilPath
             ];
 
-            // Depurar los datos antes de enviarlos al modelo
-            var_dump($data);  // Asegúrate de que los datos sean correctos
-
-
-            // Registrar usuario en la base de datos
+            var_dump($data);
             $registroExitoso = $this->model->registrarUsuario($data);
 
             if ($registroExitoso) {
                 $_SESSION['success'] = "Usuario registrado con éxito.";
-                header('location: /login');  // Redirige al login después del registro exitoso
+                header('location: /login');
             } else {
                 $_SESSION['error'] = "Error al registrar usuario.";
-                header('location: /registro');  // Redirige al formulario de registro en caso de error
+                header('location: /registro');
             }
             exit();
         } else {
             $this->mostrarFormularioRegistro();
-
-        }
+            }
     }
-
 }
