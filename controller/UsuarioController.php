@@ -19,12 +19,13 @@ class UsuarioController{
         if ($validation) {
             $_SESSION['user'] = $user;
             header('location: /home');
-        }else {
+        } else {
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
             header('location: /login');
         }
         exit();
     }
+
 
     public function login()
     {

@@ -10,14 +10,26 @@ class UsuarioModel
 
     public function validate2($user, $pass)
     {
-        $sql = "SELECT 1 
-                FROM usuarios 
-                WHERE nombre_usuario = '" . $user . "' 
-                AND contraseña = '" . $pass . "'";
-        $usuario = $this->database->query($sql);
-        return sizeof($usuario) == 1;
-        //return $usuario2 = 1;
+        // Traer la contraseña hasheada de la base de datos
+        $sql = "SELECT contraseña 
+            FROM usuarios 
+            WHERE nombre_usuario = ?";
+
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $user);
+        $stmt->execute();
+        $stmt->bind_result($hashedPassword);
+        $stmt->fetch();
+        $stmt->close();
+
+        // Verificar si la contraseña ingresada por el usuario coincide con la contraseña hasheada
+        if ($hashedPassword && password_verify($pass, $hashedPassword)) {
+            return true;
+        } else {
+            return false;
+        }
     }
+
 
     public function registrarUsuario($data)
     {
