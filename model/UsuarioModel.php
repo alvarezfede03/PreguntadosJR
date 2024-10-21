@@ -29,7 +29,22 @@ class UsuarioModel
             return false;
         }
     }
+    public function filter($user)
+    {
+        $sql = "SELECT nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
+                FROM usuarios 
+                WHERE nombre_usuario = '" . $user. "'";
+        $usuario =$this->database->query($sql);
+        $data["usuario"] = $this->trasnformImagePaths($usuario);
+        return $data;
+    }
 
+    public function trasnformImagePaths($usuarios){
+        foreach ($usuarios as $key => $usuario) {
+            $usuario[$key]['image'] = "./public/profile/" . $usuario[$key]['image'];
+        }
+        return $usuario;
+    }
 
     public function registrarUsuario($data)
     {
