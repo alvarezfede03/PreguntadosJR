@@ -29,6 +29,7 @@ class UsuarioModel
             return false;
         }
     }
+    /*
     public function filter($user)
     {
         $sql = "SELECT nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
@@ -41,10 +42,47 @@ class UsuarioModel
 
     public function trasnformImagePaths($usuarios){
         foreach ($usuarios as $key => $usuario) {
-            $usuario[$key]['image'] = "./public/profile/" . $usuario[$key]['image'];
+            $usuario[$key]['image'] = "/public/perfiles/" . $usuario[$key]['image'];
         }
         return $usuario;
     }
+*/
+
+
+
+    public function filter($user)
+    {
+        $sql = "SELECT nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
+            FROM usuarios 
+            WHERE nombre_usuario = ?";
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $user);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        // Verificar si se encontraron resultados
+        if ($result->num_rows > 0) {
+            $usuario = $result->fetch_assoc();  // Obtener una fila
+            $data["usuario"] = $this->trasnformImagePath($usuario);  // Llamar a la función con una sola fila
+        } else {
+            $data["usuario"] = null;  // Manejar caso de usuario no encontrado
+        }
+
+        $stmt->close();
+        return $data;
+    }
+
+
+
+    public function trasnformImagePath($usuario)
+    {
+        // Verificar si el campo foto_perfil existe antes de modificarlo
+        if (isset($usuario['foto_perfil'])) {
+            $usuario['foto_perfil'] =  $usuario['foto_perfil'];  // Ajustar la ruta de la imagen
+        }
+        return $usuario;
+    }
+
 
     public function registrarUsuario($data)
     {

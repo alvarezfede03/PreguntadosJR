@@ -73,6 +73,7 @@ class UsuarioController{
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uuid = uniqid(time(), true);
+            $nombre_usuario = $_POST['nombre_usuario'];
 
             // Verificar si se ha subido un archivo de imagen
             if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
@@ -88,13 +89,49 @@ class UsuarioController{
                     exit();
                 }
 
-                // Definir la ruta donde se guardará la imagen
-                $fileName = basename($fotoPerfil['name']);
+                // Obtener la extensión del archivo original
+                $extension = pathinfo($fotoPerfil['name'], PATHINFO_EXTENSION);
+
+                // Renombrar la imagen con el nombre del usuario
+                /*
                 $uploadDir = './public/perfiles/';
-                $uploadFilePath = $uploadDir . $fileName;
+                $newFileName = $nombre_usuario . '.' . $extension;  // Nombre de usuario + extensión
+                $uploadFilePath = $uploadDir . $newFileName;
+
+                echo $uploadFilePath;
 
                 // Mover el archivo subido a la carpeta
                 if (!move_uploaded_file($fotoPerfil['tmp_name'], $uploadFilePath)) {
+                    $_SESSION['error'] = "Error al subir la imagen.";
+                    header('location: /registro');
+                    exit();
+                }
+            } else {
+                $_SESSION['error'] = "No se ha subido ninguna imagen.";
+                header('location: /registro');
+                exit();
+            }
+
+            // Registrar el usuario con la ruta de la imagen renombrada
+            $data = [
+                'uuid' => $uuid,
+                'nombre_usuario' => $nombre_usuario,
+                'contraseña' => password_hash($_POST['contraseña'], PASSWORD_DEFAULT),
+                'nombre_completo' => $_POST['nombre_completo'],
+                'anio_nacimiento' => $_POST['anio_nacimiento'],
+                'sexo' => $_POST['sexo'],
+                'mail' => $_POST['mail'],
+                'foto_perfil' => $uploadFilePath  // Guardar la ruta de la imagen renombrada en la BD
+            ];
+                */
+                $fileName = basename($fotoPerfil['name']);
+                $uploadDir = '/public/perfiles/';
+                $newFileName = $nombre_usuario . '.' . $extension;
+                $uploadFilePath = $uploadDir . $newFileName;
+                $uploadFileBDD = $_SERVER['DOCUMENT_ROOT'] . $uploadDir . $newFileName;
+
+                // Mover el archivo subido a la carpeta
+                if (!move_uploaded_file($fotoPerfil['tmp_name'], $uploadFileBDD)) {
                     $_SESSION['error'] = "Error al subir la imagen.";
                     header('location: /registro');
                     exit();
@@ -117,7 +154,10 @@ class UsuarioController{
                 'foto_perfil' => $uploadFilePath // Guardar la ruta de la imagen en la BD
             ];
 
-            var_dump($data);
+
+
+
+
             $registroExitoso = $this->model->registrarUsuario($data);
 
             if ($registroExitoso) {
