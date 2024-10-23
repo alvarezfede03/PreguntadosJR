@@ -10,6 +10,8 @@ include_once("helper/MustachePresenter.php");
 
 include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
+include_once("controller/PartidaController.php");
+include_once("model/PartidaModel.php");
 //include_once("controller/UsuarioPokedexController.php");
 //include_once("model/UsuarioPokedexModel.php");
 
@@ -31,6 +33,10 @@ class Configuration
 
     public function getUsuarioController(){
         return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
+    }
+
+    public function getPartidaController(){
+        return new PartidaController($this->getPartidaModel(), $this->getPresenter());
     }
 
     /*private function getPokedexModel()
@@ -69,5 +75,10 @@ class Configuration
     private function getUsuarioModel()
     {
         return new UsuarioModel($this->getDatabase());
+    }
+
+    private function getPartidaModel()
+    {
+        return new PartidaModel($this->getDatabase());
     }
 }
