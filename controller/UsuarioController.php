@@ -15,7 +15,7 @@ class UsuarioController{
         $user = $_POST['username'];
         $pass = $_POST['password'];
 
-        $validation = $this->model->validate2($user, $pass);
+        $validation = $this->model->validate($user, $pass);
 
         if ($validation) {
             $_SESSION['user'] = $user;
@@ -76,8 +76,9 @@ class UsuarioController{
 
     public function procesarRegistro() {
         // Recibir los datos del formulario
+        $uuid = uniqid(time(), true);
         $username = $_POST['username'];
-        $password = $_POST['password'];
+        $password =  password_hash($_POST['password'], PASSWORD_DEFAULT);
         $fullname = $_POST['fullname'];
         $birthyear = $_POST['birthyear'];
         $sexo = $_POST['sexo'];
@@ -111,7 +112,7 @@ class UsuarioController{
 
 
         // Guardar los datos del usuario en la base de datos
-        $resultado = $this->model->crearUsuario($username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
+        $resultado = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
 
         if ($resultado) {
             // Redirigir a una página de registro exitoso
