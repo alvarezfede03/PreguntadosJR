@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 20-10-2024 a las 23:00:37
+-- Tiempo de generación: 23-10-2024 a las 02:34:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -116,9 +116,9 @@ CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `UUID` varchar(36) NOT NULL,
   `nombre_usuario` varchar(50) NOT NULL,
-  `contraseña` varchar(255) NOT NULL,
+  `contrasenia` varchar(255) NOT NULL,
   `nombre_completo` varchar(100) NOT NULL,
-  `año_nacimiento` date NOT NULL,
+  `anio_nacimiento` date NOT NULL,
   `sexo` char(1) NOT NULL,
   `pais` varchar(50) DEFAULT NULL,
   `ciudad` varchar(50) DEFAULT NULL,
@@ -126,21 +126,22 @@ CREATE TABLE `usuarios` (
   `foto_perfil` varchar(255) DEFAULT NULL,
   `tipo_usuario` enum('admin','editor','jugador') NOT NULL DEFAULT 'jugador',
   `fecha_registro` date NOT NULL DEFAULT curdate(),
-  `ultimo_login` date DEFAULT NULL,
-  `nivel` tinyint(3) UNSIGNED DEFAULT 0
+  `nivel` tinyint(3) UNSIGNED DEFAULT 0,
+  `token` varchar(64) DEFAULT NULL,
+  `activo` tinyint(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `UUID`, `nombre_usuario`, `contraseña`, `nombre_completo`, `año_nacimiento`, `sexo`, `pais`, `ciudad`, `mail`, `foto_perfil`, `tipo_usuario`, `fecha_registro`, `ultimo_login`, `nivel`) VALUES
-(1, '315e849d-8b33-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminpass1', 'Administrador Uno', '1980-05-12', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', '../public/perfiles/admin1.svg', 'admin', '2024-10-15', '2024-10-15', 0),
-(2, '315e950f-8b33-11ef-ba48-e0d55e04b0c6', 'admin2', 'adminpass2', 'Administrador Dos', '1985-08-20', 'F', 'España', 'Madrid', 'admin2@example.com', '../public/perfiles/admin2.svg', 'admin', '2024-10-15', '2024-10-15', 0),
-(6, '79fa418b-8b35-11ef-ba48-e0d55e04b0c6', 'editor1', 'editorPass456', 'Editor Uno', '1990-06-30', 'F', 'España', 'Madrid', 'editor1@example.com', '../public/perfiles/editor1.svg', 'editor', '2024-10-15', '2024-10-15', 0),
-(7, '79fa4247-8b35-11ef-ba48-e0d55e04b0c6', 'editor2', 'editorPass789', 'Editor Dos', '1992-11-22', 'M', 'México', 'Ciudad de México', 'editor2@example.com', '../public/perfiles/editor2.svg', 'editor', '2024-10-15', '2024-10-15', 0),
-(8, '79fa4289-8b35-11ef-ba48-e0d55e04b0c6', 'jugador1', 'jugadorPass123', 'Jugador Uno', '1995-08-10', 'M', 'Chile', 'Santiago', 'jugador1@example.com', '../public/perfiles/jugador1.svg', 'jugador', '2024-10-15', '2024-10-15', 10),
-(9, '79fa42c8-8b35-11ef-ba48-e0d55e04b0c6', 'jugador2', 'jugadorPass456', 'Jugador Dos', '1998-12-05', 'F', 'Colombia', 'Bogotá', 'jugador2@example.com', '../public/perfiles/jugador2.svg', 'jugador', '2024-10-15', '2024-10-15', 20);
+INSERT INTO `usuarios` (`id`, `UUID`, `nombre_usuario`, `contrasenia`, `nombre_completo`, `anio_nacimiento`, `sexo`, `pais`, `ciudad`, `mail`, `foto_perfil`, `tipo_usuario`, `fecha_registro`, `nivel`, `token`, `activo`) VALUES
+(1, '315e849d-8b33-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminpass1', 'Administrador Uno', '1980-05-12', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', '../public/perfiles/admin1.svg', 'admin', '2024-10-15', 0, NULL, NULL),
+(2, '315e950f-8b33-11ef-ba48-e0d55e04b0c6', 'admin2', 'adminpass2', 'Administrador Dos', '1985-08-20', 'F', 'España', 'Madrid', 'admin2@example.com', '../public/perfiles/admin2.svg', 'admin', '2024-10-15', 0, NULL, NULL),
+(6, '79fa418b-8b35-11ef-ba48-e0d55e04b0c6', 'editor1', 'editorPass456', 'Editor Uno', '1990-06-30', 'F', 'España', 'Madrid', 'editor1@example.com', '../public/perfiles/editor1.svg', 'editor', '2024-10-15', 0, NULL, NULL),
+(7, '79fa4247-8b35-11ef-ba48-e0d55e04b0c6', 'editor2', 'editorPass789', 'Editor Dos', '1992-11-22', 'M', 'México', 'Ciudad de México', 'editor2@example.com', '../public/perfiles/editor2.svg', 'editor', '2024-10-15', 0, NULL, NULL),
+(8, '79fa4289-8b35-11ef-ba48-e0d55e04b0c6', 'jugador1', 'jugadorPass123', 'Jugador Uno', '1995-08-10', 'M', 'Chile', 'Santiago', 'jugador1@example.com', '../public/perfiles/jugador1.svg', 'jugador', '2024-10-15', 10, NULL, NULL),
+(9, '79fa42c8-8b35-11ef-ba48-e0d55e04b0c6', 'jugador2', 'jugadorPass456', 'Jugador Dos', '1998-12-05', 'F', 'Colombia', 'Bogotá', 'jugador2@example.com', '../public/perfiles/jugador2.svg', 'jugador', '2024-10-15', 20, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -185,7 +186,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Restricciones para tablas volcadas
