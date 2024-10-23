@@ -5,14 +5,9 @@ class IncludeFilePresenter
     {
     }
 
-    /*public function show($view, $data = []){
+    public function show($view, $data = []){
         //include_once('view/header.php');
         include_once('view/'. $view . "View.php");
         //include_once('view/footer.php');
-    }*/
-    public function show($view){
-    //include_once('view/header.php');
-    include_once('view/'. $view . "View.php");
-    //include_once('view/footer.php');
     }
 }

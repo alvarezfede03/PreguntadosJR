@@ -16,7 +16,7 @@
 <div class="dashboard-container shadow p-4 bg-light rounded">
     <h2 class="text-center mb-4">Bienvenido</h2>
     <div class="d-grid gap-3">
-        <button type="button" class="btn btn-danger" onclick="window.location.href='/usuario/search'">Ver perfil</button>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/usuario/search'">Ver perfil</button>
         <button type="button" class="btn btn-primary" onclick="window.location.href='/partida/nueva'">Empezar nueva partida</button>
         <button type="button" class="btn btn-success" onclick="window.location.href='ranking.php'">Ver ranking de usuarios</button>
     </div>
