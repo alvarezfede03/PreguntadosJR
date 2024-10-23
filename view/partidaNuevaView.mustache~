@@ -19,16 +19,16 @@
             <form action="../partida/validarRespuesta" method="POST">
                 <div class="row">
                     <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="1" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_1}}</button>
+                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="1">{{opcion_1}}</button>
                     </div>
                     <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="2" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_2}}</button>
+                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="2">{{opcion_2}}</button>
                     </div>
                     <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="3" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_3}}</button>
+                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="3">{{opcion_3}}</button>
                     </div>
                     <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="4" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_4}}</button>
+                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="4" >{{opcion_4}}</button>
                     </div>
                 </div>
             </form>

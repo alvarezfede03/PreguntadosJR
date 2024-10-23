@@ -1,0 +1,36 @@
+<?php
+
+
+class PerfilModel
+{
+    private $database;
+
+    public function __construct($database)
+    {
+        $this->database = $database;
+    }
+
+    public function getUsuarios($username)
+    {
+        $stmt = $this->database->prepare("
+            SELECT nombre_completo, año_nacimiento, sexo, pais, ciudad, foto_perfil 
+            FROM usuarios 
+            WHERE username = :username
+        ");
+
+        // Vincular el parámetro $username a la consulta
+        $stmt->bindParam(':username', $username);
+
+        // Ejecutar la consulta
+        $stmt->execute();
+
+        // Obtener el resultado
+        $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Verificar si se encontró el usuario
+        if ($usuario) {
+            return $usuario;
+
+        }
+    }
+}
