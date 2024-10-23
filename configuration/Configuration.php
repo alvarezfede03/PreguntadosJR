@@ -4,6 +4,8 @@ include_once("helper/MysqlObjectDatabase.php");
 //include_once("helper/IncludeFilePresenter.php");
 include_once("helper/Router.php");
 include_once("helper/MustachePresenter.php");
+include_once("controller/PartidaController.php");
+include_once("model/PartidaModel.php");
 
 //include_once("model/PokedexModel.php");
 //include_once("controller/PokedexController.php");
@@ -33,6 +35,9 @@ class Configuration
         return new UsuarioController($this->getUsuarioModel(), $this->getPresenter());
     }
 
+    public function getPartidaController(){
+        return new PartidaController($this->getPartidaModel(), $this->getPresenter());
+    }
     /*private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
@@ -69,5 +74,10 @@ class Configuration
     private function getUsuarioModel()
     {
         return new UsuarioModel($this->getDatabase());
+    }
+
+    private function getPartidaModel()
+    {
+        return new PartidaModel($this->getDatabase());
     }
 }
