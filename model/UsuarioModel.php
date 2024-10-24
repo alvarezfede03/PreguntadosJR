@@ -11,23 +11,32 @@ class UsuarioModel
 
     public function validate($user, $pass)
     {
-        // Consulta SQL para obtener la contraseña hasheada del usuario
-        $sql = "SELECT contrasenia FROM usuarios WHERE nombre_usuario = '$user'";
-        $resultado = $this->database->query($sql);
+        // Consulta SQL para obtener la contraseña hasheada y el estado de la cuenta (activo/inactivo)
+        $sql = "SELECT contrasenia, activo FROM usuarios WHERE nombre_usuario = ?";
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $user);
+        $stmt->execute();
+        $resultado = $stmt->get_result()->fetch_assoc();
 
         // Si se encuentra el usuario
-        if (count($resultado) === 1) {
-            $usuario = $resultado[0]; // Obtenemos la única fila
-            $hashedPassword = $usuario['contrasenia'];
+        if ($resultado) {
+            $hashedPassword = $resultado['contrasenia'];
+            $activo = $resultado['activo'];
 
-            // Verificar la contraseña usando password_verify
+            // Verificar si la cuenta está activa
+            if ($activo == 0) {
+                return 'inactiva';
+            }
+
+            // Verificar la contraseña
             if (password_verify($pass, $hashedPassword)) {
-                return true; // Contraseña válida
+                return true;  // Contraseña válida y cuenta activa
             }
         }
 
-        return false; // Usuario no encontrado o contraseña incorrecta
+        return false;
     }
+
 
 
     public function filter($user)
@@ -39,12 +48,60 @@ class UsuarioModel
         return $data;
     }
 
-    public function crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen) {
-        $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contrasenia, nombre_completo, anio_nacimiento, sexo, mail, pais, ciudad, foto_perfil) 
-            VALUES ('". $uuid . "', '" . $username . "', '" . $password . "', '" . $fullname . "', '" . $birthyear . "', '" . $sexo . "', '" . $email . "', '" . $country . "', '" . $city . "', '" . $rutaImagen . "');";
+    public function crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen)
+    {
+        $token = bin2hex(random_bytes(16));  // Generar token aleatorio
+        $activo = 0;  // El usuario estará inactivo hasta que verifique su correo
 
-        return $this->database->execute($sql);
+        $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contrasenia, nombre_completo, anio_nacimiento, sexo, mail, pais, ciudad, foto_perfil, token, activo) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param(
+            'sssssssssssi',
+            $uuid,
+            $username,
+            $password,
+            $fullname,
+            $birthyear,
+            $sexo,
+            $email,
+            $country,
+            $city,
+            $rutaImagen,
+            $token,
+            $activo
+        );
+
+        if (!$stmt->execute()) {
+            throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
+        }
+
+        return $token;
     }
 
+
+    public function buscarUsuarioPorToken($token)
+    {
+        $sql = "SELECT uuid FROM usuarios WHERE token = ? AND activo = 0";
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $token);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return null;
+        }
+    }
+
+    public function activarUsuario($uuid)
+    {
+        $sql = "UPDATE usuarios SET activo = 1 WHERE uuid = ?";
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $uuid);
+        $stmt->execute();
+    }
 
 }
