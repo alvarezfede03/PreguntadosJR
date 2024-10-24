@@ -9,6 +9,13 @@ class PartidaModel
         $this->database = $database;
     }
 
+    public function generarPartida($user)
+    {
+        $sql = "INSERT INTO partidas (id_jugador, resultado) VALUES (" . $user . ", 0)";
+        $this->database->execute($sql);
+
+        return $this->database->query("SELECT LAST_INSERT_ID() as id_partida")[0]['id_partida'];
+    }
 
     public function getPregunta()
     {
@@ -27,4 +34,18 @@ class PartidaModel
             return false;
         }
     }
+
+    public function actualizarResultado($id_partida, $nuevoResultado)
+    {
+        $sql = "UPDATE partidas SET resultado = " . $nuevoResultado . " WHERE id_partida = " . $id_partida;
+        $this->database->execute($sql);
+    }
+
+    public function obtenerResultado($id_partida)
+    {
+        $sql = "SELECT resultado FROM partidas WHERE id_partida = " . $id_partida;
+        $data = $this->database->query($sql);
+        return $data[0]['resultado'] ?? 0;
+    }
+
 }

@@ -42,6 +42,7 @@ class UsuarioController{
         if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']);
             $_SESSION['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
+            $_SESSION['id'] = $data['usuario'][0]['id'];
             $data['logged_in'] = true;
             $this->presenter->show('home', $data);
         } else {
