@@ -15,11 +15,9 @@ class PartidaModel
         if ($this->database->execute($sql) > 0) {
             // Obtén el ID de la última inserción
             $idPartida = $this->database->getLastInsertId();
-
             // Realiza una consulta para obtener la fila completa
             $query = "SELECT * FROM partidas WHERE id_partida = $idPartida";
             $result = $this->database->query($query);
-
             return $result[0]; // Devuelve la fila completa
         } else {
             echo "Error en la inserción: " . $this->database->conn->error;
@@ -45,5 +43,12 @@ class PartidaModel
         } else {
             return false;
         }
+    }
+
+    public function getPuntaje($idPartida)
+    {
+        $sql = "SELECT resultado FROM partidas WHERE id_partida = " . $idPartida;
+        $result =$this->database->query($sql);
+        return $result[0]['resultado'];
     }
 }

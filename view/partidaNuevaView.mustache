@@ -37,6 +37,7 @@
             {{#respuestaDada}}
                 {{#correcta}}
                     <h3>Felicidades acertaste +1 punto</h3>
+                    <h3>Tu puntaje es {{puntaje}}</h3>
                     <div class="mt-4 text-center">
                         <button type="button" class="btn btn-danger">Reportar</button>
                         <button type="button" class="btn btn-success me-3" onclick="window.location.href='../partida/traerPregunta'">Siguiente pregunta</button>
@@ -44,12 +45,15 @@
                 {{/correcta}}
                 {{^correcta}}
                     <h3>Una lastima pa volve a intentar</h3>
+                    <h3>Tu puntaje final es {{puntaje}}</h3>
                     <div class="mt-4 text-center">
                         <button type="button" class="btn btn-danger">Reportar</button>
                         <button type="button" class="btn btn-success me-3" onclick="window.location.href='../usuario/home'">Al home</button>
                     </div>
                 {{/correcta}}
             {{/respuestaDada}}
+
+
 
     </div>
 
