@@ -44,7 +44,7 @@ class UsuarioController{
         // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
-            $_SESSION['id'] = $data['usuario'][0]['id'];
+            $_SESSION['id'] = $data['usuario'][0]['id'];  // Pasamos el nombre de usuario a la vista
             $data['logged_in'] = true;
             $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
         } else {

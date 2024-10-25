@@ -11,7 +11,20 @@ class PartidaController
         $this->presenter = $presenter;
     }
 
+    public function creaAr()
+    {
+
+    }
+
     public function nueva()
+    {
+        $usuario = $_SESSION['id'];
+        $partida = $this->model->getCrearPartida($usuario);
+        $_SESSION['partidaActual'] = $partida;
+        $this->traerPregunta();
+    }
+
+    public function traerPregunta()
     {
         $data['respuestaDada'] = false;
         $data['pregunta'] = $this->model->getPregunta();
@@ -22,7 +35,6 @@ class PartidaController
 
     public function validarRespuesta()
     {
-
         $repuestaSeleccionada = $_POST['opcion'];
         $pregunta = $_SESSION['pregunta'];
         $data['correcta'] = $this->model->verificarPregunta($pregunta, $repuestaSeleccionada);
