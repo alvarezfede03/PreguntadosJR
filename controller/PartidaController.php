@@ -25,6 +25,7 @@ class PartidaController
         $data['pregunta'] = $this->model->getPregunta();
         $_SESSION['pregunta'] = $data['pregunta'][0]['id'];;
         $_SESSION['prueba'] = $data['pregunta'];
+        $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         $this->presenter->show('partidaNueva', $data);
     }
 
@@ -40,5 +41,19 @@ class PartidaController
         unset($_SESSION['pregunta']);
         $this->presenter->show('partidaNueva', $data);
 
+    }
+
+    public function getCategoriaColor($categoria)
+    {
+        $colores = [
+            'Geografía' => "cyan",
+            'Ciencia' => "green",
+            'Historia' => "yellow",
+            'Arte' => "red",
+            'Deportes' => "orange",
+            'Entretenimiento' => "hotpink",
+        ];
+
+        return $colores[$categoria] ?? "white";
     }
 }
