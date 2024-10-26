@@ -20,6 +20,7 @@ class PartidaController
         $this->presenter->show('partidaNueva', $data);
     }
 
+
     public function validarRespuesta()
     {
 
@@ -33,4 +34,41 @@ class PartidaController
         $this->presenter->show('partidaNueva', $data);
 
     }
+<<<<<<< Updated upstream
+=======
+
+    public function getCategoriaColor($categoria)
+    {
+        $colores = [
+            'Geografía' => "cyan",
+            'Ciencia' => "green",
+            'Historia' => "yellow",
+            'Arte' => "red",
+            'Deportes' => "orange",
+            'Entretenimiento' => "hotpink",
+        ];
+
+        return $colores[$categoria] ?? "white";
+    }
+
+    public function reportarPregunta()
+    {
+        if (!isset($_SESSION['pregunta'])) {
+            die('ID de pregunta no definido en la sesión.');
+        }
+
+        $idUsuario = $_SESSION['id'];
+        $idPregunta = $_SESSION['pregunta'];
+        $motivo = $_POST['motivo'];
+
+        // Guardar el reporte en la base de datos
+        $this->model->guardarReportePregunta($idUsuario, $idPregunta, $motivo);
+
+        // Redirigir a la siguiente pregunta o a otra página
+        header('Location: ../partida/traerPregunta');
+    }
+
+
+
+>>>>>>> Stashed changes
 }

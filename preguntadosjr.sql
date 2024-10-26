@@ -2,8 +2,13 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
+<<<<<<< Updated upstream
 -- Servidor: 127.0.0.1:3306
 -- Tiempo de generación: 23-10-2024 a las 02:34:22
+=======
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-10-2024 a las 01:07:10
+>>>>>>> Stashed changes
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -109,6 +114,21 @@ INSERT INTO `preguntas` (`id`, `pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `reportepregunta`
+--
+
+CREATE TABLE `reportepregunta` (
+  `id_reporte` int(11) NOT NULL,
+  `id_usuario` int(11) DEFAULT NULL,
+  `id_pregunta` int(11) DEFAULT NULL,
+  `fecha_reporte` date NOT NULL DEFAULT curdate(),
+  `motivo_reporte` varchar(255) DEFAULT NULL,
+  `estado` enum('pendiente','resuelto') DEFAULT 'pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -161,6 +181,14 @@ ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `reportepregunta`
+--
+ALTER TABLE `reportepregunta`
+  ADD PRIMARY KEY (`id_reporte`),
+  ADD KEY `id_usuario` (`id_usuario`),
+  ADD KEY `id_pregunta` (`id_pregunta`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -174,7 +202,11 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
+<<<<<<< Updated upstream
   MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT;
+=======
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=139;
+>>>>>>> Stashed changes
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -183,10 +215,20 @@ ALTER TABLE `preguntas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
+-- AUTO_INCREMENT de la tabla `reportepregunta`
+--
+ALTER TABLE `reportepregunta`
+  MODIFY `id_reporte` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
+<<<<<<< Updated upstream
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+>>>>>>> Stashed changes
 
 --
 -- Restricciones para tablas volcadas
@@ -197,6 +239,13 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `partidas`
   ADD CONSTRAINT `partidas_ibfk_1` FOREIGN KEY (`id_jugador`) REFERENCES `usuarios` (`id`);
+
+--
+-- Filtros para la tabla `reportepregunta`
+--
+ALTER TABLE `reportepregunta`
+  ADD CONSTRAINT `reportepregunta_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`),
+  ADD CONSTRAINT `reportepregunta_ibfk_2` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

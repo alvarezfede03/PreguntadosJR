@@ -27,4 +27,23 @@ class PartidaModel
             return false;
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    public function getPuntaje($idPartida)
+    {
+        $sql = "SELECT resultado FROM partidas WHERE id_partida = " . $idPartida;
+        $result =$this->database->query($sql);
+        return $result[0]['resultado'];
+    }
+
+    public function guardarReportePregunta($idUsuario, $idPregunta, $motivo)
+    {
+        $fechaReporte = date('Y-m-d');
+        $sql = "INSERT INTO reportePregunta (id_usuario, id_pregunta, fecha_reporte, motivo_reporte, estado)
+            VALUES ('$idUsuario', '$idPregunta', '$fechaReporte', '$motivo', 'pendiente')";
+        $this->database->execute($sql);
+    }
+
+>>>>>>> Stashed changes
 }
