@@ -27,8 +27,8 @@ class PartidaModel
             return false;
         }
     }
-<<<<<<< Updated upstream
-=======
+
+
 
     public function getPuntaje($idPartida)
     {
@@ -45,5 +45,5 @@ class PartidaModel
         $this->database->execute($sql);
     }
 
->>>>>>> Stashed changes
+
 }
