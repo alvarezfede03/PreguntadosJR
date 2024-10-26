@@ -13,18 +13,10 @@
 <body class="d-flex flex-column min-vh-100">
 
 <main class="flex-grow-1 d-flex align-items-center justify-content-center">
-<<<<<<< Updated upstream
-<div class="dashboard-container shadow p-4 bg-light rounded">
-    <div class="question-container">
-        <h2 class="question">{{#pregunta}}{{pregunta}}</h2>
-            <form action="../partida/validarRespuesta" method="POST">
-                <div class="row">
-                    <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="1" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_1}}</button>
-=======
+
     <div class="dashboard-container shadow p-4 bg-light rounded" style="background-image: linear-gradient({{color}}, white);">
-        <div class="question-container text-center">
-            {{#pregunta}}
+        {{#pregunta}}
+            <div class="question-container text-center">
                 <div class="mb-2">
                     <img src="../public/categorias/{{categoria}}.png" alt="{{categoria}}" width="70" height="70">
                 </div>
@@ -37,7 +29,6 @@
                         <div class="col-6">
                             <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="2" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_2}}</button>
                         </div>
->>>>>>> Stashed changes
                     </div>
                     <div class="row">
                         <div class="col-6">
@@ -47,90 +38,47 @@
                             <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="4" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_4}}</button>
                         </div>
                     </div>
-<<<<<<< Updated upstream
-                    <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="3" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_3}}</button>
-                    </div>
-                    <div class="col-6">
-                        <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="4" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_4}}</button>
-                    </div>
-                </div>
-            </form>
-    {{/pregunta}}
+                </form>
+            </div>
+        {{/pregunta}}
 
-            {{#respuestaDada}}
+        {{#respuestaDada}}
+            <div class="result-container mt-4">
                 {{#correcta}}
-                    <h3>Felicidades acertaste +1 punto</h3>
+                    <div class="alert alert-success" role="alert">¡Felicidades, acertaste!</div>
+                    <div class="alert alert-info" role="alert">+1 Punto</div>
                     <div class="mt-4 text-center">
-                        <button type="button" class="btn btn-danger">Reportar</button>
-                        <button type="button" class="btn btn-success me-3" onclick="window.location.href='../partida/nueva'">Siguiente pregunta</button>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <!-- Botón para abrir el modal de reporte -->
+                                <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#reportarModal">Reportar</button>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <button type="button" class="btn btn-success w-100" onclick="window.location.href='../partida/traerPregunta'">Siguiente pregunta</button>
+                            </div>
+                        </div>
                     </div>
                 {{/correcta}}
                 {{^correcta}}
-                    <h3>Una lastima pa volve a intentar</h3>
+                    <div class="alert alert-danger" role="alert">Perdiste, intenta de nuevo</div>
+                    <div class="alert alert-info" role="alert">Tu puntaje final es: {{puntaje}}</div>
                     <div class="mt-4 text-center">
-                        <button type="button" class="btn btn-danger">Reportar</button>
-                        <button type="button" class="btn btn-success me-3" onclick="window.location.href='../usuario/home'">Al home</button>
+                        <div class="row">
+                            <div class="col-6 mb-2">
+                                <!-- Botón para abrir el modal de reporte -->
+                                <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#reportarModal">Reportar</button>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <button type="button" class="btn btn-success w-100" onclick="window.location.href='../usuario/home'">Al home</button>
+                            </div>
+                        </div>
                     </div>
                 {{/correcta}}
-=======
-                </form>
-            {{/pregunta}}
-
-            {{#respuestaDada}}
-                <div class="result-container mt-4">
-                    {{#correcta}}
-                        <div class="alert alert-success" role="alert">
-                            ¡Felicidades, acertaste!
-                        </div>
-                        <div class="alert alert-info" role="alert">
-                            +1 Punto
-                        </div>
-                        <div class="mt-4">
-                            <div class="row">
-                                <div class="col-6 mb-2">
-                                    <!-- Botón para abrir el modal de reporte -->
-                                    <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#reportarModal">
-                                        Reportar
-                                    </button>
-                                </div>
-                                <div class="col-6 mb-2">
-                                    <button type="button" class="btn btn-success w-100" onclick="window.location.href='../partida/traerPregunta'">Siguiente pregunta</button>
-                                </div>
-                            </div>
-                        </div>
-                    {{/correcta}}
-                    {{^correcta}}
-                        <div class="alert alert-danger" role="alert">
-                            Perdiste, intenta de nuevo
-                        </div>
-                        <div class="alert alert-info" role="alert">
-                            Tu puntaje final es: {{puntaje}}
-                        </div>
-                        <div class="mt-4">
-                            <div class="row">
-                                <div class="col-6 mb-2">
-                                    <!-- Botón para abrir el modal de reporte -->
-                                    <button type="button" class="btn btn-danger w-100" data-bs-toggle="modal" data-bs-target="#reportarModal">
-                                        Reportar
-                                    </button>
-                                </div>
-                                <div class="col-6 mb-2">
-                                    <button type="button" class="btn btn-success w-100" onclick="window.location.href='../usuario/home'">Al home</button>
-                                </div>
-                            </div>
-                        </div>
-                    {{/correcta}}
-                </div>
->>>>>>> Stashed changes
-            {{/respuestaDada}}
+            </div>
+        {{/respuestaDada}}
 
     </div>
-<<<<<<< Updated upstream
 
-</div>
-</main>
-=======
 </main>
 
 <!-- Modal para reportar pregunta -->
@@ -154,12 +102,11 @@
                     <button type="submit" class="btn btn-danger">Enviar reporte</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
->>>>>>> Stashed changes
+</body>
+</html>

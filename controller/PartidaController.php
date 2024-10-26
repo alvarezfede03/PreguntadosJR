@@ -34,8 +34,7 @@ class PartidaController
         $this->presenter->show('partidaNueva', $data);
 
     }
-<<<<<<< Updated upstream
-=======
+
 
     public function getCategoriaColor($categoria)
     {
@@ -70,5 +69,5 @@ class PartidaController
 
 
 
->>>>>>> Stashed changes
+
 }
