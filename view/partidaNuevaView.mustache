@@ -1,9 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="/public/style.css" rel="stylesheet">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
 <main class="flex-grow-1 d-flex align-items-center justify-content-center">
-<div class="dashboard-container shadow p-4 bg-light rounded" style="background-image: linear-gradient({{color}}, white);">
+<div class="dashboard-container shadow p-4 bg-light rounded">
     <div class="question-container">
-    {{#pregunta}}
-        <h2 class="text-center">{{categoria}}</h2>
-        <h2 class="question">{{pregunta}}</h2>
+        <h2 class="question">{{#pregunta}}{{pregunta}}</h2>
             <form action="../partida/validarRespuesta" method="POST">
                 <div class="row">
                     <div class="col-6">
@@ -22,25 +34,26 @@
             </form>
     {{/pregunta}}
 
-        {{#respuestaDada}}
-            {{#correcta}}
-                <h3>¡Felicidades, acertaste! +1 punto</h3>
-            {{/correcta}}
-            {{^correcta}}
-                <h3>Una lástima, vuelve a intentar</h3>
-            {{/correcta}}
-
-            <h4>Puntaje Actual: {{resultado}} puntos</h4>
-            <div class="mt-4 text-center">
-                <button type="button" class="btn btn-danger">Reportar</button>
+            {{#respuestaDada}}
                 {{#correcta}}
-                    <button type="button" class="btn btn-success me-3" onclick="window.location.href='../partida/nueva'">Siguiente pregunta</button>
+                    <h3>Felicidades acertaste +1 punto</h3>
+                    <h3>Tu puntaje es {{puntaje}}</h3>
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-danger">Reportar</button>
+                        <button type="button" class="btn btn-success me-3" onclick="window.location.href='../partida/traerPregunta'">Siguiente pregunta</button>
+                    </div>
                 {{/correcta}}
                 {{^correcta}}
-                    <button type="button" class="btn btn-success me-3" onclick="window.location.href='../usuario/home'">Al home</button>
+                    <h3>Una lastima pa volve a intentar</h3>
+                    <h3>Tu puntaje final es {{puntaje}}</h3>
+                    <div class="mt-4 text-center">
+                        <button type="button" class="btn btn-danger">Reportar</button>
+                        <button type="button" class="btn btn-success me-3" onclick="window.location.href='../usuario/home'">Al home</button>
+                    </div>
                 {{/correcta}}
-            </div>
-        {{/respuestaDada}}
+            {{/respuestaDada}}
+
+
 
     </div>
 

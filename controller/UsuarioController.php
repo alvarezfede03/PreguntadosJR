@@ -37,23 +37,25 @@ class UsuarioController{
     {
         $data = [];
 
+        // Verificar si hay un mensaje de error en la sesión
         if (isset($_SESSION['error'])) {
-            $data['error'] = $_SESSION['error'];
-            unset($_SESSION['error']);
+            $data['error'] = $_SESSION['error']; // Pasar el mensaje de error
+            unset($_SESSION['error']); // Limpiar el mensaje de error de la sesión
         }
+        // Verificar si hay un mensaje de éxito en la sesión
         if (isset($_SESSION['success'])) {
             $data['success'] = $_SESSION['success'];
-            unset($_SESSION['success']);
+            unset($_SESSION['success']);  // Limpiar el mensaje de éxito
         }
+        // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
-            $data = $this->model->filter($_SESSION['user']);
-            $_SESSION['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
+            $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
             $_SESSION['id'] = $data['usuario'][0]['id'];
             $data['logged_in'] = true;
-            $this->presenter->show('home', $data);
+            $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
         } else {
             $data['logged_in'] = false;
-            $this->presenter->show('login', $data);
+            $this->presenter->show('login', $data);  // Redirigimos al formulario de login si no está logueado
         }
     }
 
