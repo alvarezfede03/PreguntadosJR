@@ -9,6 +9,12 @@
                 <p class="card-text"><strong>País:</strong> {{pais}}</p>
                 <p class="card-text"><strong>Ciudad:</strong> {{ciudad}}</p>
                 <img src="{{foto_perfil}}" alt="Foto de perfil" class="img-fluid rounded-circle" style="max-width: 200px;">
+                <div id="map"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        initMapPerfil("{{pais}}", "{{ciudad}}");
+                    });
+                </script>
             </div>
         </div>
     {{/usuario}}
@@ -19,3 +25,6 @@
     {{/usuario}}
 </div>
 </main>
+<!-- Leaflet.js -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="../public/js/mapaPerfil.js"></script>
