@@ -37,6 +37,7 @@ class PartidaController
         $data['respuestaDada'] = true;
         $data['pregunta'] = $_SESSION['prueba'];
         $data['puntaje'] = $this->model->getPuntaje($_SESSION['partidaActual']['id_partida']);
+        $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         unset($_SESSION['prueba']);
         unset($_SESSION['pregunta']);
         $this->presenter->show('partidaNueva', $data);
