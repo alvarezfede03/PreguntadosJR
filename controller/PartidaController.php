@@ -22,7 +22,7 @@ class PartidaController
     public function traerPregunta()
     {
         $data['respuestaDada'] = false;
-        $data['pregunta'] = $this->model->getPregunta();
+        $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida']);
         $_SESSION['pregunta'] = $data['pregunta'][0]['id'];;
         $_SESSION['prueba'] = $data['pregunta'];
         $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
