@@ -52,6 +52,7 @@ class UsuarioController{
             $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
             $_SESSION['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
             $_SESSION['id'] = $data['usuario'][0]['id'];
+            $_SESSION['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
             $data['logged_in'] = true;
             $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
         } else {

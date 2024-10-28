@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 26-10-2024 a las 05:55:23
+-- Tiempo de generación: 28-10-2024 a las 14:52:48
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -124,6 +124,18 @@ INSERT INTO `preguntas` (`id`, `pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `preguntas_respondidas`
+--
+
+CREATE TABLE `preguntas_respondidas` (
+  `id` int(11) NOT NULL,
+  `partida_id` int(11) NOT NULL,
+  `pregunta_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuarios`
 --
 
@@ -177,6 +189,14 @@ ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `preguntas_respondidas`
+--
+ALTER TABLE `preguntas_respondidas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `partida_id` (`partida_id`),
+  ADD KEY `pregunta_id` (`pregunta_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -199,6 +219,12 @@ ALTER TABLE `preguntas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
+-- AUTO_INCREMENT de la tabla `preguntas_respondidas`
+--
+ALTER TABLE `preguntas_respondidas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -213,6 +239,13 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `partidas`
   ADD CONSTRAINT `partidas_ibfk_1` FOREIGN KEY (`id_jugador`) REFERENCES `usuarios` (`id`);
+
+--
+-- Filtros para la tabla `preguntas_respondidas`
+--
+ALTER TABLE `preguntas_respondidas`
+  ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`),
+  ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

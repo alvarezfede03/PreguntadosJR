@@ -104,4 +104,11 @@ class UsuarioModel
         $stmt->execute();
     }
 
+    public function getUserRanking($usuario)
+    {
+        $sql = "SELECT MAX(resultado) as resultado FROM partidas WHERE id_jugador = " . $usuario;
+        $result =$this->database->query($sql);
+        return $result[0]['resultado'];
+    }
+
 }

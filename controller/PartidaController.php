@@ -19,11 +19,20 @@ class PartidaController
         $this->traerPregunta();
     }
 
+    public function ranking()
+    {
+        $data['rankings'] = $this->model->getTopRankings();
+        foreach ($data['rankings'] as $index => $row) {
+            $data['rankings'][$index]['ranking'] = $index + 1;
+        }
+        $this->presenter->show('ranking',$data);
+    }
+
     public function traerPregunta()
     {
         $data['respuestaDada'] = false;
         $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida']);
-        $_SESSION['pregunta'] = $data['pregunta'][0]['id'];;
+        $_SESSION['pregunta'] = $data['pregunta'][0]['id'];
         $_SESSION['prueba'] = $data['pregunta'];
         $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         $this->presenter->show('partidaNueva', $data);
