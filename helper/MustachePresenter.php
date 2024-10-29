@@ -18,7 +18,6 @@ class MustachePresenter{
             $data['logged_in'] = true;
             //$data['foto_perfil'] = $_SESSION['foto_perfil'];
             //$data['miRanking'] = $_SESSION['userRanking'];
-            print_r($_SESSION);
         } else {
             $data['logged_in'] = false;
         }
