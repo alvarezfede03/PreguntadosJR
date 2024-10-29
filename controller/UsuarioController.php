@@ -178,6 +178,19 @@ class UsuarioController{
         }
         exit();
     }
+    public function verificarUsername() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'];
+
+            // Comprobar si el usuario existe en la base de datos
+            $existe = $this->model->existeUsername($username);
+
+            // Devolver resultado como JSON
+            header('Content-Type: application/json');
+            echo json_encode(['existe' => $existe]);
+            exit();
+        }
+    }
 
 
 }

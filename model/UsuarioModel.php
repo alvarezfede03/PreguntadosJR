@@ -37,8 +37,6 @@ class UsuarioModel
         return false;
     }
 
-
-
     public function filter($user)
     {
         $sql = "SELECT id, nombre_usuario, nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
@@ -109,6 +107,16 @@ class UsuarioModel
         $sql = "SELECT MAX(resultado) as resultado FROM partidas WHERE id_jugador = " . $usuario;
         $result =$this->database->query($sql);
         return $result[0]['resultado'];
+    }
+
+    public function existeUsername($username) {
+        $sql = "SELECT id FROM usuarios WHERE nombre_usuario = ?";
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+
+        return $resultado->num_rows > 0;
     }
 
 }
