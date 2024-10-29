@@ -49,6 +49,10 @@ class PartidaController
         $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         unset($_SESSION['prueba']);
         unset($_SESSION['pregunta']);
+        if(!$data['correcta'])
+        {
+            unset($_SESSION['partidaActual']);
+        }
         $this->presenter->show('partidaNueva', $data);
 
     }
