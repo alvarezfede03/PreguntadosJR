@@ -119,4 +119,15 @@ class UsuarioModel
         return $resultado->num_rows > 0;
     }
 
+    public function obtenerRankingUsuarios() {
+        $sql = "SELECT u.nombre_usuario, MAX(p.resultado) AS resultado
+            FROM usuarios u
+            LEFT JOIN partidas p ON u.id = p.id_jugador
+            GROUP BY u.id
+            ORDER BY resultado DESC";
+        $result = $this->database->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+
 }

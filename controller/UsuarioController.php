@@ -191,6 +191,10 @@ class UsuarioController{
             exit();
         }
     }
+    public function mostrarRanking() {
+        $data['rankings'] = $this->model->obtenerRankingUsuarios();
+        $this->presenter->show('rankingView', $data);
+    }
 
 
 }
