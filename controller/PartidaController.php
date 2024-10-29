@@ -66,4 +66,15 @@ class PartidaController
 
         return $colores[$categoria] ?? "white";
     }
+
+    public function reportarPregunta()
+    {
+        $preguntaId = $_POST['pregunta_id'];
+        $motivo = $_POST['motivo'];
+
+        $this->model->guardarReporte($preguntaId, $motivo);
+        header("Location: ../usuario/home");
+    }
+
+
 }

@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-10-2024 a las 14:52:48
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 29-10-2024 a las 23:49:32
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,65 @@ CREATE TABLE `partidas` (
   `id_jugador` int(11) NOT NULL,
   `resultado` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `partidas`
+--
+
+INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`) VALUES
+(75, 35, '2'),
+(76, 35, '3'),
+(77, 35, '0'),
+(78, 35, '0'),
+(79, 35, '0'),
+(80, 35, '0'),
+(81, 35, '0'),
+(82, 35, '1'),
+(83, 35, '1'),
+(84, 35, '0'),
+(85, 35, '0'),
+(86, 35, '0'),
+(87, 35, '0'),
+(88, 35, '0'),
+(89, 35, '1'),
+(90, 35, '0'),
+(91, 35, '0'),
+(92, 35, '0'),
+(93, 35, '0'),
+(94, 35, '0'),
+(95, 35, '0'),
+(96, 35, '0'),
+(97, 35, '0'),
+(98, 35, '0'),
+(99, 35, '0'),
+(100, 35, '0'),
+(101, 35, '0'),
+(102, 35, '0'),
+(103, 35, '0'),
+(104, 35, '0'),
+(105, 35, '0'),
+(106, 35, '0'),
+(107, 35, '0'),
+(108, 35, '0'),
+(109, 35, '1'),
+(110, 35, '0'),
+(111, 35, '0'),
+(112, 35, '0'),
+(113, 35, '0'),
+(114, 35, '0'),
+(115, 35, '0'),
+(116, 35, '0'),
+(117, 35, '0'),
+(118, 35, '0'),
+(119, 35, '0'),
+(120, 35, '0'),
+(121, 35, '0'),
+(122, 35, '0'),
+(123, 35, '1'),
+(124, 35, '0'),
+(125, 35, '0'),
+(126, 35, '1'),
+(127, 35, '0');
 
 -- --------------------------------------------------------
 
@@ -133,6 +192,44 @@ CREATE TABLE `preguntas_respondidas` (
   `pregunta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `preguntas_respondidas`
+--
+
+INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
+(1, 75, 36),
+(2, 75, 8),
+(3, 76, 3),
+(4, 76, 5),
+(5, 76, 52),
+(6, 82, 32),
+(7, 83, 1),
+(8, 89, 51),
+(9, 109, 16),
+(10, 123, 15),
+(11, 126, 47);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reportes`
+--
+
+CREATE TABLE `reportes` (
+  `id` int(11) NOT NULL,
+  `pregunta_id` int(11) NOT NULL,
+  `motivo` text NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `estado` enum('pendiente','resuelto') DEFAULT 'pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reportes`
+--
+
+INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
+(5, 34, 'esta mal', '2024-10-29 22:44:48', 'pendiente');
+
 -- --------------------------------------------------------
 
 --
@@ -197,6 +294,13 @@ ALTER TABLE `preguntas_respondidas`
   ADD KEY `pregunta_id` (`pregunta_id`);
 
 --
+-- Indices de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pregunta_id` (`pregunta_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -210,7 +314,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -222,7 +326,13 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -246,6 +356,12 @@ ALTER TABLE `partidas`
 ALTER TABLE `preguntas_respondidas`
   ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`),
   ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
+
+--
+-- Filtros para la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
