@@ -38,18 +38,3 @@ marker.on('dragend', function(e) {
             alert('No se pudo obtener la información de la ubicación.');
         });
 });
-
-// Verificar contraseñas iguales
-function validatePasswords() {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm_password').value;
-    const passwordError = document.getElementById('passwordError');
-
-    if (password !== confirmPassword) {
-        passwordError.style.display = 'block';
-        return false; // Prevent form submission
-    }
-
-    passwordError.style.display = 'none';
-    return true; // Allow form submission
-}

@@ -41,7 +41,7 @@ class UsuarioModel
 
     public function filter($user)
     {
-        $sql = "SELECT nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
+        $sql = "SELECT id, nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
                 FROM usuarios 
                 WHERE nombre_usuario = '" . $user. "'";
         $data["usuario"] =$this->database->query($sql);
@@ -102,6 +102,13 @@ class UsuarioModel
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param('s', $uuid);
         $stmt->execute();
+    }
+
+    public function getUserRanking($usuario)
+    {
+        $sql = "SELECT MAX(resultado) as resultado FROM partidas WHERE id_jugador = " . $usuario;
+        $result =$this->database->query($sql);
+        return $result[0]['resultado'];
     }
 
 }

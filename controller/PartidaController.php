@@ -13,28 +13,45 @@ class PartidaController
 
     public function nueva()
     {
+        $usuario = $_SESSION['id'];
+        $partida = $this->model->getCrearPartida($usuario);
+        $_SESSION['partidaActual'] = $partida;
+        $this->traerPregunta();
+    }
+
+    public function ranking()
+    {
+        $data['rankings'] = $this->model->getTopRankings();
+        foreach ($data['rankings'] as $index => $row) {
+            $data['rankings'][$index]['ranking'] = $index + 1;
+        }
+        $this->presenter->show('ranking',$data);
+    }
+
+    public function traerPregunta()
+    {
         $data['respuestaDada'] = false;
-        $data['pregunta'] = $this->model->getPregunta();
-        $_SESSION['pregunta'] = $data['pregunta'][0]['id'];;
-        $_SESSION['prueba'] =$data['pregunta'];
+        $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida']);
+        $_SESSION['pregunta'] = $data['pregunta'][0]['id'];
+        $_SESSION['prueba'] = $data['pregunta'];
+        $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         $this->presenter->show('partidaNueva', $data);
     }
 
-
     public function validarRespuesta()
     {
-
         $repuestaSeleccionada = $_POST['opcion'];
         $pregunta = $_SESSION['pregunta'];
         $data['correcta'] = $this->model->verificarPregunta($pregunta, $repuestaSeleccionada);
         $data['respuestaDada'] = true;
-        $data['pregunta'] =$_SESSION['prueba'];
+        $data['pregunta'] = $_SESSION['prueba'];
+        $data['puntaje'] = $this->model->getPuntaje($_SESSION['partidaActual']['id_partida']);
+        $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         unset($_SESSION['prueba']);
         unset($_SESSION['pregunta']);
         $this->presenter->show('partidaNueva', $data);
 
     }
-
 
     public function getCategoriaColor($categoria)
     {
@@ -52,22 +69,12 @@ class PartidaController
 
     public function reportarPregunta()
     {
-        if (!isset($_SESSION['pregunta'])) {
-            die('ID de pregunta no definido en la sesión.');
-        }
-
-        $idUsuario = $_SESSION['id'];
-        $idPregunta = $_SESSION['pregunta'];
+        $preguntaId = $_POST['pregunta_id'];
         $motivo = $_POST['motivo'];
 
-        // Guardar el reporte en la base de datos
-        $this->model->guardarReportePregunta($idUsuario, $idPregunta, $motivo);
-
-        // Redirigir a la siguiente pregunta o a otra página
-        header('Location: ../partida/traerPregunta');
+        $this->model->guardarReporte($preguntaId, $motivo);
+        header("Location: ../usuario/home");
     }
-
-
 
 
 }
