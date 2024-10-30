@@ -44,7 +44,7 @@
                 {{/partidas}}
                 </tbody>
             </table>
-            <button type="button" class="btn btn-warning w-100" onclick="window.location.href='/usuario/historial'">Ver historial completo</button>
+            <button type="button" class="btn btn-warning w-100" onclick="window.location.href='historial_partidas.php'">Ver historial completo</button>
         </div>
     </div>
 </main>
