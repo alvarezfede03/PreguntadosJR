@@ -11,16 +11,10 @@ class PartidaController
         $this->presenter = $presenter;
     }
 
-    public function creaAr()
-    {
-
-    }
-
     public function nueva()
     {
         $usuario = $_SESSION['id'];
-        $partida = $this->model->getCrearPartida($usuario);
-        $_SESSION['partidaActual'] = $partida;
+           
         $this->traerPregunta();
     }
 

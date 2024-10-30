@@ -1,17 +1,30 @@
-<div class="w3-container w3-padding w3-center">
+<main class="flex-grow-1 d-flex align-items-center justify-content-center">
+<div class="container my-4">
     {{#usuario}}
-        <div class="w3-card w3-padding w3-margin" style="max-width: 400px; margin: auto;">
-            <h1>{{nombre_completo}}</h1>
-            <p><strong>Año:</strong> {{anio_nacimiento}}</p>
-            <p><strong>Sexo:</strong> {{sexo}}</p>
-            <p><strong>País:</strong> {{pais}}</p>
-            <p><strong>Ciudad:</strong> {{ciudad}}</p>
-            <img src="{{foto_perfil}}" alt="Foto de perfil" class="w3-image" style="width: 100%; max-width: 200px; border-radius: 50%;">
+        <div class="card mx-auto" style="max-width: 800px;">
+            <div class="card-body text-center">
+                <h1 class="card-title">{{nombre_completo}}</h1>
+                <p class="card-text"><strong>Año:</strong> {{anio_nacimiento}}</p>
+                <p class="card-text"><strong>Sexo:</strong> {{sexo}}</p>
+                <p class="card-text"><strong>País:</strong> {{pais}}</p>
+                <p class="card-text"><strong>Ciudad:</strong> {{ciudad}}</p>
+                <img src="{{foto_perfil}}" alt="Foto de perfil" class="img-fluid rounded-circle" style="max-width: 200px;">
+                <div id="map"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        initMapPerfil("{{pais}}", "{{ciudad}}");
+                    });
+                </script>
+            </div>
         </div>
     {{/usuario}}
     {{^usuario}}
-        <div class="w3-card w3-padding w3-margin w3-center">
-            <div>ERROR: usuario no encontrado</div>
+        <div class="alert alert-danger text-center" role="alert">
+            ERROR: usuario no encontrado
         </div>
     {{/usuario}}
 </div>
+</main>
+<!-- Leaflet.js -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+<script src="../public/js/mapaPerfil.js"></script>
