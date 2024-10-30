@@ -1,0 +1,25 @@
+<main class="flex-grow-1 d-flex align-items-center justify-content-around">
+    <div class="dashboard-container shadow p-4 bg-light rounded">
+        <h2 class="text-center mb-4">Seleccione una opción</h2>
+        <div class="d-grid gap-3">
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadJugadores'">Ver cantidad de jugadores</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPartidasJugadas'">Ver cantidad de partidas jugadas</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de preguntas creadas</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios nuevos</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios por país</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios por sexo</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios por grupo de edad</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver porcentaje de preguntas respondidas correctamente</button>
+        </div>
+    </div>
+    {{#cantJugadores}}
+    <div class="dashboard-container shadow p-4 bg-light rounded">
+        <h2 class="text-center mb-4">Cantidad de jugadores: {{cantJugadores}}</h2>
+    {{/cantJugadores}}
+    {{#cantPartidasJugadas}}
+    <div class="dashboard-container shadow p-4 bg-light rounded">
+        <h2 class="text-center mb-4">Cantidad de partidas jugadas en total: {{cantPartidasJugadas}}</h2>
+    {{/cantPartidasJugadas}}
+
+    </div>
+</main>

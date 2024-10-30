@@ -37,31 +37,33 @@ class UsuarioController{
     {
         $data = [];
 
-        // Verificar si hay un mensaje de error en la sesión
         if (isset($_SESSION['error'])) {
-            $data['error'] = $_SESSION['error']; // Pasar el mensaje de error
-            unset($_SESSION['error']); // Limpiar el mensaje de error de la sesión
+            $data['error'] = $_SESSION['error'];
+            unset($_SESSION['error']);
         }
-        // Verificar si hay un mensaje de éxito en la sesión
         if (isset($_SESSION['success'])) {
             $data['success'] = $_SESSION['success'];
-            unset($_SESSION['success']);  // Limpiar el mensaje de éxito
+            unset($_SESSION['success']);
         }
         // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
-            $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
-            //$_SESSION['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
-            $_SESSION['id'] = $data['usuario'][0]['id'];
-            //$_SESSION['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
-            //$data['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
-            //$data['id'] = $data['usuario'][0]['id'];
-            $data['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
-            $data['logged_in'] = true;
+            $data = $this->model->filter($_SESSION['user']);
+            if ($data['usuario'][0]['tipo_usuario'] == 'jugador') {
+                $_SESSION['id'] = $data['usuario'][0]['id'];
+                //$_SESSION['role'] = $data['usuario'][0]['tipo_usuario'];
+                $data['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
+                $data['jugador'] = true;
+            }else if($data['usuario'][0]['tipo_usuario'] == 'admin'){
+                $data['admin'] = true;
+            }else{
+                $data['editor'] = true;
+            }
 
-            $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
+            $data['logged_in'] = true;
+            $this->presenter->show('home', $data);
         } else {
             $data['logged_in'] = false;
-            $this->presenter->show('login', $data);  // Redirigimos al formulario de login si no está logueado
+            $this->presenter->show('login', $data);
         }
     }
 

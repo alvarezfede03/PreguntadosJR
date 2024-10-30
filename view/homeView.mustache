@@ -2,18 +2,25 @@
 <div class="dashboard-container shadow p-4 bg-light rounded">
     {{#usuario}}
     <h2 class="text-center mb-4">Bienvenido {{nombre_usuario}} <img src="{{foto_perfil}}" alt="Usuario" width="40" height="40"></h2>
+    {{#jugador}}
     <div class="d-flex align-items-center justify-content-center ms-auto mb-4">
         <span class="me-2 ms-2">
             <a><img src="../public/icons/cup.png" alt="Ranking" width="30" height="30"></a>
         </span>
         <span class="me-3">Tu mejor puntaje fue: {{userRanking}}</span>
     </div>
+    {{/jugador}}
     {{/usuario}}
     <div class="d-grid gap-3">
         <button type="button" class="btn btn-danger" onclick="window.location.href='/usuario/search'">Ver perfil</button>
+    {{#jugador}}
         <button type="button" class="btn btn-primary" onclick="window.location.href='/partida/nueva'">Empezar nueva partida</button>
         <button type="button" class="btn btn-success" onclick="window.location.href='/partida/ranking'">Ver ranking de usuarios</button>
         <button type="button" class="btn btn-warning" onclick="window.location.href='historial_partidas.php'">Ver historial de partidas</button>
+    {{/jugador}}
+        {{#admin}}
+            <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ir a informes</button>
+        {{/admin}}
     </div>
 </div>
 </main>
