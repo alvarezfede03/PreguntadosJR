@@ -14,14 +14,10 @@ class MustachePresenter{
 
     public function show($contentFile , $data = array() ){
         if (isset($_SESSION['user'])) {
-            //$data['user'] = $_SESSION['user'];
             $data['logged_in'] = true;
-            //$data['foto_perfil'] = $_SESSION['foto_perfil'];
-            //$data['miRanking'] = $_SESSION['userRanking'];
         } else {
             $data['logged_in'] = false;
         }
-
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }
 

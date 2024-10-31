@@ -4,14 +4,11 @@
         <h2 class="text-center mb-4">Formulario de Registro</h2>
     <form action="/usuario/procesarRegistro" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
 
-        <!-- Nombre de usuario con AJAX -->
         <div class="mb-3">
             <label for="username" class="form-label">Nombre de Usuario</label>
             <input type="text" class="form-control" id="username" name="username" required oninput="checkUsername();">
             <div id="usernameError" class="text-danger mt-2" style="display:none;">Este nombre de usuario ya está en uso.</div>
         </div>
-
-
 
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña</label>
@@ -49,7 +46,6 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
 
-        <!-- Mapa para seleccionar país y provincia -->
         <div class="mb-3">
             <label class="form-label">Selecciona tu País y Ciudad</label>
             <div id="map"></div>
@@ -78,7 +74,6 @@
     </form>
 </div>
 </div>
-<!-- Leaflet.js -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script src="../public/js/mapaRegistro.js"></script>
 <script src="../public/js/validaciones.js"></script>

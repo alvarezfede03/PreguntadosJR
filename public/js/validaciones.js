@@ -1,4 +1,3 @@
-// Verificar contraseñas iguales
 function validatePasswords() {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm_password').value;
@@ -6,11 +5,10 @@ function validatePasswords() {
 
     if (password !== confirmPassword) {
         passwordError.style.display = 'block';
-        return false; // Prevent form submission
+        return false;
     }
-
     passwordError.style.display = 'none';
-    return true; // Allow form submission
+    return true;
 }
 
 function validateLocation() {

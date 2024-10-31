@@ -1,5 +1,4 @@
 <?php
-
 class UsuarioController{
     private $model;
     private $presenter;
@@ -21,47 +20,35 @@ class UsuarioController{
             $_SESSION['user'] = $user;
             header('location: /home');
         } elseif ($validation === 'inactive') {
-            // Si la cuenta está inactiva, mostrar mensaje de cuenta inactiva
             $_SESSION['error'] = "Cuenta inactiva. Por favor, verifica tu correo para activarla.";
             header('location: /login');
         } else {
-            // Si las credenciales son incorrectas
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
             header('location: /login');
         }
         exit();
     }
 
-
     public function login()
     {
         $data = [];
-
-        // Verificar si hay un mensaje de error en la sesión
         if (isset($_SESSION['error'])) {
-            $data['error'] = $_SESSION['error']; // Pasar el mensaje de error
-            unset($_SESSION['error']); // Limpiar el mensaje de error de la sesión
+            $data['error'] = $_SESSION['error'];
+            unset($_SESSION['error']);
         }
-        // Verificar si hay un mensaje de éxito en la sesión
         if (isset($_SESSION['success'])) {
             $data['success'] = $_SESSION['success'];
-            unset($_SESSION['success']);  // Limpiar el mensaje de éxito
+            unset($_SESSION['success']);
         }
-        // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
-            $data = $this->model->filter($_SESSION['user']); // Le paso toods los datos directamente y lo filtro desde la vista
-            //$_SESSION['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
+            $data = $this->model->filter($_SESSION['user']);
             $_SESSION['id'] = $data['usuario'][0]['id'];
-            //$_SESSION['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
-            //$data['foto_perfil'] = $data['usuario'][0]['foto_perfil'];
-            //$data['id'] = $data['usuario'][0]['id'];
             $data['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
             $data['logged_in'] = true;
-
-            $this->presenter->show('home', $data);  // Pasamos los datos del usuario a la vista 'home'
+            $this->presenter->show('home', $data);
         } else {
             $data['logged_in'] = false;
-            $this->presenter->show('login', $data);  // Redirigimos al formulario de login si no está logueado
+            $this->presenter->show('login', $data);
         }
     }
 
@@ -77,18 +64,16 @@ class UsuarioController{
         session_start();
         session_unset();
         session_destroy();
-        header('Location: /login');  // Redirige al formulario de login
+        header('Location: /login');
         exit();
     }
 
     public function registrar() {
-        $data = [];  // Si necesitas pasar datos a la vista, lo haces aquí
-        $this->presenter->show('registrar', $data);  // Renderiza la vista 'registrar.mustache'
+        $data = [];
+        $this->presenter->show('registrar', $data);
     }
 
-
     public function procesarRegistro() {
-        // Recibir los datos del formulario
         $uuid = uniqid(time(), true);
         $username = $_POST['username'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -99,17 +84,11 @@ class UsuarioController{
         $country = $_POST['country'];
         $city = $_POST['city'];
 
-        // Validar imagen de perfil (igual que antes)
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $resultadoImagen = $this->validarImagen($_FILES['image']);
             if ($resultadoImagen['valid']) {
-                // Ruta relativa para guardar en la base de datos
                 $urlImagen = "../public/perfiles/" . $username . "." . $resultadoImagen['extension'];
-
-                // Ruta absoluta para mover el archivo en el servidor
                 $rutaImagenCompleta = $_SERVER['DOCUMENT_ROOT'] . "/public/perfiles/" . $username . "." . $resultadoImagen['extension'];
-
-                // Mover el archivo a la ruta absoluta en el servidor
                 move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagenCompleta);
             } else {
                 $_SESSION['error'] = $resultadoImagen['message'];
@@ -117,17 +96,14 @@ class UsuarioController{
                 exit();
             }
         } else {
-            $urlImagen = null;  // Si no hay imagen, la ruta se guarda como null
+            $urlImagen = null;
         }
 
         // Guardar los datos del usuario en la base de datos (inactivo hasta que verifique el correo)
         $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
-
         if ($token) {
-            // Enviar correo con el enlace de verificación
             $emailSender = new EmailSender();
             $emailExitoso = $emailSender->enviarMail($email, $token);
-
             if ($emailExitoso) {
                 $_SESSION['success'] = "Usuario registrado exitosamente. Revisa tu correo para activar tu cuenta.";
                 header("Location: /login");
@@ -141,8 +117,6 @@ class UsuarioController{
         }
     }
 
-
-    // Función para validar la imagen
     private function validarImagen($file) {
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
@@ -150,11 +124,9 @@ class UsuarioController{
         if (in_array($extension, $allowed_extensions) && $file['size'] <= 2 * 1024 * 1024) {
             return ['valid' => true, 'extension' => $extension];
         }
-
         $errorMessage = (in_array($extension, $allowed_extensions))
             ? 'El tamaño de la imagen debe ser de 2MB o menos.'
             : 'Formato de imagen no permitido. Solo se permiten: jpg, jpeg, png, gif, svg.';
-
         return ['valid' => false, 'message' => $errorMessage];
     }
 
@@ -164,7 +136,6 @@ class UsuarioController{
             $usuario = $this->model->buscarUsuarioPorToken($token);
 
             if ($usuario) {
-                // Activar el usuario
                 $this->model->activarUsuario($usuario['uuid']);
                 $_SESSION['success'] = "Cuenta activada correctamente.";
                 header('location: /login');
@@ -178,29 +149,14 @@ class UsuarioController{
         }
         exit();
     }
+
     public function verificarUsername() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
-
-            // Comprobar si el usuario existe en la base de datos
             $existe = $this->model->existeUsername($username);
-
-            // Devolver resultado como JSON
             header('Content-Type: application/json');
             echo json_encode(['existe' => $existe]);
             exit();
         }
     }
-    public function mostrarRanking() {
-        $data['rankings'] = $this->model->obtenerRankingUsuarios();
-        $this->presenter->show('rankingView', $data);
-    }
-
-    public function mostrarPerfil($username) {
-        $data = $this->model->filter($username);  // Filtra los datos del usuario específico
-        $this->presenter->show('perfilUsuario', $data);  // Muestra la vista 'perfilUsuarioView'
-    }
-
-
-
 }

@@ -11,29 +11,23 @@ class UsuarioModel
 
     public function validate($user, $pass)
     {
-        // Consulta SQL para obtener la contraseña hasheada y el estado de la cuenta (activo/inactivo)
         $sql = "SELECT contrasenia, activo FROM usuarios WHERE nombre_usuario = ?";
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param('s', $user);
         $stmt->execute();
         $resultado = $stmt->get_result()->fetch_assoc();
 
-        // Si se encuentra el usuario
         if ($resultado) {
             $hashedPassword = $resultado['contrasenia'];
             $activo = $resultado['activo'];
 
-            // Verificar si la cuenta está activa
             if ($activo == 0) {
                 return 'inactiva';
             }
-
-            // Verificar la contraseña
             if (password_verify($pass, $hashedPassword)) {
-                return true;  // Contraseña válida y cuenta activa
+                return true;
             }
         }
-
         return false;
     }
 
@@ -48,12 +42,11 @@ class UsuarioModel
 
     public function crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen)
     {
-        $token = bin2hex(random_bytes(16));  // Generar token aleatorio
-        $activo = 0;  // El usuario estará inactivo hasta que verifique su correo
+        $token = bin2hex(random_bytes(16));
+        $activo = 0;
 
         $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contrasenia, nombre_completo, anio_nacimiento, sexo, mail, pais, ciudad, foto_perfil, token, activo) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param(
             'sssssssssssi',
@@ -70,14 +63,11 @@ class UsuarioModel
             $token,
             $activo
         );
-
         if (!$stmt->execute()) {
             throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
         }
-
         return $token;
     }
-
 
     public function buscarUsuarioPorToken($token)
     {
@@ -128,6 +118,4 @@ class UsuarioModel
         $result = $this->database->query($sql);
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-
 }

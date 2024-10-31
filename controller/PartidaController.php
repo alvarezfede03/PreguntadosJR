@@ -67,7 +67,6 @@ class PartidaController
             'Deportes' => "orange",
             'Entretenimiento' => "hotpink",
         ];
-
         return $colores[$categoria] ?? "white";
     }
 }
