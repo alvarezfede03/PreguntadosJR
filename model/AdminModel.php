@@ -61,10 +61,14 @@ class AdminModel
     }
 
     public function getPorcentajePreguntasCorrectas(){
-
-        //Averiguar en base a que se hace el calculo
-        /*
-        $sql = "";
-        return $this->database->query($sql);*/
+        $sql = "SELECT u.nombre_usuario AS usuario,
+                COUNT(pr.pregunta_id) AS total_correctas,
+                CONCAT(ROUND(COUNT(pr.pregunta_id) * 100.0 / (SELECT COUNT(*) FROM preguntas), 2), '%') AS porcentaje_correctas
+                FROM partidas p
+                JOIN preguntas_respondidas pr ON p.id_partida = pr.partida_id
+                JOIN usuarios u ON p.id_jugador = u.id
+                WHERE u.tipo_usuario = 'jugador'
+                GROUP BY u.nombre_usuario;";
+        return $this->database->query($sql);
     }
 }

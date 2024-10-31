@@ -37,6 +37,19 @@ class AdminController{
     {
         $data['cantUsuariosXPais'] = $this->model->getCantidadUsuariosXPais();
         $data['mostrarUsuariosXPais'] = true;
+
+        $labels = [];
+        $dataValues = [];
+
+        foreach ($data['cantUsuariosXPais'] as $item) {
+            $labels[] = $item['pais'];
+            $dataValues[] = $item['total_usuarios'];
+        }
+
+        $data['labels'] = json_encode($labels);
+        $data['data'] = json_encode($dataValues);
+        $data['chartLabel'] = "Cantidad de usuarios"; // "Hover" del grafico
+        $data['chartText'] = "Distribución de usuarios por pais"; // Titulo del grafico
         $this->presenter->show('informes',$data);
     }
 
@@ -44,6 +57,19 @@ class AdminController{
     {
         $data['cantUsuariosXSexo'] = $this->model->getCantidadusuariosXSexo();
         $data['mostrarUsuariosXSexo'] = true;
+
+        $labels = [];
+        $dataValues = [];
+
+        foreach ($data['cantUsuariosXSexo'] as $item) {
+            $labels[] = $item['sexo'];
+            $dataValues[] = $item['total_usuarios'];
+        }
+
+        $data['labels'] = json_encode($labels);
+        $data['data'] = json_encode($dataValues);
+        $data['chartLabel'] = "Cantidad de usuarios"; // "Hover" del grafico
+        $data['chartText'] = "Distribución de usuarios por sexo"; // Titulo del grafico
         $this->presenter->show('informes',$data);
     }
 
@@ -51,25 +77,44 @@ class AdminController{
     {
         $data['cantUsuariosXGrupoEdad'] = $this->model->getCantidadUsuariosXGrupoEdad();
         $data['mostrarUsuariosXGrupoEdad'] = true;
+
+        // Preparar los datos para los gráficos
+        $labels = [];
+        $dataValues = [];
+
+        // Asumimos que $data['cantUsuariosXGrupoEdad'] es un array de objetos
+        foreach ($data['cantUsuariosXGrupoEdad'] as $item) {
+            $labels[] = $item['grupo_edad']; // Ajusta según tu estructura de datos
+            $dataValues[] = $item['total_usuarios']; // Ajusta según tu estructura de datos
+        }
+
+        // Convertir a JSON
+        $data['labels'] = json_encode($labels);
+        $data['data'] = json_encode($dataValues);
+        $data['chartLabel'] = "Cantidad de usuarios"; // "Hover" del grafico
+        $data['chartText'] = "Distribución de usuarios por grupo de edad"; // Titulo del grafico
         $this->presenter->show('informes',$data);
     }
 
     public function porcentajeDePreguntasCorrectas()
     {
-        $data = [];
-        //Averiguar en base a que se hace el calculo de porcentaje
-        //$data['porcentajePreguntasCorrectas'] = $this->model->getPorcentajePreguntasCorrectas();
-        /*$usuarios  = $this->model->getPorcentajePreguntasCorrectas();
+        //Para el grafico esta utilizando total_correctas pero deberia utilizar el de porcentaje -
+        //Hay que pasarle porcentaje como INT sin el signo %
+        $data['porcentajePreguntasCorrectas'] = $this->model->getPorcentajePreguntasCorrectas();
+        $data['mostrarPorcentajePreguntasCorrectas'] = true;
 
-        $data['porcentajePreguntasCorrectas'] = [];
+        $labels = [];
+        $dataValues = [];
 
-        foreach ($usuarios as $usuario) {
-            $data['porcentajePreguntasCorrectas'][] = [
-                'nombre_usuario' => $usuario['nombre_usuario'],
-                'porcentaje_correctas' => number_format($usuario['porcentaje_correctas'], 2) . '%'
-            ];
+        foreach ($data['porcentajePreguntasCorrectas'] as $item) {
+            $labels[] = $item['usuario'];
+            $dataValues[] = $item['total_correctas'];
         }
-        $data['mostrarPorcentajePreguntasCorrectas'] = true;*/
+
+        $data['labels'] = json_encode($labels);
+        $data['data'] = json_encode($dataValues);
+        $data['chartLabel'] = "Porcentaje de respuestas correctas";
+        $data['chartText'] = "Porcentajes de preguntas respondidas correctamente por usuario";
         $this->presenter->show('informes',$data);
     }
 
