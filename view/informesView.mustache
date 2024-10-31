@@ -4,12 +4,12 @@
         <div class="d-grid gap-3">
         <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadJugadores'">Ver cantidad de jugadores</button>
         <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPartidasJugadas'">Ver cantidad de partidas jugadas</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de preguntas creadas</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios nuevos</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios por país</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios por sexo</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de usuarios por grupo de edad</button>
-        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver porcentaje de preguntas respondidas correctamente</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de preguntas creadas (Proximamente)</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadUsuariosNuevos'">Ver cantidad de usuarios nuevos</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadUsuariosXPais'">Ver cantidad de usuarios por país</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadUsuariosXSexo'">Ver cantidad de usuarios por sexo</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadUsuariosXGrupoEdad'">Ver cantidad de usuarios por grupo de edad</button>
+        <button type="button" class="btn btn-info" onclick="window.location.href='/admin/porcentajeDePreguntasCorrectas'">Ver porcentaje de preguntas respondidas correctamente por usuario</button>
         </div>
     </div>
     {{#cantJugadores}}
@@ -20,6 +20,91 @@
     <div class="dashboard-container shadow p-4 bg-light rounded">
         <h2 class="text-center mb-4">Cantidad de partidas jugadas en total: {{cantPartidasJugadas}}</h2>
     {{/cantPartidasJugadas}}
+    {{#cantUsuariosNuevos}}
+    <div class="dashboard-container shadow p-4 bg-light rounded">
+        <h2 class="text-center mb-4">Cantidad de usuarios nuevos en el ultimo mes: {{cantUsuariosNuevos}}</h2>
+    {{/cantUsuariosNuevos}}
+    {{#mostrarUsuariosXPais}}
+    <div class="table-responsive shadow" style="max-height: 400px; width: 400px; overflow-y: auto;">
+        <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
+            <thead class="table-secondary">
+            <tr>
+                <th>Pais</th>
+                <th>Total de Usuarios</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#cantUsuariosXPais}}
+                <tr>
+                    <td><p>{{pais}}</p></td>
+                    <td><p>{{total_usuarios}}</p></td>
+                </tr>
+            {{/cantUsuariosXPais}}
+            </tbody>
+        </table>
+    </div>
+    {{/mostrarUsuariosXPais}}
+    {{#mostrarUsuariosXSexo}}
+        <div class="table-responsive shadow" style="max-height: 400px; width: 400px; overflow-y: auto;">
+            <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
+                <thead class="table-secondary">
+                <tr>
+                    <th>Pais</th>
+                    <th>Total de Usuarios</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#cantUsuariosXSexo}}
+                    <tr>
+                        <td><p>{{sexo}}</p></td>
+                        <td><p>{{total_usuarios}}</p></td>
+                    </tr>
+                {{/cantUsuariosXSexo}}
+                </tbody>
+            </table>
+        </div>
+    {{/mostrarUsuariosXSexo}}
+    {{#mostrarUsuariosXGrupoEdad}}
+        <div class="table-responsive shadow" style="max-height: 400px; width: 400px; overflow-y: auto;">
+            <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
+                <thead class="table-secondary">
+                <tr>
+                    <th>Grupo de edad</th>
+                    <th>Total de Usuarios</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#cantUsuariosXGrupoEdad}}
+                    <tr>
+                        <td><p>{{grupo_edad}}</p></td>
+                        <td><p>{{total_usuarios}}</p></td>
+                    </tr>
+                {{/cantUsuariosXGrupoEdad}}
+                </tbody>
+            </table>
+        </div>
+    {{/mostrarUsuariosXGrupoEdad}}
+    {{#mostrarPorcentajePreguntasCorrectas}}
+        <div class="table-responsive shadow" style="max-height: 400px; width: 400px; overflow-y: auto;">
+            <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
+                <thead class="table-secondary">
+                <tr>
+                    <th>Usuario</th>
+                    <th>Porcentaje de respuestas correctas</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#porcentajePreguntasCorrectas}}
+                    <tr>
+                        <td><p>{{nombre_usuario}}</p></td>
+                        <td><p>{{porcentaje_correctas}}</p></td>
+                    </tr>
+                {{/porcentajePreguntasCorrectas}}
+                </tbody>
+            </table>
+        </div>
+    {{/mostrarPorcentajePreguntasCorrectas}}
+
 
     </div>
 </main>
