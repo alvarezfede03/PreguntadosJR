@@ -196,5 +196,11 @@ class UsuarioController{
         $this->presenter->show('rankingView', $data);
     }
 
+    public function mostrarPerfil($username) {
+        $data = $this->model->filter($username);  // Filtra los datos del usuario específico
+        $this->presenter->show('perfilUsuario', $data);  // Muestra la vista 'perfilUsuarioView'
+    }
+
+
 
 }
