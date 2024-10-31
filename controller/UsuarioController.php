@@ -52,6 +52,11 @@ class UsuarioController{
                 $_SESSION['id'] = $data['usuario'][0]['id'];
                 //$_SESSION['role'] = $data['usuario'][0]['tipo_usuario'];
                 $data['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
+                $partidas = $this->model->getHistorial5Partida($data['usuario'][0]['id']);
+                foreach ($partidas as $index => $partida) {
+                    $partidas[$index]['numero'] = $index + 1; // Asigna un número a cada partida
+                }
+                $data['partidas'] = $partidas;
                 $data['jugador'] = true;
             }else if($data['usuario'][0]['tipo_usuario'] == 'admin'){
                 $data['admin'] = true;
@@ -180,6 +185,22 @@ class UsuarioController{
         }
         exit();
     }
+
+    public function historial()
+    {
+        $data = $this->model->filter($_SESSION['user']);
+        $data['userRanking'] = $this->model->getUserRanking($_SESSION['id']);
+        $partidas =$this->model->getHistorialPartidas($_SESSION['id']);
+        foreach ($partidas as $index => $partida) {
+            $partidas[$index]['numero'] = $index + 1; // Asigna un número a cada partida
+        }
+        $data['partidas'] = $partidas;
+        $this->presenter->show('historial', $data);  // Pasamos los datos del usuario a la vista 'home'
+    }
+
+
+
+
 
 
 }

@@ -111,4 +111,27 @@ class UsuarioModel
         return $result[0]['resultado'];
     }
 
+    public function getHistorial5Partida($usuario)
+    {
+        $sql = "SELECT *
+        FROM partidas
+        WHERE id_jugador = " . $usuario . "
+        ORDER BY fecha_creacion DESC
+        LIMIT 5"
+        ;
+        $result =$this->database->query($sql);
+        return $result;
+    }
+
+    public function getHistorialPartidas($usuario)
+    {
+        $sql = "SELECT *
+        FROM partidas
+        WHERE id_jugador = " . $usuario . "
+        ORDER BY fecha_creacion DESC"
+        ;
+        $result =$this->database->query($sql);
+        return $result;
+    }
+
 }
