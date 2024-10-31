@@ -82,13 +82,11 @@ class AdminController{
         $labels = [];
         $dataValues = [];
 
-        // Asumimos que $data['cantUsuariosXGrupoEdad'] es un array de objetos
         foreach ($data['cantUsuariosXGrupoEdad'] as $item) {
-            $labels[] = $item['grupo_edad']; // Ajusta según tu estructura de datos
-            $dataValues[] = $item['total_usuarios']; // Ajusta según tu estructura de datos
+            $labels[] = $item['grupo_edad'];
+            $dataValues[] = $item['total_usuarios'];
         }
 
-        // Convertir a JSON
         $data['labels'] = json_encode($labels);
         $data['data'] = json_encode($dataValues);
         $data['chartLabel'] = "Cantidad de usuarios"; // "Hover" del grafico

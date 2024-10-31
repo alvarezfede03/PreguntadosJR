@@ -21,11 +21,9 @@ class UsuarioController{
             $_SESSION['user'] = $user;
             header('location: /home');
         } elseif ($validation === 'inactive') {
-            // Si la cuenta está inactiva, mostrar mensaje de cuenta inactiva
             $_SESSION['error'] = "Cuenta inactiva. Por favor, verifica tu correo para activarla.";
             header('location: /login');
         } else {
-            // Si las credenciales son incorrectas
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
             header('location: /login');
         }
@@ -45,16 +43,14 @@ class UsuarioController{
             $data['success'] = $_SESSION['success'];
             unset($_SESSION['success']);
         }
-        // Verificamos si el usuario está logueado
         if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']);
             if ($data['usuario'][0]['tipo_usuario'] == 'jugador') {
                 $_SESSION['id'] = $data['usuario'][0]['id'];
-                //$_SESSION['role'] = $data['usuario'][0]['tipo_usuario'];
                 $data['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
                 $partidas = $this->model->getHistorial5Partida($data['usuario'][0]['id']);
                 foreach ($partidas as $index => $partida) {
-                    $partidas[$index]['numero'] = $index + 1; // Asigna un número a cada partida
+                    $partidas[$index]['numero'] = $index + 1;
                 }
                 $data['partidas'] = $partidas;
                 $data['jugador'] = true;
@@ -84,18 +80,16 @@ class UsuarioController{
         session_start();
         session_unset();
         session_destroy();
-        header('Location: /login');  // Redirige al formulario de login
+        header('Location: /login');
         exit();
     }
 
     public function registrar() {
-        $data = [];  // Si necesitas pasar datos a la vista, lo haces aquí
-        $this->presenter->show('registrar', $data);  // Renderiza la vista 'registrar.mustache'
+        $data = [];
+        $this->presenter->show('registrar', $data);
     }
 
-
     public function procesarRegistro() {
-        // Recibir los datos del formulario
         $uuid = uniqid(time(), true);
         $username = $_POST['username'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -106,17 +100,13 @@ class UsuarioController{
         $country = $_POST['country'];
         $city = $_POST['city'];
 
-        // Validar imagen de perfil (igual que antes)
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $resultadoImagen = $this->validarImagen($_FILES['image']);
             if ($resultadoImagen['valid']) {
-                // Ruta relativa para guardar en la base de datos
                 $urlImagen = "../public/perfiles/" . $username . "." . $resultadoImagen['extension'];
 
-                // Ruta absoluta para mover el archivo en el servidor
                 $rutaImagenCompleta = $_SERVER['DOCUMENT_ROOT'] . "/public/perfiles/" . $username . "." . $resultadoImagen['extension'];
 
-                // Mover el archivo a la ruta absoluta en el servidor
                 move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagenCompleta);
             } else {
                 $_SESSION['error'] = $resultadoImagen['message'];
@@ -124,14 +114,12 @@ class UsuarioController{
                 exit();
             }
         } else {
-            $urlImagen = null;  // Si no hay imagen, la ruta se guarda como null
+            $urlImagen = null;
         }
 
-        // Guardar los datos del usuario en la base de datos (inactivo hasta que verifique el correo)
         $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
 
         if ($token) {
-            // Enviar correo con el enlace de verificación
             $emailSender = new EmailSender();
             $emailExitoso = $emailSender->enviarMail($email, $token);
 
@@ -148,8 +136,6 @@ class UsuarioController{
         }
     }
 
-
-    // Función para validar la imagen
     private function validarImagen($file) {
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
@@ -171,7 +157,6 @@ class UsuarioController{
             $usuario = $this->model->buscarUsuarioPorToken($token);
 
             if ($usuario) {
-                // Activar el usuario
                 $this->model->activarUsuario($usuario['uuid']);
                 $_SESSION['success'] = "Cuenta activada correctamente.";
                 header('location: /login');
@@ -192,10 +177,10 @@ class UsuarioController{
         $data['userRanking'] = $this->model->getUserRanking($_SESSION['id']);
         $partidas =$this->model->getHistorialPartidas($_SESSION['id']);
         foreach ($partidas as $index => $partida) {
-            $partidas[$index]['numero'] = $index + 1; // Asigna un número a cada partida
+            $partidas[$index]['numero'] = $index + 1;
         }
         $data['partidas'] = $partidas;
-        $this->presenter->show('historial', $data);  // Pasamos los datos del usuario a la vista 'home'
+        $this->presenter->show('historial', $data);
     }
 
 
