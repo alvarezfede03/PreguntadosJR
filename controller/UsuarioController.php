@@ -59,6 +59,12 @@ class UsuarioController{
         }
     }
 
+    public function search2(){
+        $user = $_POST['usuario'];
+            $data = $this->model->filter($user);
+            $this->presenter->show('perfilUsuario', $data);
+    }
+
     public function logout()
     {
         session_start();
