@@ -7,17 +7,22 @@
         {{/usuario}}
     </div>
 
+    {{#jugador}}
     <!-- Contenedor de dos columnas: botonera a la izquierda y tabla a la derecha -->
     <div class="d-flex w-100 justify-content-center align-items-start">
         <!-- Columna izquierda: botonera, con fondo blanco y botones alineados verticalmente -->
         <div class="button-container d-flex flex-column align-items-center p-4 bg-white rounded shadow me-4" style="max-width: 200px;">
             <button type="button" class="btn btn-danger mb-3 w-100" onclick="window.location.href='/usuario/search'">Ver perfil</button>
-    {{#jugador}}
             <button type="button" class="btn btn-primary mb-3 w-100" onclick="window.location.href='/partida/nueva'">Empezar nueva partida</button>
             <button type="button" class="btn btn-success mb-3 w-100" onclick="window.location.href='/partida/ranking'">Ver ranking de usuarios</button>
     {{/jugador}}
             {{#admin}}
-                <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ir a informes</button>
+            <div class="dashboard-container shadow p-4 bg-light rounded">
+                    <div class="d-grid gap-1">
+                    <button type="button" class="btn btn-danger mb-3 w-100" onclick="window.location.href='/usuario/search'">Ver perfil</button>
+                    <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ir a informes</button>
+                    </div>
+            </div>
             {{/admin}}
         </div>
     {{#jugador}}
