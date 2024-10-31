@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 30-10-2024 a las 00:16:21
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 31-10-2024 a las 00:58:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -30,17 +30,28 @@ SET time_zone = "+00:00";
 CREATE TABLE `partidas` (
   `id_partida` int(11) NOT NULL,
   `id_jugador` int(11) NOT NULL,
-  `resultado` varchar(50) DEFAULT NULL
+  `resultado` varchar(50) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `partidas`
 --
 
-INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`) VALUES
-(1, 7, '1'),
-(2, 5, '3'),
-(3, 6, '8');
+INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion`) VALUES
+(1, 7, '1', '2024-10-29 21:31:31'),
+(2, 5, '3', '2024-10-29 21:31:31'),
+(3, 6, '8', '2024-10-29 21:31:31'),
+(4, 7, '0', '2024-10-29 21:31:31'),
+(5, 7, '1', '2024-10-29 21:31:31'),
+(6, 7, '1', '2024-10-29 21:31:37'),
+(7, 7, '0', '2024-10-29 21:32:01'),
+(8, 7, '0', '2024-10-29 21:32:10'),
+(9, 7, '4', '2024-10-30 19:41:32'),
+(10, 7, '4', '2024-10-30 20:00:08'),
+(11, 7, '0', '2024-10-30 20:19:02'),
+(12, 7, '3', '2024-10-30 20:30:32'),
+(13, 7, '7', '2024-10-30 20:32:13');
 
 -- --------------------------------------------------------
 
@@ -158,7 +169,27 @@ INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
 (9, 3, 51),
 (10, 3, 13),
 (11, 3, 10),
-(12, 3, 60);
+(12, 3, 60),
+(13, 5, 30),
+(14, 6, 40),
+(15, 9, 2),
+(16, 9, 7),
+(17, 9, 28),
+(18, 9, 23),
+(19, 10, 26),
+(20, 10, 49),
+(21, 10, 54),
+(22, 10, 59),
+(23, 12, 49),
+(24, 12, 41),
+(25, 12, 36),
+(26, 13, 13),
+(27, 13, 55),
+(28, 13, 24),
+(29, 13, 9),
+(30, 13, 56),
+(31, 13, 58),
+(32, 13, 12);
 
 -- --------------------------------------------------------
 
@@ -173,6 +204,13 @@ CREATE TABLE `reportes` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('pendiente','resuelto') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reportes`
+--
+
+INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
+(1, 52, 'En la primer pelicula es Loki', '2024-10-30 23:33:36', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -258,7 +296,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -270,13 +308,13 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
