@@ -15,13 +15,15 @@ include_once("controller/PartidaController.php");
 include_once("model/PartidaModel.php");
 include_once("controller/AdminController.php");
 include_once("model/AdminModel.php");
+include_once("controller/CrearPreguntasController.php");
+include_once("model/CrearPreguntasModel.php");
 //include_once("controller/UsuarioPokedexController.php");
 //include_once("model/UsuarioPokedexModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
-include_once ('vendor/PHPMailer/src/PHPMailer.php');
-include_once ('vendor/PHPMailer/src/SMTP.php');
-include_once ('vendor/PHPMailer/src/Exception.php');
+include_once('vendor/PHPMailer/src/PHPMailer.php');
+include_once('vendor/PHPMailer/src/SMTP.php');
+include_once('vendor/PHPMailer/src/Exception.php');
 
 class Configuration
 {
@@ -49,17 +51,19 @@ class Configuration
         return new AdminController($this->getAdminModel(), $this->getPresenter());
     }
 
+    public function getCrearPreguntasController() {
+        return new CrearPreguntasController($this->getCrearPreguntasModel(), $this->getPresenter());
+    }
+
     /*private function getPokedexModel()
     {
         return new PokedexModel($this->getDatabase());
     }*/
 
-
     private function getPresenter()
     {
         return new MustachePresenter("./view");
     }
-
 
     private function getDatabase()
     {
@@ -82,6 +86,7 @@ class Configuration
     {
         return new UsuarioPokedexModel($this->getDatabase());
     }*/
+
     private function getUsuarioModel()
     {
         return new UsuarioModel($this->getDatabase());
@@ -95,5 +100,10 @@ class Configuration
     private function getAdminModel()
     {
         return new AdminModel($this->getDatabase());
+    }
+
+    private function getCrearPreguntasModel()
+    {
+        return new CrearPreguntasModel($this->getDatabase());
     }
 }
