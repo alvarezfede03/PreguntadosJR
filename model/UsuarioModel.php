@@ -41,7 +41,7 @@ class UsuarioModel
 
     public function filter($user)
     {
-        $sql = "SELECT id, nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil
+        $sql = "SELECT id, nombre_usuario, nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil, tipo_usuario
                 FROM usuarios 
                 WHERE nombre_usuario = '" . $user. "'";
         $data["usuario"] =$this->database->query($sql);
@@ -109,6 +109,29 @@ class UsuarioModel
         $sql = "SELECT MAX(resultado) as resultado FROM partidas WHERE id_jugador = " . $usuario;
         $result =$this->database->query($sql);
         return $result[0]['resultado'];
+    }
+
+    public function getHistorial5Partida($usuario)
+    {
+        $sql = "SELECT *
+        FROM partidas
+        WHERE id_jugador = " . $usuario . "
+        ORDER BY fecha_creacion DESC
+        LIMIT 5"
+        ;
+        $result =$this->database->query($sql);
+        return $result;
+    }
+
+    public function getHistorialPartidas($usuario)
+    {
+        $sql = "SELECT *
+        FROM partidas
+        WHERE id_jugador = " . $usuario . "
+        ORDER BY fecha_creacion DESC"
+        ;
+        $result =$this->database->query($sql);
+        return $result;
     }
 
 }
