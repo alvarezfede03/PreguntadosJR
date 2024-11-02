@@ -13,18 +13,16 @@ class PartidaModel
     {
         $sql = "INSERT INTO partidas (id_jugador, resultado) VALUES ('$usuario', '0')";
         if ($this->database->execute($sql) > 0) {
-            // Obtén el ID de la última inserción
             $idPartida = $this->database->getLastInsertId();
-            // Realiza una consulta para obtener la fila completa
+
             $query = "SELECT * FROM partidas WHERE id_partida = $idPartida";
             $result = $this->database->query($query);
-            return $result[0]; // Devuelve la fila completa
+            return $result[0];
         } else {
             echo "Error en la inserción: " . $this->database->conn->error;
             return false;
         }
     }
-
 
     public function getPregunta($id_partida)
     {
@@ -51,7 +49,6 @@ class PartidaModel
         LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
         WHERE pr.pregunta_id IS NULL ORDER BY RAND() LIMIT 1;
         "; //ahora se usa RAND() porque $randomNumber no funcionaba bien
-
         return $this->database->query($sql2);
     }
 

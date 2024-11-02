@@ -30,11 +30,9 @@ class UsuarioController{
         exit();
     }
 
-
     public function login()
     {
         $data = [];
-
         if (isset($_SESSION['error'])) {
             $data['error'] = $_SESSION['error'];
             unset($_SESSION['error']);
@@ -73,6 +71,12 @@ class UsuarioController{
             $data = $this->model->filter($_SESSION['user']);
             $this->presenter->show('perfilUsuario', $data);
         }
+    }
+
+    public function search2(){
+        $user = $_POST['usuario'];
+            $data = $this->model->filter($user);
+            $this->presenter->show('perfilUsuario', $data);
     }
 
     public function logout()
@@ -118,11 +122,9 @@ class UsuarioController{
         }
 
         $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
-
         if ($token) {
             $emailSender = new EmailSender();
             $emailExitoso = $emailSender->enviarMail($email, $token);
-
             if ($emailExitoso) {
                 $_SESSION['success'] = "Usuario registrado exitosamente. Revisa tu correo para activar tu cuenta.";
                 header("Location: /login");
@@ -143,11 +145,9 @@ class UsuarioController{
         if (in_array($extension, $allowed_extensions) && $file['size'] <= 2 * 1024 * 1024) {
             return ['valid' => true, 'extension' => $extension];
         }
-
         $errorMessage = (in_array($extension, $allowed_extensions))
             ? 'El tamaño de la imagen debe ser de 2MB o menos.'
             : 'Formato de imagen no permitido. Solo se permiten: jpg, jpeg, png, gif, svg.';
-
         return ['valid' => false, 'message' => $errorMessage];
     }
 
@@ -183,9 +183,13 @@ class UsuarioController{
         $this->presenter->show('historial', $data);
     }
 
-
-
-
-
-
+    public function verificarUsername() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $username = $_POST['username'];
+            $existe = $this->model->existeUsername($username);
+            header('Content-Type: application/json');
+            echo json_encode(['existe' => $existe]);
+            exit();
+        }
+    }
 }

@@ -19,7 +19,6 @@ class MustachePresenter{
         } else {
             $data['logged_in'] = false;
         }
-
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }
 
