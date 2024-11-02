@@ -20,6 +20,12 @@ class AdminModel
         return $resultado[0]['count'];
     }
 
+    public function getCantidadPreguntasCreadas(){
+        $sql = "SELECT COUNT(*) AS count FROM preguntas WHERE creada = 'si';";
+        $resultado = $this->database->query($sql);
+        return $resultado[0]['count'];
+    }
+
     public function getCantidadUsuariosNuevos(){
         $sql = "SELECT DATE(fecha_registro) AS dia, COUNT(*) AS count
                 FROM usuarios

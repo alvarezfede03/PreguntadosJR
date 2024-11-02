@@ -27,6 +27,12 @@ class AdminController{
         $this->presenter->show('informes',$data);
     }
 
+    public function cantidadPreguntasCreadas()
+    {
+        $data['cantPreguntasCreadas'] = $this->model->getCantidadPreguntasCreadas();
+        $this->presenter->show('informes',$data);
+    }
+
     public function cantidadUsuariosNuevos()
     {
         $data['cantUsuariosNuevos'] = $this->model->getCantidadUsuariosNuevos();

@@ -10,8 +10,8 @@
             <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPartidasJugadas'">
                 Ver cantidad de partidas jugadas
             </button>
-            <button type="button" class="btn btn-info" onclick="window.location.href='/admin/informes'">Ver cantidad de
-                preguntas creadas (Proximamente)
+            <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPreguntasCreadas'">Ver cantidad de
+                preguntas creadas
             </button>
             <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadUsuariosNuevos'">
                 Ver cantidad de usuarios nuevos
@@ -42,6 +42,11 @@
             <h2 class="text-center mb-4">Cantidad de partidas jugadas en total: {{cantPartidasJugadas}}</h2>
         </div>
     {{/cantPartidasJugadas}}
+    {{#cantPreguntasCreadas}}
+        <div class="dashboard-container shadow p-4 bg-light rounded">
+            <h2 class="text-center mb-4">Cantidad de preguntas creadas en total: {{cantPreguntasCreadas}}</h2>
+        </div>
+    {{/cantPreguntasCreadas}}
     {{#cantUsuariosNuevos}}
         <div class="dashboard-container shadow p-4 bg-light rounded">
             <h2 class="text-center mb-4">Cantidad de usuarios nuevos en el ultimo mes: {{cantUsuariosNuevos}}</h2>
