@@ -36,11 +36,21 @@ class AdminModel
         return $resultado[0]['count'];
     }
 
-    public function getCantidadUsuariosXPais(){
-        $sql = "SELECT pais, COUNT(*) AS total_usuarios
+    public function getCantidadUsuariosXPais($fecha_inicio = null, $fecha_fin = null){
+        /*$sql = "SELECT pais, COUNT(*) AS total_usuarios
                 FROM usuarios
                 GROUP BY pais
                 ORDER BY total_usuarios DESC;";
+        return $this->database->query($sql);*/
+
+        $sql = "SELECT pais, COUNT(*) AS total_usuarios
+                FROM usuarios";
+
+        if ($fecha_inicio && $fecha_fin) {
+            $sql .= " WHERE fecha_registro BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
+        }
+
+        $sql .= " GROUP BY pais ORDER BY total_usuarios DESC;";
         return $this->database->query($sql);
     }
 

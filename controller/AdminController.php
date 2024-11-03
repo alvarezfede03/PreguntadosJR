@@ -41,7 +41,16 @@ class AdminController{
 
     public function cantidadUsuariosXPais()
     {
-        $data['cantUsuariosXPais'] = $this->model->getCantidadUsuariosXPais();
+        // Este tiene la funcionalidad preparada para filtrar pero todavia no funciona,
+        // a no ser que descomente los parametros de fecha pero es manual
+        // El model ya esta preparado tambien para recibir las fechas
+        $fecha_inicio = $_POST['fecha_inicio'] ?? null;
+        $fecha_fin = $_POST['fecha_fin'] ?? null;
+
+        //$fecha_inicio = date("2024-10-1", strtotime($fecha_inicio));
+        //$fecha_fin = date("2024-11-3", strtotime($fecha_fin));
+
+        $data['cantUsuariosXPais'] = $this->model->getCantidadUsuariosXPais($fecha_inicio, $fecha_fin);
         $data['mostrarUsuariosXPais'] = true;
 
         $labels = [];
