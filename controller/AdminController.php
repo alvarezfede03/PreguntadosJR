@@ -41,17 +41,10 @@ class AdminController{
 
     public function cantidadUsuariosXPais()
     {
-        // Este tiene la funcionalidad preparada para filtrar pero todavia no funciona,
-        // a no ser que descomente los parametros de fecha pero es manual
-        // El model ya esta preparado tambien para recibir las fechas
         $fecha_inicio = $_POST['fecha_inicio'] ?? null;
         $fecha_fin = $_POST['fecha_fin'] ?? null;
 
-        //$fecha_inicio = date("2024-10-1", strtotime($fecha_inicio));
-        //$fecha_fin = date("2024-11-3", strtotime($fecha_fin));
-
         $data['cantUsuariosXPais'] = $this->model->getCantidadUsuariosXPais($fecha_inicio, $fecha_fin);
-        $data['mostrarUsuariosXPais'] = true;
 
         $labels = [];
         $dataValues = [];
@@ -61,11 +54,23 @@ class AdminController{
             $dataValues[] = $item['total_usuarios'];
         }
 
+        // Si se detecta que la solicitud es AJAX, devuelve JSON
+        if ($fecha_inicio && $fecha_fin) {
+            echo json_encode([
+                'labels' => $labels,
+                'data' => $dataValues
+            ]);
+            exit;
+        }
+
+        // En caso contrario, prepara los datos para la vista Mustache
+        $data['mostrarUsuariosXPais'] = true;
         $data['labels'] = json_encode($labels);
         $data['data'] = json_encode($dataValues);
-        $data['chartLabel'] = "Cantidad de usuarios"; // "Hover" del grafico
-        $data['chartText'] = "Distribución de usuarios por pais"; // Titulo del grafico
-        $this->presenter->show('informes',$data);
+        $data['chartLabel'] = "Cantidad de usuarios";
+        $data['chartText'] = "Distribución de usuarios por pais";
+
+        $this->presenter->show('informes', $data);
     }
 
     public function cantidadUsuariosXSexo()

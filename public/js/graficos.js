@@ -1,20 +1,12 @@
-let miGraficoTorta; // Definido en el ámbito global
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Obtener el elemento canvas por su ID
+document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById('miGraficoTorta');
-
-    // Obtener los datos de los atributos data-labels y data-data
     const labels = JSON.parse(ctx.getAttribute('data-labels'));
     const data = JSON.parse(ctx.getAttribute('data-data'));
-
-    // Obtener la etiqueta y texto del gráfico
     const chartLabel = ctx.dataset.chartLabel;
     const chartText = ctx.dataset.chartText;
 
-    // Configuración del gráfico
     const config = {
-        type: 'doughnut', // Tipo de gráfico
+        type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
@@ -46,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     position: 'top',
                     labels: {
                         font: {
-                            size: 18, // Tamaño de la fuente de la leyenda
+                            size: 18
                         }
                     }
                 },
@@ -54,56 +46,43 @@ document.addEventListener("DOMContentLoaded", function() {
                     display: true,
                     text: chartText,
                     font: {
-                        size: 24, // Tamaño de la fuente
-                        weight: 'bold', // Peso de la fuente
+                        size: 24,
+                        weight: 'bold'
                     }
                 }
             }
         }
     };
 
-    // Crear el gráfico
-    miGraficoTorta = new Chart(ctx, config);
-});
+    let miGraficoTorta = new Chart(ctx, config);
 
-document.getElementById("filtrar_btn").addEventListener("click", function() {
-    const fecha_inicio = document.getElementById("fecha_inicio").value;
-    const fecha_fin = document.getElementById("fecha_fin").value;
+    document.getElementById('filtrar_btn').addEventListener('click', function () {
+        const fechaInicio = document.getElementById('fecha_inicio').value;
+        const fechaFin = document.getElementById('fecha_fin').value;
 
-    if (!fecha_inicio || !fecha_fin) {
-        alert("Por favor, seleccione ambas fechas.");
-        return;
-    }
+        if (!fechaInicio || !fechaFin) {
+            alert("Por favor, selecciona ambas fechas para aplicar el filtro.");
+            return;
+        }
 
-    // Crear un objeto con los datos a enviar
-    const data = {
-        fecha_inicio: fecha_inicio,
-        fecha_fin: fecha_fin
-    };
-
-    fetch('/admin/cantidadUsuariosXPais', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json', // Especificamos el tipo de contenido
-        },
-        body: JSON.stringify(data) // Convertimos el objeto a JSON
-    })
-        .then(response => {
-            // Comprobamos si la respuesta es válida
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json(); // Convertimos la respuesta a JSON
+        fetch('/admin/cantidadUsuariosXPais', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `fecha_inicio=${encodeURIComponent(fechaInicio)}&fecha_fin=${encodeURIComponent(fechaFin)}`
         })
-        .then(data => {
-            console.log(data); // Para verificar que los datos son correctos
-            // Actualizamos los datos del gráfico
-            miGraficoTorta.data.labels = data.labels;
-            miGraficoTorta.data.datasets[0].data = data.data;
-            miGraficoTorta.update();
-        })
-        .catch(error => {
-            console.error('Error en la solicitud:', error);
-            alert("Error al obtener datos. Intente nuevamente.");
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la respuesta del servidor');
+                }
+                return response.json();
+            })
+            .then(data => {
+                miGraficoTorta.data.labels = data.labels;
+                miGraficoTorta.data.datasets[0].data = data.data;
+                miGraficoTorta.update();
+            })
+            .catch(error => console.error('Error:', error));
+    });
 });
