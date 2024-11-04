@@ -1,3 +1,4 @@
+// Barra de progreso principal
 const progressBar = document.getElementById('progress-bar');
 const hiddenSubmit = document.getElementById('hiddenSubmit');
 
@@ -27,3 +28,5 @@ const countdown = setInterval(() => {
         hiddenSubmit.click();
     }
 }, 1000);
+
+
