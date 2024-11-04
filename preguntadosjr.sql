@@ -2,8 +2,13 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
+<<<<<<< HEAD
 -- Servidor: 127.0.0.1
 -- Tiempo de generación: 31-10-2024 a las 00:58:37
+=======
+-- Servidor: 127.0.0.1:3306
+-- Tiempo de generación: 30-10-2024 a las 00:16:21
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,6 +43,7 @@ CREATE TABLE `partidas` (
 -- Volcado de datos para la tabla `partidas`
 --
 
+<<<<<<< HEAD
 INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion`) VALUES
 (1, 7, '1', '2024-10-29 21:31:31'),
 (2, 5, '3', '2024-10-29 21:31:31'),
@@ -52,6 +58,12 @@ INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion
 (11, 7, '0', '2024-10-30 20:19:02'),
 (12, 7, '3', '2024-10-30 20:30:32'),
 (13, 7, '7', '2024-10-30 20:32:13');
+=======
+INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`) VALUES
+(1, 7, '1'),
+(2, 5, '3'),
+(3, 6, '8');
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 
 -- --------------------------------------------------------
 
@@ -169,6 +181,7 @@ INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
 (9, 3, 51),
 (10, 3, 13),
 (11, 3, 10),
+<<<<<<< HEAD
 (12, 3, 60),
 (13, 5, 30),
 (14, 6, 40),
@@ -190,6 +203,9 @@ INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
 (30, 13, 56),
 (31, 13, 58),
 (32, 13, 12);
+=======
+(12, 3, 60);
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 
 -- --------------------------------------------------------
 
@@ -204,6 +220,7 @@ CREATE TABLE `reportes` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('pendiente','resuelto') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+<<<<<<< HEAD
 
 --
 -- Volcado de datos para la tabla `reportes`
@@ -211,6 +228,8 @@ CREATE TABLE `reportes` (
 
 INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
 (1, 52, 'En la primer pelicula es Loki', '2024-10-30 23:33:36', 'pendiente');
+=======
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 
 -- --------------------------------------------------------
 
@@ -296,7 +315,11 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
+<<<<<<< HEAD
   MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+=======
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -308,13 +331,21 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 
 --
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
+<<<<<<< HEAD
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+=======
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+>>>>>>> 37b601d95bc112166d12e597490b01132f59e709
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
