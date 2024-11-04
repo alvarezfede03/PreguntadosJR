@@ -2,15 +2,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById('miGraficoTorta');
     const labels = JSON.parse(ctx.getAttribute('data-labels'));
     const data = JSON.parse(ctx.getAttribute('data-data'));
-    const chartLabel = ctx.dataset.chartLabel;
+    //const chartLabel = ctx.dataset.chartLabel;
     const chartText = ctx.dataset.chartText;
+    const mostrarPorcentajes = ctx.dataset.mostrarPorcentajes === "true";
 
     const config = {
         type: 'doughnut',
         data: {
             labels: labels,
             datasets: [{
-                label: chartLabel,
+                //label: chartLabel,
                 data: data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -49,11 +50,29 @@ document.addEventListener("DOMContentLoaded", function () {
                         size: 24,
                         weight: 'bold'
                     }
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function (tooltipItem) {
+                            const value = tooltipItem.raw;
+                            return mostrarPorcentajes ? `${value}%` : value;
+                        }
+                    }
+                },
+                datalabels: {
+                    formatter: function (value) {
+                        return mostrarPorcentajes ? `${value}%` : value;
+                    },
+                    font: {
+                        size: 16
+                    }
                 }
             }
-        }
+        },
+            plugins: [ChartDataLabels]
     };
 
+    // Agregar alert de boostrap para mostrar los errores en caso de que ocurran
     let miGraficoTorta = new Chart(ctx, config);
 
     document.getElementById('filtrar_btn').addEventListener('click', function () {
@@ -70,19 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
+            /*body = 'fecha_inicio=' + encodeURIComponent(fechaInicio) +
+                     '&fecha_fin=' + encodeURIComponent(fechaFin);*/
             body: `fecha_inicio=${encodeURIComponent(fechaInicio)}&fecha_fin=${encodeURIComponent(fechaFin)}`
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error en la respuesta del servidor');
-                }
-                return response.json();
-            })
+            .then(response => response.json())
             .then(data => {
                 miGraficoTorta.data.labels = data.labels;
                 miGraficoTorta.data.datasets[0].data = data.data;
                 miGraficoTorta.update();
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error al solicitar los datos', error));
     });
 });

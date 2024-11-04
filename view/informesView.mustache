@@ -1,4 +1,5 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <!-- HACER FUNCIONAR BIEN EL RESPONSIVE! -->
 <main class="flex-grow-1 d-flex align-items-center justify-content-around">
     <div class="dashboard-container shadow p-4 bg-light rounded">
@@ -190,7 +191,7 @@
                     <tr>
                         <td><p>{{usuario}}</p></td>
                         <td><p>{{total_correctas}}</p></td>
-                        <td><p>{{porcentaje_correctas}}</p></td>
+                        <td><p>{{porcentaje_correctas}}%</p></td>
                     </tr>
                 {{/porcentajePreguntasCorrectas}}
                 </tbody>
@@ -212,7 +213,8 @@
                     data-labels='{{labels}}'
                     data-data='{{data}}'
                     data-chart-label='{{chartLabel}}'
-                    data-chart-text='{{chartText}}'>
+                    data-chart-text='{{chartText}}'
+                    data-mostrar-porcentajes="true">
             </canvas>
         </div>
         <script src="../public/js/graficos.js"></script>

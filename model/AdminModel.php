@@ -43,6 +43,7 @@ class AdminModel
                 ORDER BY total_usuarios DESC;";
         return $this->database->query($sql);*/
 
+        // Ver si tambien hay que filtrar por tipo de usuario!!!
         $sql = "SELECT pais, COUNT(*) AS total_usuarios
                 FROM usuarios";
 
@@ -79,7 +80,7 @@ class AdminModel
     public function getPorcentajePreguntasCorrectas(){
         $sql = "SELECT u.nombre_usuario AS usuario,
                 COUNT(pr.pregunta_id) AS total_correctas,
-                CONCAT(ROUND(COUNT(pr.pregunta_id) * 100.0 / (SELECT COUNT(*) FROM preguntas), 2), '%') AS porcentaje_correctas
+                ROUND(COUNT(pr.pregunta_id) * 100.0 / (SELECT COUNT(*) FROM preguntas), 2) AS porcentaje_correctas
                 FROM partidas p
                 JOIN preguntas_respondidas pr ON p.id_partida = pr.partida_id
                 JOIN usuarios u ON p.id_jugador = u.id
