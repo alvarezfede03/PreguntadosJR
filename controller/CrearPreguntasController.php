@@ -11,7 +11,7 @@ class CrearPreguntasController {
 
     public function form() {
         $data = [
-            'categorias' => ['Selecciona una categoria','Geografia', 'Historia', 'Deportes', 'Arte', 'Ciencia', 'Entretenimiento']
+            'categorias' => ['Geografia', 'Historia', 'Deportes', 'Arte', 'Ciencia', 'Entretenimiento']
         ];
         $this->presenter->show('crearPregunta', $data);
     }

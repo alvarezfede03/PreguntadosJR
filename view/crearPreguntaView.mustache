@@ -31,6 +31,7 @@
             <div class="mb-3">
                 <label for="opcionCorrecta" class="form-label">Opción Correcta</label>
                 <select class="form-select" id="opcionCorrecta" name="opcionCorrecta" required>
+                    <option value="" selected disabled>Seleccione la opción correcta</option>'
                     <option value="1">Opción 1</option>
                     <option value="2">Opción 2</option>
                     <option value="3">Opción 3</option>
@@ -41,6 +42,7 @@
             <div class="mb-3">
                 <label for="categoria" class="form-label">Categoría</label>
                 <select class="form-select" id="categoria" name="categoria" required>
+                    <option value="" selected disabled>Seleccione la categoría</option>'
                     {{#categorias}}
                         <option value="{{.}}">{{.}}</option>
                     {{/categorias}}
