@@ -15,7 +15,7 @@ class MustachePresenter{
     public function show($contentFile , $data = array() ){
         if (isset($_SESSION['user'])) {
             $data['logged_in'] = true;
-            //print_r($_SESSION);
+            print_r($_SESSION);
         } else {
             $data['logged_in'] = false;
         }

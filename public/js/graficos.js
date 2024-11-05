@@ -5,7 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
     //const chartLabel = ctx.dataset.chartLabel;
     const chartText = ctx.dataset.chartText;
     const mostrarPorcentajes = ctx.dataset.mostrarPorcentajes === "true";
-
+    const nombreFuncion = ctx.dataset.nombreFuncion;
+    console.log(labels);
+    console.log(data);
+    console.log(mostrarPorcentajes);
     const config = {
         type: 'doughnut',
         data: {
@@ -84,7 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        fetch('/admin/cantidadUsuariosXPais', {
+        console.log(fechaInicio, fechaFin);
+        console.log(`/admin/${nombreFuncion}`);
+        //console.log(data.labels);
+        //console.log(data.data);
+        fetch(`/admin/${nombreFuncion}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -98,6 +105,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 miGraficoTorta.data.labels = data.labels;
                 miGraficoTorta.data.datasets[0].data = data.data;
                 miGraficoTorta.update();
+                console.log(data.labels);
+                console.log(data.data);
             })
             .catch(error => console.error('Error al solicitar los datos', error));
     });

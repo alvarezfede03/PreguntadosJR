@@ -52,10 +52,13 @@ class UsuarioController{
                 }
                 $data['partidas'] = $partidas;
                 $data['jugador'] = true;
+                $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             }else if($data['usuario'][0]['tipo_usuario'] == 'admin'){
                 $data['admin'] = true;
+                $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             }else{
                 $data['editor'] = true;
+                $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             }
 
             $data['logged_in'] = true;
@@ -74,9 +77,11 @@ class UsuarioController{
     }
 
     public function search2(){
-        $user = $_POST['usuario'];
+        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")){
+            $user = $_POST['usuario'];
             $data = $this->model->filter($user);
             $this->presenter->show('perfilUsuario', $data);
+        }
     }
 
     public function logout()
@@ -89,52 +94,56 @@ class UsuarioController{
     }
 
     public function registrar() {
-        $data = [];
-        $this->presenter->show('registrar', $data);
+        if (!isset($_SESSION['user'])){
+            $data = [];
+            $this->presenter->show('registrar', $data);
+        }
     }
 
     public function procesarRegistro() {
-        $uuid = uniqid(time(), true);
-        $username = $_POST['username'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $fullname = $_POST['fullname'];
-        $birthyear = $_POST['birthyear'];
-        $sexo = $_POST['sexo'];
-        $email = $_POST['email'];
-        $country = $_POST['country'];
-        $city = $_POST['city'];
+        if (!isset($_SESSION['user'])) {
+            $uuid = uniqid(time(), true);
+            $username = $_POST['username'];
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $fullname = $_POST['fullname'];
+            $birthyear = $_POST['birthyear'];
+            $sexo = $_POST['sexo'];
+            $email = $_POST['email'];
+            $country = $_POST['country'];
+            $city = $_POST['city'];
 
-        if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-            $resultadoImagen = $this->validarImagen($_FILES['image']);
-            if ($resultadoImagen['valid']) {
-                $urlImagen = "../public/perfiles/" . $username . "." . $resultadoImagen['extension'];
+            if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+                $resultadoImagen = $this->validarImagen($_FILES['image']);
+                if ($resultadoImagen['valid']) {
+                    $urlImagen = "../public/perfiles/" . $username . "." . $resultadoImagen['extension'];
 
-                $rutaImagenCompleta = $_SERVER['DOCUMENT_ROOT'] . "/public/perfiles/" . $username . "." . $resultadoImagen['extension'];
+                    $rutaImagenCompleta = $_SERVER['DOCUMENT_ROOT'] . "/public/perfiles/" . $username . "." . $resultadoImagen['extension'];
 
-                move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagenCompleta);
+                    move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagenCompleta);
+                } else {
+                    $_SESSION['error'] = $resultadoImagen['message'];
+                    header("Location: /registro");
+                    exit();
+                }
             } else {
-                $_SESSION['error'] = $resultadoImagen['message'];
-                header("Location: /registro");
-                exit();
+                $urlImagen = null;
             }
-        } else {
-            $urlImagen = null;
-        }
 
-        $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
-        if ($token) {
-            $emailSender = new EmailSender();
-            $emailExitoso = $emailSender->enviarMail($email, $token);
-            if ($emailExitoso) {
-                $_SESSION['success'] = "Usuario registrado exitosamente. Revisa tu correo para activar tu cuenta.";
-                header("Location: /login");
+            $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
+            if ($token) {
+                $emailSender = new EmailSender();
+                $emailExitoso = $emailSender->enviarMail($email, $token);
+                if ($emailExitoso) {
+                    $_SESSION['success'] = "Usuario registrado exitosamente. Revisa tu correo para activar tu cuenta.";
+                    header("Location: /login");
+                } else {
+                    $_SESSION['error'] = "Error al enviar el correo de activación.";
+                    header("Location: /registro");
+                }
             } else {
-                $_SESSION['error'] = "Error al enviar el correo de activación.";
-                header("Location: /registro");
+                $_SESSION['error'] = "Hubo un problema al registrar el usuario.";
+                header("Location: /registrar");
             }
-        } else {
-            $_SESSION['error'] = "Hubo un problema al registrar el usuario.";
-            header("Location: /registrar");
         }
     }
 
@@ -173,14 +182,16 @@ class UsuarioController{
 
     public function historial()
     {
-        $data = $this->model->filter($_SESSION['user']);
-        $data['userRanking'] = $this->model->getUserRanking($_SESSION['id']);
-        $partidas =$this->model->getHistorialPartidas($_SESSION['id']);
-        foreach ($partidas as $index => $partida) {
-            $partidas[$index]['numero'] = $index + 1;
+        if (isset($_SESSION['user'])) {
+            $data = $this->model->filter($_SESSION['user']);
+            $data['userRanking'] = $this->model->getUserRanking($_SESSION['id']);
+            $partidas = $this->model->getHistorialPartidas($_SESSION['id']);
+            foreach ($partidas as $index => $partida) {
+                $partidas[$index]['numero'] = $index + 1;
+            }
+            $data['partidas'] = $partidas;
+            $this->presenter->show('historial', $data);
         }
-        $data['partidas'] = $partidas;
-        $this->presenter->show('historial', $data);
     }
 
     public function verificarUsername() {

@@ -55,15 +55,19 @@ class AdminModel
         return $this->database->query($sql);
     }
 
-    public function getCantidadUsuariosXSexo(){
+    public function getCantidadUsuariosXSexo($fecha_inicio = null, $fecha_fin = null){
         $sql = "SELECT sexo, COUNT(*) AS total_usuarios
-                FROM usuarios
-                GROUP BY sexo
-                ORDER by total_usuarios DESC;";
+                FROM usuarios";
+
+        if ($fecha_inicio && $fecha_fin) {
+            $sql .= " WHERE fecha_registro BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
+        }
+
+        $sql .= " GROUP BY sexo ORDER BY total_usuarios DESC;";
         return $this->database->query($sql);
     }
 
-    public function getCantidadUsuariosXGrupoEdad(){
+    public function getCantidadUsuariosXGrupoEdad($fecha_inicio = null, $fecha_fin = null){
         $sql = "SELECT 
                 CASE 
                     WHEN YEAR(CURDATE()) - YEAR(anio_nacimiento) < 18 THEN 'Menores'
@@ -71,21 +75,32 @@ class AdminModel
                 ELSE 'Medio'
                 END AS grupo_edad,
                 COUNT(*) AS total_usuarios
-                FROM usuarios
-                GROUP BY grupo_edad
-                ORDER BY grupo_edad;";
+                FROM usuarios";
+
+        if ($fecha_inicio && $fecha_fin) {
+            $sql .= " WHERE fecha_registro BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
+        }
+
+        $sql .= " GROUP BY sexo ORDER BY total_usuarios DESC;";
         return $this->database->query($sql);
     }
 
-    public function getPorcentajePreguntasCorrectas(){
+    public function getPorcentajePreguntasCorrectas($fecha_inicio = null, $fecha_fin = null){
         $sql = "SELECT u.nombre_usuario AS usuario,
                 COUNT(pr.pregunta_id) AS total_correctas,
                 ROUND(COUNT(pr.pregunta_id) * 100.0 / (SELECT COUNT(*) FROM preguntas), 2) AS porcentaje_correctas
                 FROM partidas p
                 JOIN preguntas_respondidas pr ON p.id_partida = pr.partida_id
-                JOIN usuarios u ON p.id_jugador = u.id
-                WHERE u.tipo_usuario = 'jugador'
-                GROUP BY u.nombre_usuario;";
+                JOIN usuarios u ON p.id_jugador = u.id";
+
+        if ($fecha_inicio && $fecha_fin) {
+            $sql .= " WHERE u.tipo_usuario = 'jugador' 
+                  AND p.fecha_creacion BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
+        } else {
+            $sql .= " WHERE u.tipo_usuario = 'jugador'";
+        }
+
+        $sql .= " GROUP BY u.nombre_usuario;";
         return $this->database->query($sql);
     }
 }
