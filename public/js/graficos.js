@@ -110,4 +110,34 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error('Error al solicitar los datos', error));
     });
+
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function (e) {
+            const format = e.target.getAttribute('data-format');
+            downloadChart(format);
+        });
+    });
+    function downloadChart(format) {
+        const element = document.getElementById('contenidoPDF');
+
+        if (format === 'jpg' || format === 'png') {
+            html2canvas(element).then(canvas => {
+                const image = canvas.toDataURL(`image/${format}`);
+                const link = document.createElement('a');
+                link.href = image;
+                link.download = `PreguntadosJR_Report.${format}`;
+                link.click();
+            });
+        } else if (format === 'pdf') {
+            html2pdf(element, {
+                margin: 3,
+                filename: 'PreguntadosJR_Report.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'A4', orientation: 'landscape' }
+            });
+        }
+    }
 });
+
+

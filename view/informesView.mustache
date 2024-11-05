@@ -1,5 +1,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
 <!-- HACER FUNCIONAR BIEN EL RESPONSIVE! -->
 <main class="flex-grow-1 d-flex align-items-center justify-content-around">
     <div class="dashboard-container shadow p-4 bg-light rounded">
@@ -11,7 +12,8 @@
             <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPartidasJugadas'">
                 Ver cantidad de partidas jugadas
             </button>
-            <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPreguntasCreadas'">Ver cantidad de
+            <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadPreguntasCreadas'">
+                Ver cantidad de
                 preguntas creadas
             </button>
             <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadUsuariosNuevos'">
@@ -212,15 +214,30 @@
                     <button class="btn btn-primary w-75" id="filtrar_btn">Filtrar</button>
                 </div>
             </div>
-            <canvas id="miGraficoTorta" width="500" height="500"
-                    data-labels='{{labels}}'
-                    data-data='{{data}}'
-                    data-chart-label='{{chartLabel}}'
-                    data-chart-text='{{chartText}}'
-                    data-mostrar-porcentajes='{{mostrarPorcentaje}}'
-                    data-nombre-funcion='{{nombreFuncion}}'>
-            </canvas>
+            <div id="contenidoPDF">
+                <canvas id="miGraficoTorta" width="500" height="500"
+                        data-labels='{{labels}}'
+                        data-data='{{data}}'
+                        data-chart-label='{{chartLabel}}'
+                        data-chart-text='{{chartText}}'
+                        data-mostrar-porcentajes='{{mostrarPorcentaje}}'
+                        data-nombre-funcion='{{nombreFuncion}}'>
+                </canvas>
+            </div>
+            <div class="dropdown mt-4 text-center">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="downloadButton"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    Descargar Gráfico
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="downloadButton">
+                    <li><a class="dropdown-item" href="#" data-format="jpg">JPG</a></li>
+                    <li><a class="dropdown-item" href="#" data-format="png">PNG</a></li>
+                    <li><a class="dropdown-item" href="#" data-format="pdf">PDF</a></li>
+                </ul>
+            </div>
         </div>
         <script src="../public/js/graficos.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     {{/mostrarPorcentajePreguntasCorrectas}}
 </main>
