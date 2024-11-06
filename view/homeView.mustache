@@ -1,5 +1,4 @@
 <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <!-- Título y foto de perfil centrados con fondo blanco -->
     <div class="text-center mb-4 p-4 bg-white rounded shadow" style="max-width: 600px; width: 100%;">
         {{#usuario}}
             <h2>{{nombre_usuario}}</h2>
@@ -8,16 +7,15 @@
     </div>
 
     {{#jugador}}
-        <!-- Contenedor de dos columnas: botonera a la izquierda y tabla a la derecha -->
     <div class="d-flex w-100 justify-content-center align-items-start">
-        <!-- Columna izquierda: botonera, con fondo blanco y botones alineados verticalmente -->
+
     <div class="button-container d-flex flex-column align-items-center p-4 bg-white rounded shadow me-4" style="max-width: 200px;">
         <button type="button" class="btn btn-danger mb-3 w-100" onclick="window.location.href='/usuario/search'">Ver perfil</button>
         <button type="button" class="btn btn-primary mb-3 w-100" onclick="window.location.href='/partida/nueva'">Empezar nueva partida</button>
         <button type="button" class="btn btn-success mb-3 w-100" onclick="window.location.href='/partida/ranking'">Ver ranking de usuarios</button>
         <button type="button" class="btn btn-info mb-3 w-100" onclick="window.location.href='/crearpreguntas/form'">CrearPregunta</button>
-
     {{/jugador}}
+
     {{#admin}}
         <div class="dashboard-container shadow p-4 bg-light rounded">
             <div class="d-grid gap-1">
@@ -26,9 +24,9 @@
             </div>
         </div>
     {{/admin}}
-</div>
+    </div>
+
     {{#jugador}}
-        <!-- Columna derecha: historial de partidas, con fondo blanco -->
         <div class="history-container p-4 bg-white rounded shadow" style="max-width: 400px;">
             <h3 class="text-center">Historial de partidas</h3>
             <div class="d-flex justify-content-center align-items-center mb-3">
@@ -36,7 +34,6 @@
                 <p class="mb-0">Tu mejor puntaje fue: {{userRanking}}</p>
             </div>
 
-            <!-- Tabla con 5 partidas -->
             <table class="table table-striped">
                 <thead>
                 <tr>

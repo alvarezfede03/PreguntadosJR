@@ -30,6 +30,7 @@ class PartidaModel
         //$randomNumber = rand(1, 60); se anula porque que se rompia al intentaba buscar una pregunta que ya estaba utilizada y devolvia null
         //sql1 se fija si hay preguntas sin responder en la partida -
         //- cuenta la cantidad de preguntas en la tabla preguntas que no tengan coincidencia en la tabla preguntas_respondidas
+
         $sql1 = "SELECT COUNT(*) AS count FROM preguntas AS p
             LEFT JOIN preguntas_respondidas AS pr 
             ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
@@ -87,6 +88,4 @@ class PartidaModel
         $sql = "INSERT INTO reportes (pregunta_id, motivo) VALUES ('$preguntaId', '$motivo')";
         $this->database->execute($sql);
     }
-
-
 }

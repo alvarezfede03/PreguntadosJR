@@ -21,8 +21,6 @@ class PartidaController
         }
     }
 
-
-
     public function traerPregunta()
     {
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
@@ -34,8 +32,6 @@ class PartidaController
             $this->presenter->show('partidaNueva', $data);
         }
     }
-
-
 
     public function validarRespuesta()
     {

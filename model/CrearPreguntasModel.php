@@ -20,10 +20,4 @@ class CrearPreguntasModel
 
         return $stmt->execute();
     }
-
-
-
-
-
-
 }
