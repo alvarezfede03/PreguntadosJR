@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 28-10-2024 a las 14:52:48
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 31-10-2024 a las 00:58:37
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -30,8 +30,28 @@ SET time_zone = "+00:00";
 CREATE TABLE `partidas` (
   `id_partida` int(11) NOT NULL,
   `id_jugador` int(11) NOT NULL,
-  `resultado` varchar(50) DEFAULT NULL
+  `resultado` varchar(50) DEFAULT NULL,
+  `fecha_creacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `partidas`
+--
+
+INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion`) VALUES
+(1, 7, '1', '2024-10-29 21:31:31'),
+(2, 5, '3', '2024-10-29 21:31:31'),
+(3, 6, '8', '2024-10-29 21:31:31'),
+(4, 7, '0', '2024-10-29 21:31:31'),
+(5, 7, '1', '2024-10-29 21:31:31'),
+(6, 7, '1', '2024-10-29 21:31:37'),
+(7, 7, '0', '2024-10-29 21:32:01'),
+(8, 7, '0', '2024-10-29 21:32:10'),
+(9, 7, '4', '2024-10-30 19:41:32'),
+(10, 7, '4', '2024-10-30 20:00:08'),
+(11, 7, '0', '2024-10-30 20:19:02'),
+(12, 7, '3', '2024-10-30 20:30:32'),
+(13, 7, '7', '2024-10-30 20:32:13');
 
 -- --------------------------------------------------------
 
@@ -133,6 +153,65 @@ CREATE TABLE `preguntas_respondidas` (
   `pregunta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `preguntas_respondidas`
+--
+
+INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
+(1, 1, 39),
+(2, 2, 38),
+(3, 2, 54),
+(4, 2, 18),
+(5, 3, 15),
+(6, 3, 1),
+(7, 3, 39),
+(8, 3, 36),
+(9, 3, 51),
+(10, 3, 13),
+(11, 3, 10),
+(12, 3, 60),
+(13, 5, 30),
+(14, 6, 40),
+(15, 9, 2),
+(16, 9, 7),
+(17, 9, 28),
+(18, 9, 23),
+(19, 10, 26),
+(20, 10, 49),
+(21, 10, 54),
+(22, 10, 59),
+(23, 12, 49),
+(24, 12, 41),
+(25, 12, 36),
+(26, 13, 13),
+(27, 13, 55),
+(28, 13, 24),
+(29, 13, 9),
+(30, 13, 56),
+(31, 13, 58),
+(32, 13, 12);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `reportes`
+--
+
+CREATE TABLE `reportes` (
+  `id` int(11) NOT NULL,
+  `pregunta_id` int(11) NOT NULL,
+  `motivo` text NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `estado` enum('pendiente','resuelto') DEFAULT 'pendiente'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `reportes`
+--
+
+INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
+(1, 52, 'En la primer pelicula es Loki', '2024-10-30 23:33:36', 'pendiente');
+
 -- --------------------------------------------------------
 
 --
@@ -163,13 +242,13 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `UUID`, `nombre_usuario`, `contrasenia`, `nombre_completo`, `anio_nacimiento`, `sexo`, `pais`, `ciudad`, `mail`, `foto_perfil`, `tipo_usuario`, `fecha_registro`, `nivel`, `token`, `activo`) VALUES
-(1, '315e849d-8b33-11ef-ba48-e0d55e04b0c6', 'admin1', 'adminpass1', 'Administrador Uno', '1980-05-12', 'M', 'Argentina', 'Buenos Aires', 'admin1@example.com', '../public/perfiles/admin1.svg', 'admin', '2024-10-15', 0, NULL, NULL),
-(2, '315e950f-8b33-11ef-ba48-e0d55e04b0c6', 'admin2', 'adminpass2', 'Administrador Dos', '1985-08-20', 'F', 'España', 'Madrid', 'admin2@example.com', '../public/perfiles/admin2.svg', 'admin', '2024-10-15', 0, NULL, NULL),
-(6, '79fa418b-8b35-11ef-ba48-e0d55e04b0c6', 'editor1', 'editorPass456', 'Editor Uno', '1990-06-30', 'F', 'España', 'Madrid', 'editor1@example.com', '../public/perfiles/editor1.svg', 'editor', '2024-10-15', 0, NULL, NULL),
-(7, '79fa4247-8b35-11ef-ba48-e0d55e04b0c6', 'editor2', 'editorPass789', 'Editor Dos', '1992-11-22', 'M', 'México', 'Ciudad de México', 'editor2@example.com', '../public/perfiles/editor2.svg', 'editor', '2024-10-15', 0, NULL, NULL),
-(8, '79fa4289-8b35-11ef-ba48-e0d55e04b0c6', 'jugador1', 'jugadorPass123', 'Jugador Uno', '1995-08-10', 'M', 'Chile', 'Santiago', 'jugador1@example.com', '../public/perfiles/jugador1.svg', 'jugador', '2024-10-15', 10, NULL, NULL),
-(9, '79fa42c8-8b35-11ef-ba48-e0d55e04b0c6', 'jugador2', 'jugadorPass456', 'Jugador Dos', '1998-12-05', 'F', 'Colombia', 'Bogotá', 'jugador2@example.com', '../public/perfiles/jugador2.svg', 'jugador', '2024-10-15', 20, NULL, NULL),
-(35, '17297414696719c29db62376.75128480', 'test', '$2y$10$s/10ix8GLC6BU4EfntVYjudsiC/ohJhehulG01kzNd9STFlDKJ.ty', 'test1', '2005-05-11', 'M', 'Argentina', 'Remedios de Escalada', 'checchia47@gmail.com', '../public/perfiles/test.svg', 'jugador', '2024-10-24', 0, 'f5cdcc9ddc6cd41db679db0c04ebde85', 1);
+(1, '1730243068672169fcd6b912.37226186', 'admin1', '$2y$10$3PFr39McNRO1UjyN7tNH5.eW8ulcmmOdoFrxXoM9v/qkn.7MlDBhW', 'administrador 1', '1998-02-11', 'M', 'Brasil', 'Río de Janeiro', 'checchia47@gmail.com', '../public/perfiles/admin1.svg', 'admin', '2024-10-29', 0, '9f03a77b4b8a7f96427ada99079f0e21', 1),
+(2, '173024312067216a30277611.66937124', 'admin2', '$2y$10$rMd/e0Sv5zL8hQnNouT/TeZYLF2WppaEMNNr2tv8naF6tS7IxGjGK', 'administrador 2', '1998-11-11', 'F', 'Uruguay', 'La Paz', 'checchia47@gmail.com', '../public/perfiles/admin2.svg', 'admin', '2024-10-29', 0, '9d8bf23e18ba86703d0229529214faf8', 1),
+(3, '173024318367216a6f1ada69.08162378', 'editor1', '$2y$10$W2dr2RhAft9rXVWohdrzse30D3kbNymTb/nW8x6RrEEhQ/X1KjJrW', 'editor 1', '0998-08-18', 'M', 'Argentina', 'Zárate', 'checchia47@gmail.com', '../public/perfiles/editor1.svg', 'editor', '2024-10-29', 0, 'd33f962d306933510570586e542fad66', 1),
+(4, '173024323967216aa7dab492.88264967', 'editor2', '$2y$10$LYQrLEGVRuX3YmcrMk2gw.hp0QlX8ysA8Fi6q/iEapegIMqBSilvS', 'editor 2', '1996-04-14', 'F', 'Argentina', 'Pedanía Punta del Agua', 'checchia47@gmail.com', '../public/perfiles/editor2.svg', 'editor', '2024-10-29', 0, '0651639a87da9ed235fa584977ed6e98', 1),
+(5, '173024329067216ada7677a3.98511133', 'jugador1', '$2y$10$owb8HRYSOPLzs/WItiPf/eQsFCYiOSOPd8aS2V7Yox17KbGhxviEi', 'jugador 1', '1999-02-17', 'M', 'Argentina', 'Castelar', 'checchia47@gmail.com', '../public/perfiles/jugador1.svg', 'jugador', '2024-10-29', 0, '0b17ea8082492a8b1ba782e47e198d53', 1),
+(6, '173024333167216b038ce6e1.97310869', 'jugador2', '$2y$10$lExY2O5z5r6Q3rglGcHZG.vNZuJaONCHkZChW3WcSaCnTwP9X1d4W', 'jugador 2', '1990-12-11', 'F', 'Brasil', 'Orizona', 'checchia47@gmail.com', '../public/perfiles/jugador2.svg', 'jugador', '2024-10-29', 0, '20f21da3c0a7060a7c5f7271a78f6586', 1),
+(7, '173024339267216b409efe16.20480083', 'test', '$2y$10$IAaH1BhabxMFeNIXq.91eOCJ31rB7hEWPW29p0DGEAs.dW8fEfasq', 'test test', '2000-12-12', 'O', 'Chile', 'Buin', 'checchia47@gmail.com', '../public/perfiles/test.svg', 'jugador', '2024-10-29', 0, '18dae336a1d3417f7e690f5f682845e6', 1);
 
 --
 -- Índices para tablas volcadas
@@ -197,6 +276,13 @@ ALTER TABLE `preguntas_respondidas`
   ADD KEY `pregunta_id` (`pregunta_id`);
 
 --
+-- Indices de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `pregunta_id` (`pregunta_id`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -210,7 +296,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -222,13 +308,19 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
+-- AUTO_INCREMENT de la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -246,6 +338,12 @@ ALTER TABLE `partidas`
 ALTER TABLE `preguntas_respondidas`
   ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`),
   ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
+
+--
+-- Filtros para la tabla `reportes`
+--
+ALTER TABLE `reportes`
+  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

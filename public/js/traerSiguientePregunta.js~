@@ -1,0 +1,15 @@
+const progressBar = document.getElementById('progress-bar');
+const hiddenSubmit = document.getElementById('hiddenSubmit');
+
+const totalTime = 2;
+let timeLeft = totalTime;
+
+progressBar.style.width = '100%';
+
+const countdown = setInterval(() => {
+    timeLeft--;
+
+    const progressPercentage = (timeLeft / totalTime) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+
+}, 1000);

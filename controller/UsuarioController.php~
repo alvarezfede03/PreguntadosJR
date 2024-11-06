@@ -193,6 +193,7 @@ class UsuarioController{
             $partidas[$index]['numero'] = $index + 1; // Asigna un número a cada partida
         }
         $data['partidas'] = $partidas;
+
         $this->presenter->show('historial', $data);  // Pasamos los datos del usuario a la vista 'home'
     }
 

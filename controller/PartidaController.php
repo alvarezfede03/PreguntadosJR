@@ -19,14 +19,7 @@ class PartidaController
         $this->traerPregunta();
     }
 
-    public function ranking()
-    {
-        $data['rankings'] = $this->model->getTopRankings();
-        foreach ($data['rankings'] as $index => $row) {
-            $data['rankings'][$index]['ranking'] = $index + 1;
-        }
-        $this->presenter->show('ranking',$data);
-    }
+
 
     public function traerPregunta()
     {
@@ -37,6 +30,8 @@ class PartidaController
         $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
         $this->presenter->show('partidaNueva', $data);
     }
+
+
 
     public function validarRespuesta()
     {
@@ -57,6 +52,15 @@ class PartidaController
 
     }
 
+    public function ranking()
+    {
+        $data['rankings'] = $this->model->getTopRankings();
+        foreach ($data['rankings'] as $index => $row) {
+            $data['rankings'][$index]['ranking'] = $index + 1;
+        }
+        $this->presenter->show('ranking',$data);
+    }
+
     public function getCategoriaColor($categoria)
     {
         $colores = [
@@ -69,4 +73,15 @@ class PartidaController
         ];
         return $colores[$categoria] ?? "white";
     }
+
+    public function reportarPregunta()
+    {
+        $preguntaId = $_POST['pregunta_id'];
+        $motivo = $_POST['motivo'];
+
+        $this->model->guardarReporte($preguntaId, $motivo);
+        header("Location: ../usuario/home");
+    }
+
+
 }

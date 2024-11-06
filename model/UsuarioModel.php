@@ -11,25 +11,33 @@ class UsuarioModel
 
     public function validate($user, $pass)
     {
+        // Consulta SQL para obtener la contraseña hasheada y el estado de la cuenta (activo/inactivo)
         $sql = "SELECT contrasenia, activo FROM usuarios WHERE nombre_usuario = ?";
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param('s', $user);
         $stmt->execute();
         $resultado = $stmt->get_result()->fetch_assoc();
 
+        // Si se encuentra el usuario
         if ($resultado) {
             $hashedPassword = $resultado['contrasenia'];
             $activo = $resultado['activo'];
 
+            // Verificar si la cuenta está activa
             if ($activo == 0) {
                 return 'inactiva';
             }
+
+            // Verificar la contraseña
             if (password_verify($pass, $hashedPassword)) {
-                return true;
+                return true;  // Contraseña válida y cuenta activa
             }
         }
+
         return false;
     }
+
+
 
     public function filter($user)
     {
@@ -42,11 +50,12 @@ class UsuarioModel
 
     public function crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen)
     {
-        $token = bin2hex(random_bytes(16));
-        $activo = 0;
+        $token = bin2hex(random_bytes(16));  // Generar token aleatorio
+        $activo = 0;  // El usuario estará inactivo hasta que verifique su correo
 
         $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contrasenia, nombre_completo, anio_nacimiento, sexo, mail, pais, ciudad, foto_perfil, token, activo) 
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param(
             'sssssssssssi',
@@ -63,11 +72,14 @@ class UsuarioModel
             $token,
             $activo
         );
+
         if (!$stmt->execute()) {
             throw new Exception("Error al ejecutar la consulta: " . $stmt->error);
         }
+
         return $token;
     }
+
 
     public function buscarUsuarioPorToken($token)
     {
@@ -99,23 +111,27 @@ class UsuarioModel
         return $result[0]['resultado'];
     }
 
-    public function existeUsername($username) {
-        $sql = "SELECT id FROM usuarios WHERE nombre_usuario = ?";
-        $stmt = $this->database->prepare($sql);
-        $stmt->bind_param('s', $username);
-        $stmt->execute();
-        $resultado = $stmt->get_result();
-
-        return $resultado->num_rows > 0;
+    public function getHistorial5Partida($usuario)
+    {
+        $sql = "SELECT *
+        FROM partidas
+        WHERE id_jugador = " . $usuario . "
+        ORDER BY fecha_creacion DESC
+        LIMIT 5"
+        ;
+        $result =$this->database->query($sql);
+        return $result;
     }
 
-    public function obtenerRankingUsuarios() {
-        $sql = "SELECT u.nombre_usuario, MAX(p.resultado) AS resultado
-            FROM usuarios u
-            LEFT JOIN partidas p ON u.id = p.id_jugador
-            GROUP BY u.id
-            ORDER BY resultado DESC";
-        $result = $this->database->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+    public function getHistorialPartidas($usuario)
+    {
+        $sql = "SELECT *
+        FROM partidas
+        WHERE id_jugador = " . $usuario . "
+        ORDER BY fecha_creacion DESC"
+        ;
+        $result =$this->database->query($sql);
+        return $result;
     }
+
 }

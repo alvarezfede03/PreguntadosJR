@@ -81,4 +81,12 @@ class PartidaModel
                 ORDER BY CAST(MAX(p.resultado) AS UNSIGNED) DESC;";
         return $this->database->query($sql);
     }
+
+    public function guardarReporte($preguntaId, $motivo)
+    {
+        $sql = "INSERT INTO reportes (pregunta_id, motivo) VALUES ('$preguntaId', '$motivo')";
+        $this->database->execute($sql);
+    }
+
+
 }
