@@ -8,11 +8,15 @@ include_once("controller/UsuarioController.php");
 include_once("model/UsuarioModel.php");
 include_once("controller/PartidaController.php");
 include_once("model/PartidaModel.php");
+include_once("controller/AdminController.php");
+include_once("model/AdminModel.php");
+include_once("controller/CrearPreguntasController.php");
+include_once("model/CrearPreguntasModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
-include_once ('vendor/PHPMailer/src/PHPMailer.php');
-include_once ('vendor/PHPMailer/src/SMTP.php');
-include_once ('vendor/PHPMailer/src/Exception.php');
+include_once('vendor/PHPMailer/src/PHPMailer.php');
+include_once('vendor/PHPMailer/src/SMTP.php');
+include_once('vendor/PHPMailer/src/Exception.php');
 
 class Configuration
 {
@@ -26,6 +30,14 @@ class Configuration
 
     public function getPartidaController(){
         return new PartidaController($this->getPartidaModel(), $this->getPresenter());
+    }
+
+    public function getAdminController(){
+        return new AdminController($this->getAdminModel(), $this->getPresenter());
+    }
+
+    public function getCrearPreguntasController() {
+        return new CrearPreguntasController($this->getCrearPreguntasModel(), $this->getPresenter());
     }
 
     private function getPresenter()
@@ -58,5 +70,15 @@ class Configuration
     private function getPartidaModel()
     {
         return new PartidaModel($this->getDatabase());
+    }
+
+    private function getAdminModel()
+    {
+        return new AdminModel($this->getDatabase());
+    }
+
+    private function getCrearPreguntasModel()
+    {
+        return new CrearPreguntasModel($this->getDatabase());
     }
 }
