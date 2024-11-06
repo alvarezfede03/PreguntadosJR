@@ -14,6 +14,9 @@ class AdminController{
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")){
             $data = [];
             $this->presenter->show('informes',$data);
+        }else{
+            $data['gif']=true;
+            $this->presenter->show('blank',$data);
         }
     }
 
