@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 04-11-2024 a las 18:20:27
+-- Tiempo de generación: 06-11-2024 a las 18:56:04
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -51,7 +51,23 @@ INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion
 (10, 7, '4', '2024-10-30 20:00:08'),
 (11, 7, '0', '2024-10-30 20:19:02'),
 (12, 7, '3', '2024-10-30 20:30:32'),
-(13, 7, '7', '2024-10-30 20:32:13');
+(13, 7, '7', '2024-10-30 20:32:13'),
+(14, 7, '0', '2024-11-04 15:31:21'),
+(15, 7, '0', '2024-11-04 15:32:08'),
+(16, 7, '1', '2024-11-04 15:32:37'),
+(17, 7, '2', '2024-11-04 15:32:48'),
+(18, 7, '0', '2024-11-06 11:17:39'),
+(19, 7, '0', '2024-11-06 11:24:19'),
+(20, 7, '0', '2024-11-06 11:24:26'),
+(21, 7, '0', '2024-11-06 11:24:32'),
+(22, 7, '0', '2024-11-06 11:24:39'),
+(23, 7, '0', '2024-11-06 11:24:47'),
+(24, 7, '0', '2024-11-06 11:24:59'),
+(25, 7, '3', '2024-11-06 11:26:18'),
+(26, 7, '0', '2024-11-06 11:33:45'),
+(27, 7, '0', '2024-11-06 11:33:57'),
+(28, 7, '0', '2024-11-06 11:34:01'),
+(29, 7, '0', '2024-11-06 11:34:07');
 
 -- --------------------------------------------------------
 
@@ -60,6 +76,93 @@ INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion
 --
 
 CREATE TABLE `preguntas` (
+  `id` int(11) NOT NULL,
+  `pregunta` text NOT NULL,
+  `reportada` enum('si','no') DEFAULT 'no',
+  `aprobada` enum('si','no') DEFAULT 'no',
+  `usada` int(10) UNSIGNED DEFAULT 0,
+  `respondida_correctamente` int(10) UNSIGNED DEFAULT 0,
+  `dificultad` tinyint(3) UNSIGNED NOT NULL CHECK (`dificultad` between 0 and 100),
+  `categoria` varchar(50) NOT NULL,
+  `creada` enum('si','no') NOT NULL DEFAULT 'no',
+  `fecha_creacion` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `preguntas`
+--
+
+INSERT INTO `preguntas` (`id`, `pregunta`, `reportada`, `aprobada`, `usada`, `respondida_correctamente`, `dificultad`, `categoria`, `creada`, `fecha_creacion`) VALUES
+(1, '¿Cuál es el río más largo del mundo?', 'no', 'si', 0, 0, 30, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(2, '¿Dónde se encuentra la Torre Eiffel?', 'no', 'si', 0, 0, 20, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(3, '¿Cuál es el país más grande del mundo?', 'no', 'si', 0, 0, 40, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(4, '¿En qué continente está Egipto?', 'no', 'si', 0, 0, 10, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(5, '¿Cuál es la capital de Australia?', 'no', 'si', 0, 0, 35, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(6, '¿Cuál es el país más poblado del mundo?', 'no', 'si', 0, 0, 50, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(7, '¿En qué océano se encuentra la isla de Madagascar?', 'no', 'si', 0, 0, 60, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(8, '¿Cuál es la capital de Canadá?', 'no', 'si', 0, 0, 25, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(9, '¿Dónde está el desierto del Sahara?', 'no', 'si', 0, 0, 45, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(10, '¿Qué país tiene la mayor cantidad de islas?', 'no', 'si', 0, 0, 70, 'Geografía', 'no', '2024-11-02 15:33:14'),
+(11, '¿En qué año comenzó la Segunda Guerra Mundial?', 'no', 'si', 0, 0, 30, 'Historia', 'no', '2024-11-02 15:33:14'),
+(12, '¿Quién fue el primer presidente de los Estados Unidos?', 'no', 'si', 0, 0, 20, 'Historia', 'no', '2024-11-02 15:33:14'),
+(13, '¿Cuál de estos países fue parte de la Unión Soviética?', 'no', 'si', 0, 0, 40, 'Historia', 'no', '2024-11-02 15:33:14'),
+(14, '¿Quién fue Cleopatra?', 'no', 'si', 0, 0, 50, 'Historia', 'no', '2024-11-02 15:33:14'),
+(15, '¿En qué año cayó el Muro de Berlín?', 'no', 'si', 0, 0, 25, 'Historia', 'no', '2024-11-02 15:33:14'),
+(16, '¿Quién fue el primer hombre en pisar la Luna?', 'no', 'si', 0, 0, 30, 'Historia', 'no', '2024-11-02 15:33:14'),
+(17, '¿Cuál fue la civilización que construyó Machu Picchu?', 'no', 'si', 0, 0, 35, 'Historia', 'no', '2024-11-02 15:33:14'),
+(18, '¿En qué año comenzó la Revolución Francesa?', 'no', 'si', 0, 0, 45, 'Historia', 'no', '2024-11-02 15:33:14'),
+(19, '¿Quién fue el líder de la independencia de la India?', 'no', 'si', 0, 0, 40, 'Historia', 'no', '2024-11-02 15:33:14'),
+(20, '¿Dónde se firmó la Declaración de Independencia de los Estados Unidos?', 'no', 'si', 0, 0, 50, 'Historia', 'no', '2024-11-02 15:33:14'),
+(21, '¿En qué deporte se utiliza un balón de voleibol?', 'no', 'si', 0, 0, 10, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(22, '¿Quién ganó el Mundial de Fútbol en 2018?', 'no', 'si', 0, 0, 30, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(23, '¿Cuántos jugadores forman un equipo de baloncesto?', 'no', 'si', 0, 0, 20, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(24, '¿En qué país se originaron los Juegos Olímpicos?', 'no', 'si', 0, 0, 15, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(25, '¿Quién tiene el récord de más títulos de Grand Slam en tenis masculino?', 'no', 'si', 0, 0, 50, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(26, '¿Qué deporte se practica en la NBA?', 'no', 'si', 0, 0, 15, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(27, '¿Qué atleta ganó ocho medallas de oro en los Juegos Olímpicos de Pekín 2008?', 'no', 'si', 0, 0, 70, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(28, '¿Cuál es el equipo de fútbol con más Champions League ganadas?', 'no', 'si', 0, 0, 40, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(29, '¿En qué deporte se utiliza un bate y una pelota?', 'no', 'si', 0, 0, 10, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(30, '¿Quién es conocido como \"La Pulga\" en el fútbol?', 'no', 'si', 0, 0, 25, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(31, '¿Quién pintó la Mona Lisa?', 'no', 'si', 0, 0, 20, 'Arte', 'no', '2024-11-02 15:33:14'),
+(32, '¿En qué ciudad se encuentra el Museo del Louvre?', 'no', 'si', 0, 0, 15, 'Arte', 'no', '2024-11-02 15:33:14'),
+(33, '¿Quién es el autor de \"La persistencia de la memoria\"?', 'no', 'si', 0, 0, 30, 'Arte', 'no', '2024-11-02 15:33:14'),
+(34, '¿Cuál de estos es un cuadro de Vincent van Gogh?', 'no', 'si', 0, 0, 25, 'Arte', 'no', '2024-11-02 15:33:14'),
+(35, '¿Qué artista pintó el techo de la Capilla Sixtina?', 'no', 'si', 0, 0, 30, 'Arte', 'no', '2024-11-02 15:33:14'),
+(36, '¿Quién escribió \"Hamlet\"?', 'no', 'si', 0, 0, 40, 'Arte', 'no', '2024-11-02 15:33:14'),
+(37, '¿En qué siglo vivió Rembrandt?', 'no', 'si', 0, 0, 45, 'Arte', 'no', '2024-11-02 15:33:14'),
+(38, '¿Cuál es la técnica de pintar en paredes húmedas?', 'no', 'si', 0, 0, 50, 'Arte', 'no', '2024-11-02 15:33:14'),
+(39, '¿Qué estilo es característico de Pablo Picasso?', 'no', 'si', 0, 0, 40, 'Arte', 'no', '2024-11-02 15:33:14'),
+(40, '¿Quién compuso \"Las Cuatro Estaciones\"?', 'no', 'si', 0, 0, 25, 'Arte', 'no', '2024-11-02 15:33:14'),
+(41, '¿Cuál es el planeta más grande del sistema solar?', 'no', 'si', 0, 0, 20, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(42, '¿Qué gas es esencial para la respiración humana?', 'no', 'si', 0, 0, 15, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(43, '¿Quién es conocido como el padre de la teoría de la relatividad?', 'no', 'si', 0, 0, 40, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(44, '¿Cuál es el metal más ligero?', 'no', 'si', 0, 0, 50, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(45, '¿Qué tipo de célula carece de núcleo?', 'no', 'si', 0, 0, 45, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(46, '¿Cuál es la sustancia que le da color a las plantas?', 'no', 'si', 0, 0, 25, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(47, '¿Cuántos elementos tiene la tabla periódica?', 'no', 'si', 0, 0, 30, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(48, '¿Quién desarrolló el principio de la flotabilidad?', 'no', 'si', 0, 0, 60, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(49, '¿Qué es H2O?', 'no', 'si', 0, 0, 10, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(50, '¿Cuál es el órgano más grande del cuerpo humano?', 'no', 'si', 0, 0, 35, 'Ciencia', 'no', '2024-11-02 15:33:14'),
+(51, '¿Quién interpretó a Jack en Titanic?', 'no', 'si', 0, 0, 20, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(52, '¿Cuál es el nombre del villano en Los Vengadores?', 'no', 'si', 0, 0, 40, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(53, '¿En qué serie aparece \"Walter White\"?', 'no', 'si', 0, 0, 15, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(54, '¿Cuál es la saga de libros más vendida de J.K. Rowling?', 'no', 'si', 0, 0, 25, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(55, '¿Quién es el superhéroe que es también Bruce Wayne?', 'no', 'si', 0, 0, 20, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(56, '¿Cuál de estos personajes es amigo de Shrek?', 'no', 'si', 0, 0, 15, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(57, '¿Cuál es el nombre del planeta natal de Superman?', 'no', 'si', 0, 0, 35, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(58, '¿Qué personaje es famoso por decir \"Hakuna Matata\"?', 'no', 'si', 0, 0, 20, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(59, '¿Cuál de estos cantantes es conocido como \"El Rey del Pop\"?', 'no', 'si', 0, 0, 50, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(60, '¿En qué película se escucha la frase \"Yo soy tu padre\"?', 'no', 'si', 0, 0, 25, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
+(63, '¿Cuál de estos actores no ha interpretado al personaje de Batman en una película de acción real?', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-02 15:52:34'),
+(65, '¿Cuál de estos actores interpretó al personaje de Tony Stark/Iron Man en las películas del Universo Cinematográfico de Marvel?', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-04 15:41:40');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `preguntas_old`
+--
+
+CREATE TABLE `preguntas_old` (
   `id` int(11) NOT NULL,
   `pregunta` text NOT NULL,
   `opcion_1` varchar(255) NOT NULL,
@@ -78,10 +181,10 @@ CREATE TABLE `preguntas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Volcado de datos para la tabla `preguntas`
+-- Volcado de datos para la tabla `preguntas_old`
 --
 
-INSERT INTO `preguntas` (`id`, `pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `opcion_4`, `opcion_correcta`, `reportada`, `aprobada`, `usada`, `respondida_correctamente`, `dificultad`, `categoria`, `creada`, `fecha_creacion`) VALUES
+INSERT INTO `preguntas_old` (`id`, `pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `opcion_4`, `opcion_correcta`, `reportada`, `aprobada`, `usada`, `respondida_correctamente`, `dificultad`, `categoria`, `creada`, `fecha_creacion`) VALUES
 (1, '¿Cuál es el río más largo del mundo?', 'Amazonas', 'Nilo', 'Yangtsé', 'Misisipi', '2', 'no', 'si', 0, 0, 30, 'Geografía', 'no', '2024-11-02 15:33:14'),
 (2, '¿Dónde se encuentra la Torre Eiffel?', 'Nueva York', 'Londres', 'París', 'Roma', '3', 'no', 'si', 0, 0, 20, 'Geografía', 'no', '2024-11-02 15:33:14'),
 (3, '¿Cuál es el país más grande del mundo?', 'Canadá', 'Rusia', 'China', 'Estados Unidos', '2', 'no', 'si', 0, 0, 40, 'Geografía', 'no', '2024-11-02 15:33:14'),
@@ -142,7 +245,8 @@ INSERT INTO `preguntas` (`id`, `pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `
 (58, '¿Qué personaje es famoso por decir \"Hakuna Matata\"?', 'Simba', 'Timón y Pumba', 'Rafiki', 'Scar', '2', 'no', 'si', 0, 0, 20, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
 (59, '¿Cuál de estos cantantes es conocido como \"El Rey del Pop\"?', 'Elvis Presley', 'Michael Jackson', 'Prince', 'Freddie Mercury', '2', 'no', 'si', 0, 0, 50, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
 (60, '¿En qué película se escucha la frase \"Yo soy tu padre\"?', 'Titanic', 'Matrix', 'Star Wars', 'Jurassic Park', '3', 'no', 'si', 0, 0, 25, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
-(63, '¿Cuál de estos actores no ha interpretado al personaje de Batman en una película de acción real?', 'Christian Bale', 'Robert Pattinson', 'Tom Cruise', 'Ben Affleck', '3', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-02 15:52:34');
+(63, '¿Cuál de estos actores no ha interpretado al personaje de Batman en una película de acción real?', 'Christian Bale', 'Robert Pattinson', 'Tom Cruise', 'Ben Affleck', '3', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-02 15:52:34'),
+(65, '¿Cuál de estos actores interpretó al personaje de Tony Stark/Iron Man en las películas del Universo Cinematográfico de Marvel?', 'Chris Evans', 'Robert Downey Jr.', 'Chris Hemsworth', 'Mark Ruffalo', '2', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-04 15:41:40');
 
 -- --------------------------------------------------------
 
@@ -192,7 +296,13 @@ INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
 (29, 13, 9),
 (30, 13, 56),
 (31, 13, 58),
-(32, 13, 12);
+(32, 13, 12),
+(33, 16, 47),
+(34, 17, 24),
+(35, 17, 57),
+(36, 25, 27),
+(37, 25, 28),
+(38, 25, 21);
 
 -- --------------------------------------------------------
 
@@ -214,6 +324,89 @@ CREATE TABLE `reportes` (
 
 INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
 (1, 52, 'En la primer pelicula es Loki', '2024-10-30 23:33:36', 'pendiente');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas`
+--
+
+CREATE TABLE `respuestas` (
+  `id_pregunta` int(11) DEFAULT NULL,
+  `opcion_1` varchar(255) NOT NULL,
+  `opcion_2` varchar(255) NOT NULL,
+  `opcion_3` varchar(255) NOT NULL,
+  `opcion_4` varchar(255) NOT NULL,
+  `opcion_correcta` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `respuestas`
+--
+
+INSERT INTO `respuestas` (`id_pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `opcion_4`, `opcion_correcta`) VALUES
+(1, 'Amazonas', 'Nilo', 'Yangtsé', 'Misisipi', 'Nilo'),
+(2, 'Nueva York', 'Londres', 'París', 'Roma', 'París'),
+(3, 'Canadá', 'Rusia', 'China', 'Estados Unidos', 'Rusia'),
+(4, 'Asia', 'África', 'Europa', 'América', 'África'),
+(5, 'Sídney', 'Melbourne', 'Canberra', 'Perth', 'Canberra'),
+(6, 'India', 'Estados Unidos', 'Indonesia', 'China', 'China'),
+(7, 'Atlántico', 'Pacífico', 'Índico', 'Ártico', 'Índico'),
+(8, 'Toronto', 'Vancouver', 'Ottawa', 'Montreal', 'Ottawa'),
+(9, 'Asia', 'África', 'América del Sur', 'Australia', 'África'),
+(10, 'Canadá', 'Suecia', 'Filipinas', 'Indonesia', 'Suecia'),
+(11, '1939', '1941', '1945', '1936', '1939'),
+(12, 'Abraham Lincoln', 'Thomas Jefferson', 'George Washington', 'John Adams', 'George Washington'),
+(13, 'Polonia', 'Rusia', 'Finlandia', 'Austria', 'Rusia'),
+(14, 'Reina de Roma', 'Reina de Egipto', 'Emperatriz China', 'Princesa Persa', 'Reina de Egipto'),
+(15, '1985', '1989', '1991', '1995', '1989'),
+(16, 'Neil Armstrong', 'Buzz Aldrin', 'Yuri Gagarin', 'Michael Collins', 'Neil Armstrong'),
+(17, 'Aztecas', 'Mayas', 'Incas', 'Olmecas', 'Incas'),
+(18, '1776', '1789', '1804', '1815', '1789'),
+(19, 'Nelson Mandela', 'Mahatma Gandhi', 'Jawaharlal Nehru', 'Subhas Chandra Bose', 'Mahatma Gandhi'),
+(20, 'Boston', 'Nueva York', 'Filadelfia', 'Washington D.C.', 'Filadelfia'),
+(21, 'Fútbol', 'Baloncesto', 'Voleibol', 'Béisbol', 'Voleibol'),
+(22, 'Brasil', 'Francia', 'Alemania', 'Argentina', 'Francia'),
+(23, '5', '7', '6', '8', '5'),
+(24, 'Italia', 'Grecia', 'Egipto', 'China', 'Grecia'),
+(25, 'Rafael Nadal', 'Roger Federer', 'Novak Djokovic', 'Andy Murray', 'Novak Djokovic'),
+(26, 'Hockey', 'Béisbol', 'Baloncesto', 'Fútbol Americano', 'Baloncesto'),
+(27, 'Usain Bolt', 'Michael Phelps', 'Carl Lewis', 'Mark Spitz', 'Michael Phelps'),
+(28, 'AC Milan', 'FC Barcelona', 'Real Madrid', 'Liverpool', 'Real Madrid'),
+(29, 'Baloncesto', 'Voleibol', 'Béisbol', 'Fútbol', 'Béisbol'),
+(30, 'Cristiano Ronaldo', 'Lionel Messi', 'Neymar', 'Kylian Mbappé', 'Lionel Messi'),
+(31, 'Vincent van Gogh', 'Leonardo da Vinci', 'Pablo Picasso', 'Claude Monet', 'Leonardo da Vinci'),
+(32, 'Madrid', 'Roma', 'París', 'Berlín', 'París'),
+(33, 'Salvador Dalí', 'Pablo Picasso', 'Joan Miró', 'Henri Matisse', 'Salvador Dalí'),
+(34, 'El grito', 'La noche estrellada', 'Guernica', 'Las Meninas', 'La noche estrellada'),
+(35, 'Miguel Ángel', 'Donatello', 'Leonardo da Vinci', 'Rafael', 'Miguel Ángel'),
+(36, 'Edgar Allan Poe', 'William Shakespeare', 'Oscar Wilde', 'Charles Dickens', 'William Shakespeare'),
+(37, 'XV', 'XVI', 'XVII', 'XVIII', 'XVII'),
+(38, 'Óleo', 'Pastel', 'Acuarela', 'Fresco', 'Fresco'),
+(39, 'Impresionismo', 'Surrealismo', 'Cubismo', 'Romanticismo', 'Cubismo'),
+(40, 'Mozart', 'Vivaldi', 'Beethoven', 'Bach', 'Vivaldi'),
+(41, 'Tierra', 'Marte', 'Júpiter', 'Saturno', 'Júpiter'),
+(42, 'Hidrógeno', 'Nitrógeno', 'Oxígeno', 'Dióxido de Carbono', 'Oxígeno'),
+(43, 'Isaac Newton', 'Albert Einstein', 'Galileo Galilei', 'Nikola Tesla', 'Albert Einstein'),
+(44, 'Aluminio', 'Oro', 'Litio', 'Plomo', 'Litio'),
+(45, 'Célula vegetal', 'Célula animal', 'Célula procariota', 'Célula eucariota', 'Célula procariota'),
+(46, 'Clorofila', 'Melanina', 'Hemoglobina', 'Caroteno', 'Clorofila'),
+(47, '108', '118', '98', '128', '118'),
+(48, 'Galileo', 'Arquímedes', 'Pascal', 'Einstein', 'Arquímedes'),
+(49, 'Hidrógeno', 'Agua', 'Oxígeno', 'Helio', 'Agua'),
+(50, 'Corazón', 'Hígado', 'Piel', 'Cerebro', 'Piel'),
+(51, 'Brad Pitt', 'Leonardo DiCaprio', 'Tom Cruise', 'Johnny Depp', 'Leonardo DiCaprio'),
+(52, 'Ultrón', 'Loki', 'Thanos', 'Hela', 'Thanos'),
+(53, 'Breaking Bad', 'The Sopranos', 'Lost', 'Prison Break', 'Breaking Bad'),
+(54, 'El Señor de los Anillos', 'Harry Potter', 'Crepúsculo', 'Las Crónicas de Narnia', 'Harry Potter'),
+(55, 'Superman', 'Iron Man', 'Batman', 'Spider-Man', 'Batman'),
+(56, 'Simba', 'Mickey Mouse', 'Burro', 'El Gato con Botas', 'Burro'),
+(57, 'Tierra', 'Kripton', 'Marte', 'Vulcano', 'Kripton'),
+(58, 'Simba', 'Timón y Pumba', 'Rafiki', 'Scar', 'Timón y Pumba'),
+(59, 'Elvis Presley', 'Michael Jackson', 'Prince', 'Freddie Mercury', 'Michael Jackson'),
+(60, 'Titanic', 'Matrix', 'Star Wars', 'Jurassic Park', 'Star Wars'),
+(63, 'Christian Bale', 'Robert Pattinson', 'Tom Cruise', 'Ben Affleck', 'Tom Cruise'),
+(65, 'Chris Evans', 'Robert Downey Jr.', 'Chris Hemsworth', 'Mark Ruffalo', 'Robert Downey Jr.');
 
 -- --------------------------------------------------------
 
@@ -271,6 +464,12 @@ ALTER TABLE `preguntas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `preguntas_old`
+--
+ALTER TABLE `preguntas_old`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
@@ -286,6 +485,12 @@ ALTER TABLE `reportes`
   ADD KEY `pregunta_id` (`pregunta_id`);
 
 --
+-- Indices de la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD KEY `id_pregunta` (`id_pregunta`);
+
+--
 -- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -299,31 +504,37 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+
+--
+-- AUTO_INCREMENT de la tabla `preguntas_old`
+--
+ALTER TABLE `preguntas_old`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
@@ -340,13 +551,19 @@ ALTER TABLE `partidas`
 --
 ALTER TABLE `preguntas_respondidas`
   ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`),
-  ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
+  ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas_old` (`id`);
 
 --
 -- Filtros para la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
+  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas_old` (`id`);
+
+--
+-- Filtros para la tabla `respuestas`
+--
+ALTER TABLE `respuestas`
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

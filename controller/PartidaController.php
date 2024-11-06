@@ -21,21 +21,31 @@ class PartidaController
         }
     }
 
-
-
     public function traerPregunta()
     {
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $data['respuestaDada'] = false;
             $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida']);
+
+            $opciones = [
+                $data['pregunta'][0]['opcion_1'],
+                $data['pregunta'][0]['opcion_2'],
+                $data['pregunta'][0]['opcion_3'],
+                $data['pregunta'][0]['opcion_4']
+            ];
+            shuffle($opciones);
+
+            $data['pregunta'][0]['opcion_1'] = $opciones[0];
+            $data['pregunta'][0]['opcion_2'] = $opciones[1];
+            $data['pregunta'][0]['opcion_3'] = $opciones[2];
+            $data['pregunta'][0]['opcion_4'] = $opciones[3];
+
             $_SESSION['pregunta'] = $data['pregunta'][0]['id'];
             $_SESSION['prueba'] = $data['pregunta'];
             $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
             $this->presenter->show('partidaNueva', $data);
         }
     }
-
-
 
     public function validarRespuesta()
     {

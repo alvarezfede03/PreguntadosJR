@@ -45,16 +45,20 @@ class PartidaModel
         }
 
         //sql2 selecciona una pregunta al azar con la variable randomNumber y la manda al controller
-        $sql2 = "SELECT p.* FROM preguntas AS p
-        LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
-        WHERE pr.pregunta_id IS NULL ORDER BY RAND() LIMIT 1;
+        $sql2 = "SELECT p.*, r.* FROM preguntas AS p
+                 JOIN respuestas AS r ON p.id = r.id_pregunta
+                 LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = 1
+                 WHERE pr.pregunta_id IS NULL 
+                 ORDER BY RAND() LIMIT 1;
         "; //ahora se usa RAND() porque $randomNumber no funcionaba bien
         return $this->database->query($sql2);
     }
 
     public function verificarPregunta($preguntaId, $repuestaSeleccionada)
     {
-        $sql = "SELECT * FROM preguntas WHERE id = " . $preguntaId;
+        $sql = "SELECT * FROM preguntas AS p
+         JOIN respuestas AS r on p.id = r.id_pregunta
+         WHERE p.id = " . $preguntaId;
         $data = $this->database->query($sql);
         if ($data[0]['opcion_correcta'] == $repuestaSeleccionada) {
             $this->database->execute("UPDATE partidas SET resultado = resultado + 1 WHERE id_partida = " . $_SESSION['partidaActual']['id_partida']);

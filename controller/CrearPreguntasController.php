@@ -30,8 +30,12 @@ class CrearPreguntasController {
             $dificultad = $_POST['dificultad'] ?? 0;
             $categoria = $_POST['categoria'];
 
-            $this->model->crearPregunta($pregunta, $opcion1, $opcion2, $opcion3, $opcion4, $opcionCorrecta, $reportada, $dificultad, $categoria);
-
+            $status = $this->model->crearPregunta($pregunta, $opcion1, $opcion2, $opcion3, $opcion4, $opcionCorrecta, $reportada, $dificultad, $categoria);
+            if($status){
+                $_SESSION['success'] = "Pregunta creada correctamente";
+            }else{
+                $_SESSION['error'] = "Error al crear pregunta";
+            }
             header("Location: /home");
             exit();
         }
