@@ -15,7 +15,7 @@ class CrearPreguntasModel
         $sqlPregunta = "INSERT INTO preguntas (pregunta, reportada, aprobada, dificultad, categoria, creada) 
                         VALUES (?, ?, 'no', ?, ?, 'si')";
         $stmt = $this->database->prepare($sqlPregunta);
-        $stmt->bind_param('sssis', $pregunta, $reportada, $dificultad, $categoria);
+        $stmt->bind_param('ssis', $pregunta, $reportada, $dificultad, $categoria);
         if (!$stmt->execute()) {
             $stmt = null;
             return false;

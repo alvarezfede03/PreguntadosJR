@@ -19,6 +19,12 @@ class PartidaController
             $_SESSION['partidaActual'] = $partida;
             $this->traerPregunta();
         }
+        else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
+        }
     }
 
     public function traerPregunta()
@@ -45,6 +51,12 @@ class PartidaController
             $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
             $this->presenter->show('partidaNueva', $data);
         }
+        else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
+        }
     }
 
     public function validarRespuesta()
@@ -64,6 +76,12 @@ class PartidaController
             }
             $this->presenter->show('partidaNueva', $data);
         }
+        else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
+        }
     }
 
     public function ranking()
@@ -74,6 +92,12 @@ class PartidaController
                 $data['rankings'][$index]['ranking'] = $index + 1;
             }
             $this->presenter->show('ranking', $data);
+        }
+        else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -98,6 +122,12 @@ class PartidaController
 
             $this->model->guardarReporte($preguntaId, $motivo);
             header("Location: ../usuario/home");
+        }
+        else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 }
