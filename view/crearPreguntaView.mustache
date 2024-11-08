@@ -1,7 +1,17 @@
 <div class="container my-5">
     <div class="form-container">
+        {{#error}}
+            <div class="alert alert-danger" role="alert">
+                {{error}}
+            </div>
+        {{/error}}
+        {{#success}}
+            <div class="alert alert-success" role="alert">
+                {{success}}
+            </div>
+        {{/success}}
         <h2 class="text-center mb-4">Crear Pregunta</h2>
-        <form method="post" action="?page=crearPreguntas&action=crear">
+        <form method="post" action="/crearPreguntas/crear" id="formPreguntas">
 
             <div class="mb-3">
                 <label for="pregunta" class="form-label">Pregunta</label>
@@ -49,6 +59,8 @@
                 </select>
             </div>
 
+            <input type="hidden" id="opcionCorrectaTexto" name="opcionCorrectaTexto">
+
             <div class="btn-center">
                 <button type="submit" class="btn btn-primary w-25 mx-2">Crear Pregunta</button>
                 <button type="button" class="btn btn-secondary w-25 mx-2" onclick="window.location.href='/usuario/home'">Volver</button>
@@ -56,3 +68,5 @@
         </form>
     </div>
 </div>
+
+<script src="/public/js/validaciones.js"></script>

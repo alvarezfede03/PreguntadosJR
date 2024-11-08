@@ -16,6 +16,8 @@ class AdminController{
             $this->presenter->show('informes',$data);
         }else{
             $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
             $this->presenter->show('blank',$data);
         }
     }
@@ -25,6 +27,11 @@ class AdminController{
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantJugadores'] = $this->model->getCantidadJugadores();
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -33,6 +40,11 @@ class AdminController{
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantPartidasJugadas'] = $this->model->getCantidadPartidasJugadas();
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -41,6 +53,11 @@ class AdminController{
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantPreguntasCreadas'] = $this->model->getCantidadPreguntasCreadas();
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -49,6 +66,11 @@ class AdminController{
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantUsuariosNuevos'] = $this->model->getCantidadUsuariosNuevos();
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -84,6 +106,11 @@ class AdminController{
             $data['chartText'] = "Distribución de usuarios por pais";  // Titulo del grafico
             $data['nombreFuncion'] = "cantidadUsuariosXPais";
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -118,6 +145,11 @@ class AdminController{
             $data['chartText'] = "Distribución de usuarios por sexo";
             $data['nombreFuncion'] = "cantidadUsuariosXSexo";
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -153,6 +185,11 @@ class AdminController{
             $data['chartText'] = "Distribución de usuarios por grupo de edad";
             $data['nombreFuncion'] = "cantidadUsuariosXGrupoEdad";
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 
@@ -187,6 +224,11 @@ class AdminController{
             $data['nombreFuncion'] = "porcentajeDePreguntasCorrectas";
             $data['mostrarPorcentaje'] = 'true';
             $this->presenter->show('informes', $data);
+        }else{
+            $data['gif']=true;
+            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
+            $data['frases'] = $frases[array_rand($frases)];
+            $this->presenter->show('blank',$data);
         }
     }
 }
