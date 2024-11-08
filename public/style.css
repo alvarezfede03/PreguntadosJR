@@ -1,0 +1,70 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.navbar {
+    padding: 20px 40px 0px 40px;
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    margin: auto;
+}
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+}
+
+.header-gradient {
+    background: linear-gradient(to bottom, black, transparent);
+    padding: 0 0 20px;
+}
+
+/* Gradiente para el footer */
+.footer-gradient {
+    background: linear-gradient(to top, black, transparent);
+}
+
+/* Ajustes para el logo */
+.navbar-brand img {
+    max-height: 50px;
+}
+
+footer {
+    padding: 20px 0;
+    text-align: center;
+    color: white;
+}
+
+body{
+    background: url("5134336.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.dashboard-container {
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+#map {
+    height: 500px;
+}

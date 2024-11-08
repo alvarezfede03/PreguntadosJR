@@ -24,8 +24,6 @@ class MysqlObjectDatabase{
     }
 
     public function getLastInsertId() {
-        return $this->conn->insert_id; // Devuelve el ID de la última inserción
+        return $this->conn->insert_id;
     }
-
-
 }

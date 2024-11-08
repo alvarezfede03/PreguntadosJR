@@ -9,18 +9,18 @@
                 <form action="../partida/validarRespuesta" method="POST">
                     <div class="row mb-4">
                         <div class="col-6">
-                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="1" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_1}}</button>
+                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="{{opcion_1}}" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_1}}</button>
                         </div>
                         <div class="col-6">
-                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="2" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_2}}</button>
+                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="{{opcion_2}}" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_2}}</button>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="3" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_3}}</button>
+                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="{{opcion_3}}" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_3}}</button>
                         </div>
                         <div class="col-6">
-                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="4" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_4}}</button>
+                            <button type="submit" name="opcion" class="btn btn-primary w-100 mb-2" value="{{opcion_4}}" {{#respuestaDada}}disabled{{/respuestaDada}}>{{opcion_4}}</button>
                         </div>
                     </div>
                     <button type="submit" id="hiddenSubmit" name="opcion" value="5" style="display: none;"></button>
@@ -36,13 +36,13 @@
                         ¡Felicidades, acertaste!
                     </div>
                     <div class="alert alert-info" role="alert">
-                        +1 Punto
+                        +1 Punto - Tu puntaje: {{puntaje}}
                     </div>
                     <div class="progress mt-3">
                         <div id="progress-bar2" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <div class="col-6 mb-2">
-                        <button type="button" hidden="hidden" id="pregunta32" class="btn btn-success w-100" onclick="window.location.href='../partida/traerPregunta'">Siguiente pregunta</button>
+                        <button type="button" style="display: none" id="pregunta32" class="btn btn-success w-100" onclick="window.location.href='../partida/traerPregunta(null)'">Siguiente pregunta</button>
                     </div>
                 {{/correcta}}
                 {{^correcta}}
@@ -99,5 +99,3 @@
 
 <script src="../public/js/cuentaRegresiva2.js"></script>
 <script src="../public/js/cuentaRegresiva.js"></script>
-
-

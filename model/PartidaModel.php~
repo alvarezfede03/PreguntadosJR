@@ -65,7 +65,7 @@ class PartidaModel
 
 
         public function getPregunta($id_partida, $idPregunta)
-        {
+    {
         if ($idPregunta != null) {
             $sql = "SELECT p.*, r.* 
             FROM preguntas AS p

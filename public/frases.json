@@ -1,0 +1,60 @@
+{
+  "frases": [
+    {
+      "frase": "¡Houston, tenemos un problema! No tienes acceso a esta sección.",
+      "pelicula": "Apollo 13"
+    },
+    {
+      "frase": "Este acceso está fuera de tu alcance... como un anillo único.",
+      "pelicula": "The Lord of the Rings"
+    },
+    {
+      "frase": "La fuerza no está de tu lado. No tienes permiso para entrar aquí.",
+      "pelicula": "Star Wars"
+    },
+    {
+      "frase": "No puedes pasar… porque aún no sabes lo que estás buscando.",
+      "pelicula": "The Lord of the Rings"
+    },
+    {
+      "frase": "Este acceso es más exclusivo que la fiesta de Gatsby.",
+      "pelicula": "The Great Gatsby"
+    },
+    {
+      "frase": "Lo siento, este acceso está protegido como el sistema de seguridad de Jurassic Park.",
+      "pelicula": "Jurassic Park"
+    },
+    {
+      "frase": "No puedes entrar aquí. Es tan secreto como la fórmula de la Coca-Cola.",
+      "pelicula": "Coca-Cola"
+    },
+    {
+      "frase": "¡Nunca ha sido tan fácil no conseguir lo que quieres! Lo siento, no tienes acceso.",
+      "pelicula": "The Pursuit of Happyness"
+    },
+    {
+      "frase": "No hay acceso. Este sitio es tan seguro como el banco de *El Caballero Oscuro*.",
+      "pelicula": "The Dark Knight"
+    },
+    {
+      "frase": "Lo siento, no puedes acceder. Como diría Jack Sparrow, 'Es un asunto entre nosotros.'",
+      "pelicula": "Pirates of the Caribbean"
+    },
+    {
+      "frase": "Este acceso está tan protegido como el código de *Mission Impossible*.",
+      "pelicula": "Mission Impossible"
+    },
+    {
+      "frase": "Te he bloqueado más rápido que un DeLorean viajando en el tiempo.",
+      "pelicula": "Back to the Future"
+    },
+    {
+      "frase": "No puedes pasar. Como diría Gandalf, 'You shall not pass'",
+      "pelicula": "The Lord of the Rings"
+    },
+    {
+      "frase": "Es tan exclusivo como el *Club de la Pelea*... No hables de esto.",
+      "pelicula": "Fight Club"
+    }
+  ]
+}

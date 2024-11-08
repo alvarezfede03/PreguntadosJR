@@ -8,14 +8,16 @@
         <tr>
             <th>Ranking</th>
             <th>Usuario</th>
-            <th>Puntuacion máxima</th>
+            <th>Puntuación máxima</th>
         </tr>
         </thead>
         <tbody>
         {{#rankings}}
             <tr>
                 <td><p>{{ranking}}</p></td>
-                <td><p>{{nombre_usuario}}</p></td>
+                <td><form method="post" action="/usuario/search2">
+                    <button type="submit" class="btn text-primary" name="usuario" value="{{nombre_usuario}}">{{nombre_usuario}}</button>
+                </form> </td>
                 <td><p>{{resultado}}</p></td>
             </tr>
         {{/rankings}}

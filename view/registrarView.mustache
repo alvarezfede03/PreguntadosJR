@@ -6,7 +6,8 @@
 
         <div class="mb-3">
             <label for="username" class="form-label">Nombre de Usuario</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+            <input type="text" class="form-control" id="username" name="username" required oninput="checkUsername();">
+            <div id="usernameError" class="text-danger mt-2" style="display:none;">Este nombre de usuario ya está en uso.</div>
         </div>
 
         <div class="mb-3">
@@ -45,7 +46,6 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
 
-        <!-- Mapa para seleccionar país y provincia -->
         <div class="mb-3">
             <label class="form-label">Selecciona tu País y Ciudad</label>
             <div id="map"></div>
@@ -68,13 +68,13 @@
             <input type="file" class="form-control" id="image" name="image" required>
         </div>
         <div class="btn-center">
-            <button type="submit" class="btn btn-primary w-25 mx-2">Registrarse</button>
+            <button type="submit" class="btn btn-primary w-25 mx-2  ">Registrarse</button>
             <button type="button" class="btn btn-secondary w-25 mx-2" onclick="window.location.href='/usuario/login'">Volver</button>
         </div>
     </form>
 </div>
 </div>
-<!-- Leaflet.js -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script src="../public/js/mapaRegistro.js"></script>
 <script src="../public/js/validaciones.js"></script>
+<script src="../public/js/validarUsername.js"></script>

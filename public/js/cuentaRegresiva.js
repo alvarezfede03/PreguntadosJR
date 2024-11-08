@@ -4,7 +4,6 @@ const hiddenSubmit = document.getElementById('hiddenSubmit');
 
 const totalTime = 15;
 let timeLeft = totalTime;
-
 progressBar.style.width = '100%';
 
 const countdown = setInterval(() => {
@@ -21,7 +20,6 @@ const countdown = setInterval(() => {
         progressBar.classList.remove('bg-warning');
         progressBar.classList.add('bg-danger');
     }
-
     if (timeLeft <= 0) {
         clearInterval(countdown);
         progressBar.style.width = '0%';
