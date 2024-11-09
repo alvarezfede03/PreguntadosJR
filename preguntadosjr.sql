@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1:3306
--- Tiempo de generación: 08-11-2024 a las 00:46:27
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 09-11-2024 a las 23:45:44
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -71,7 +71,8 @@ INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion
 (30, 7, '0', '2024-11-07 20:45:05'),
 (31, 7, '0', '2024-11-07 20:45:12'),
 (32, 7, '0', '2024-11-07 20:45:17'),
-(33, 7, '1', '2024-11-07 20:45:22');
+(33, 7, '1', '2024-11-07 20:45:22'),
+(34, 7, '0', '2024-11-09 19:44:13');
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,7 @@ INSERT INTO `preguntas` (`id`, `pregunta`, `reportada`, `aprobada`, `usada`, `re
 (23, '¿Cuántos jugadores forman un equipo de baloncesto?', 'no', 'si', 0, 0, 20, 'Deportes', 'no', '2024-11-02 15:33:14'),
 (24, '¿En qué país se originaron los Juegos Olímpicos?', 'no', 'si', 0, 0, 15, 'Deportes', 'no', '2024-11-02 15:33:14'),
 (25, '¿Quién tiene el récord de más títulos de Grand Slam en tenis masculino?', 'no', 'si', 0, 0, 50, 'Deportes', 'no', '2024-11-02 15:33:14'),
-(26, '¿Qué deporte se practica en la NBA?', 'no', 'si', 0, 0, 15, 'Deportes', 'no', '2024-11-02 15:33:14'),
+(26, '¿Qué deporte se practica en la NBA?', 'si', 'si', 0, 0, 15, 'Deportes', 'no', '2024-11-02 15:33:14'),
 (27, '¿Qué atleta ganó ocho medallas de oro en los Juegos Olímpicos de Pekín 2008?', 'no', 'si', 0, 0, 70, 'Deportes', 'no', '2024-11-02 15:33:14'),
 (28, '¿Cuál es el equipo de fútbol con más Champions League ganadas?', 'no', 'si', 0, 0, 40, 'Deportes', 'no', '2024-11-02 15:33:14'),
 (29, '¿En qué deporte se utiliza un bate y una pelota?', 'no', 'si', 0, 0, 10, 'Deportes', 'no', '2024-11-02 15:33:14'),
@@ -237,7 +238,8 @@ CREATE TABLE `reportes` (
 
 INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
 (1, 52, 'En la primer pelicula es Loki', '2024-10-30 23:33:36', 'pendiente'),
-(3, 20, 'test2', '2024-11-07 23:45:39', 'pendiente');
+(3, 20, 'test2', '2024-11-07 23:45:39', 'pendiente'),
+(4, 26, 'se practican todos', '2024-11-09 22:44:38', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -412,7 +414,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
@@ -430,7 +432,7 @@ ALTER TABLE `preguntas_respondidas`
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -452,20 +454,19 @@ ALTER TABLE `partidas`
 -- Filtros para la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`),
-  ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
+  ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`);
 
 --
 -- Filtros para la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
+  ADD CONSTRAINT `reportes_ibfk_1` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE;
 
 --
 -- Filtros para la tabla `respuestas`
 --
 ALTER TABLE `respuestas`
-  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`);
+  ADD CONSTRAINT `respuestas_ibfk_1` FOREIGN KEY (`id_pregunta`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

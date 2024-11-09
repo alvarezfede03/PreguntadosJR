@@ -26,6 +26,20 @@
             </div>
         </div>
     {{/admin}}
+
+    {{#editor}}
+        <div class="dashboard-container shadow p-4 bg-light rounded">
+            <div class="d-grid gap-1">
+                <button type="button" class="btn btn-danger mb-3 w-100" onclick="window.location.href='/usuario/search'">Ver perfil</button>
+                <button type="button" class="btn btn-info" onclick="window.location.href='/editor/verPreguntas'">Todas las Preguntas</button>
+                <button type="button" class="btn btn-info" onclick="window.location.href='/editor/verPreguntasReportadas'">Preguntas Reportdas</button>
+                <button type="button" class="btn btn-info" onclick="window.location.href='/editor/verPreguntasSugeridas'">Preguntas Sugeridas</button>
+            </div>
+        </div>
+    {{/editor}}
+
+
+
 </div>
     {{#jugador}}
         <!-- Columna derecha: historial de partidas, con fondo blanco -->
