@@ -37,10 +37,6 @@ class PartidaController
         }
     }
 
-    public function jugar($data)
-    {
-        $this->presenter->show('partidaNueva',$data);
-    }
 
     public function traerPregunta()
     {

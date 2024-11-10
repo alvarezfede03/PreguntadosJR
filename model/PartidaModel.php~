@@ -65,7 +65,7 @@ class PartidaModel
 
 
         public function getPregunta($id_partida, $idPregunta)
-    {
+        {
         if ($idPregunta != null) {
             $sql = "SELECT p.*, r.* 
             FROM preguntas AS p
@@ -80,6 +80,34 @@ class PartidaModel
             return $pregunta;
         }
 
+
+            $sql7="SELECT *
+                 FROM partidas
+                WHERE id_partida = ".$id_partida. "
+                AND terminada = 'no'
+                 ORDER BY hora_pregunta_recibida DESC
+                LIMIT 1;";
+            $data = $this->database->query($sql7);
+            if ($data[0]['id_ultima_pregunta'] != null) {
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                $horaActual = date("H:i:s");
+                $horaPreguntaTimestamp = strtotime($data[0]['hora_pregunta_recibida']);
+                $horaActualTimestamp = strtotime($horaActual);
+                if ($horaActualTimestamp - $horaPreguntaTimestamp < 80) {
+                    $sql5="SELECT p.*, o.*
+                        FROM partidas AS pa
+                        JOIN preguntas AS p ON pa.id_ultima_pregunta = p.id
+                         JOIN respuestas AS o ON o.id_pregunta = p.id
+                        WHERE pa.id_partida = $id_partida
+                         AND pa.terminada = 'no'
+                        ORDER BY pa.hora_pregunta_recibida ASC
+                         LIMIT 1;
+                            ";
+                    $data2 = $this->database->query($sql5);
+
+                    return $data2;
+                }
+            }
         // SQL para contar preguntas no respondidas en la partida actual
         $sql1 = "SELECT COUNT(*) AS count FROM preguntas AS p
             LEFT JOIN preguntas_respondidas AS pr 
@@ -116,7 +144,6 @@ class PartidaModel
                  WHERE id_partida = $id_partida";
 
             $this->database->execute($sql3);
-
             return $pregunta; // Retorna la pregunta obtenida
         }
 
@@ -138,6 +165,7 @@ class PartidaModel
     public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida)
     {
 
+
         $sql = "SELECT * FROM preguntas AS p
          JOIN respuestas AS r on p.id = r.id_pregunta
          WHERE p.id = " . $preguntaId;
@@ -146,6 +174,7 @@ class PartidaModel
         if ($data[0]['opcion_correcta'] == $repuestaSeleccionada) {
             $this->database->execute("UPDATE partidas SET resultado = resultado + 1 WHERE id_partida = " . $idPartida);
             $this->database->execute("INSERT INTO preguntas_respondidas (partida_id, pregunta_id) VALUES (" . $idPartida . ", $preguntaId)");
+            $this->database->execute("UPDATE partidas SET id_ultima_pregunta = null  WHERE id_partida = " . $idPartida);
             return true;
         } else {
             $this->database->execute("UPDATE partidas
