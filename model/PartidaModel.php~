@@ -152,8 +152,20 @@ class PartidaModel
     }
 
 
+        public function getPreguntaRandom(){
+        $sql2 = "SELECT p.*, r.* FROM preguntas AS p
+                 JOIN respuestas AS r ON p.id = r.id_pregunta
+                 LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = 1
+                 WHERE pr.pregunta_id IS NULL 
+                 ORDER BY RAND() LIMIT 1;
+        "; //ahora se usa RAND() porque $randomNumber no funcionaba bien
+        return $this->database->query($sql2);
+    }
+
     public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida)
     {
+
+
         $sql = "SELECT * FROM preguntas AS p
          JOIN respuestas AS r on p.id = r.id_pregunta
          WHERE p.id = " . $preguntaId;
