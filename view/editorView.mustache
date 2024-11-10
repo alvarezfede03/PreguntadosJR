@@ -1,0 +1,53 @@
+<div class="container">
+    <h1 class="text-center my-4">Lista de Preguntas</h1>
+    <div class="accordion" id="preguntasAccordion">
+        {{#preguntas}}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{id}}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">
+                        <strong>{{pregunta}}</strong> - Categoría: {{categoria}}
+                    </button>
+                </h2>
+                <div id="collapse{{id}}" class="accordion-collapse collapse" aria-labelledby="heading{{id}}">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>Opción 1: {{opcion_1}}</li>
+                            <li>Opción 2: {{opcion_2}}</li>
+                            <li>Opción 3: {{opcion_3}}</li>
+                            <li>Opción 4: {{opcion_4}}</li>
+                            <li>Opción Correcta: {{opcion_correcta}}</li>
+                            {{#motivo}}
+                                <li><strong>Motivo del reporte:</strong> {{motivo}}</li>
+                            {{/motivo}}
+                        </ul>
+
+                        <form action="/editor/editarPregunta" method="POST" style="display: inline;">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn btn-primary me-2">Editar</button>
+                        </form>
+
+                        <form action="/editor/eliminarPregunta" method="POST" style="display: inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta pregunta?');">
+                            <input type="hidden" name="id" value="{{id}}">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+
+                        {{#sugeridas}}
+                            <form action="/editor/darDeAltaPregunta" method="POST" style="display: inline;">
+                                <input type="hidden" name="id" value="{{id}}">
+                                <button type="submit" class="btn btn-success">Dar de alta</button>
+                            </form>
+                        {{/sugeridas}}
+                        {{#reportadas}}
+                            <form action="/editor/darDeAltaPregunta" method="POST" style="display: inline;">
+                                <input type="hidden" name="id" value="{{id}}">
+                                <button type="submit" class="btn btn-success">Dar de alta</button>
+                            </form>
+                        {{/reportadas}}
+                    </div>
+                </div>
+            </div>
+        {{/preguntas}}
+    </div>
+</div>
+
+

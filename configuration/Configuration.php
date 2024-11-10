@@ -12,6 +12,8 @@ include_once("controller/AdminController.php");
 include_once("model/AdminModel.php");
 include_once("controller/CrearPreguntasController.php");
 include_once("model/CrearPreguntasModel.php");
+include_once ("controller/EditorController.php");
+include_once ("model/EditorModel.php");
 
 include_once('vendor/mustache/src/Mustache/Autoloader.php');
 include_once('vendor/PHPMailer/src/PHPMailer.php');
@@ -38,6 +40,10 @@ class Configuration
 
     public function getCrearPreguntasController() {
         return new CrearPreguntasController($this->getCrearPreguntasModel(), $this->getPresenter());
+    }
+
+    public function getEditorController(){
+        return new EditorController($this->getEditorModel(), $this->getPresenter());
     }
 
     private function getPresenter()
@@ -80,5 +86,9 @@ class Configuration
     private function getCrearPreguntasModel()
     {
         return new CrearPreguntasModel($this->getDatabase());
+    }
+
+    private function getEditorModel(){
+        return new EditorModel($this->getDatabase());
     }
 }
