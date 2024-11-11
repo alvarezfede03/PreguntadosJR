@@ -74,20 +74,24 @@ class PartidaController
     public function validarRespuesta()
     {
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
-            $_SESSION['partidaActual']['id_ultima_pregunta']=null;
-            $repuestaSeleccionada = $_POST['opcion'];
-            $pregunta = $_SESSION['pregunta'];
-            $data['correcta'] = $this->model->verificarPregunta($pregunta, $repuestaSeleccionada, $_SESSION['partidaActual']['id_partida']);
-            $data['respuestaDada'] = true;
-            $data['pregunta'] = $_SESSION['prueba'];
-            $data['puntaje'] = $this->model->getPuntaje($_SESSION['partidaActual']['id_partida']);
-            $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
-            unset($_SESSION['prueba']);
-            unset($_SESSION['pregunta']);
-            if (!$data['correcta']) {
-                unset($_SESSION['partidaActual']);
+            try {
+                $_SESSION['partidaActual']['id_ultima_pregunta'] = null;
+                $repuestaSeleccionada = $_POST['opcion'];
+                $pregunta = $_SESSION['pregunta'];
+                $data['correcta'] = $this->model->verificarPregunta($pregunta, $repuestaSeleccionada, $_SESSION['partidaActual']['id_partida']);
+                $data['respuestaDada'] = true;
+                $data['pregunta'] = $_SESSION['prueba'];
+                $data['puntaje'] = $this->model->getPuntaje($_SESSION['partidaActual']['id_partida']);
+                $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
+                unset($_SESSION['prueba']);
+                unset($_SESSION['pregunta']);
+                if (!$data['correcta']) {
+                    unset($_SESSION['partidaActual']);
+                }
+                $this->presenter->show('partidaNueva', $data);
+            }catch(Exception $e){
+                header("location:/usuario/home");
             }
-            $this->presenter->show('partidaNueva', $data);
         }
         else{
             $data['gif']=true;
