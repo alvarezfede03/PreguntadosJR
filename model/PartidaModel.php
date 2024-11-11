@@ -191,8 +191,13 @@ class PartidaModel
 
     public function guardarReporte($preguntaId, $motivo)
     {
-        $sql = "INSERT INTO reportes (pregunta_id, motivo) VALUES ('$preguntaId', '$motivo')";
-        $this->database->execute($sql);
+        // Insertar el reporte en la tabla reportes
+        $sqlReporte = "INSERT INTO reportes (pregunta_id, motivo) VALUES ('$preguntaId', '$motivo')";
+        $this->database->execute($sqlReporte);
+
+        // Actualizar el campo reportada en la tabla preguntas
+        $sqlActualizarPregunta = "UPDATE preguntas SET reportada = 'si' WHERE id = '$preguntaId'";
+        $this->database->execute($sqlActualizarPregunta);
     }
 
 
