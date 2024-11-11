@@ -211,7 +211,13 @@ class UsuarioController
             $this->generarQR($user);
             exit;
         }
-        $user = $_POST['usuario'];
+        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $user = $_POST['usuario'];
+        }else if($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $user = $_GET['usuario'];
+        }
         $data = $this->model->filter($user);
         $this->presenter->show('perfilUsuario', $data);
     }
