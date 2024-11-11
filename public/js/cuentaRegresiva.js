@@ -14,7 +14,6 @@ function updateProgressBar(timeLeft) {
     const progressPercentage = (timeLeft / totalTime) * 100;
     progressBar.style.width = `${progressPercentage}%`;
 
-    // Cambiar el color de la barra según el tiempo restante
     progressBar.classList.remove('bg-success', 'bg-warning', 'bg-danger');
     if (timeLeft <= 5) {
         progressBar.classList.remove('bg-success', 'bg-info');
@@ -53,7 +52,6 @@ function resetCountdown() {
     startCountdown();
 }
 
-// Iniciar la cuenta regresiva al cargar la página
 startCountdown();
 
 const buttons = document.querySelectorAll('form button[type="submit"]');
