@@ -37,13 +37,15 @@ class AdminModel
     }
 
     public function getCantidadUsuariosXPais($fecha_inicio = null, $fecha_fin = null){
+
         /*$sql = "SELECT pais, COUNT(*) AS total_usuarios
                 FROM usuarios
                 GROUP BY pais
                 ORDER BY total_usuarios DESC;";
         return $this->database->query($sql);*/
 
-        // Ver si tambien hay que filtrar por tipo de usuario!!!
+        // Ver si tambien hay que filtrar por tipo de usuario!
+
         $sql = "SELECT pais, COUNT(*) AS total_usuarios
                 FROM usuarios";
 
