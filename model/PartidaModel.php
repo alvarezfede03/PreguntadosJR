@@ -9,9 +9,46 @@ class PartidaModel
         $this->database = $database;
     }
 
+
+    public function finalizadorPartidas($usuario)
+    {
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $horaActual = date("H:i:s");
+        $sql2="SELECT *
+        FROM partidas
+        WHERE id_jugador = ".$usuario. "
+        AND terminada = 'no'
+        ORDER BY hora_pregunta_recibida DESC
+        LIMIT 1;";
+        $data = $this->database->query($sql2);
+        if ($data != null ){
+            $horaPreguntaTimestamp = strtotime($data[0]['hora_pregunta_recibida']);
+            $horaActualTimestamp = strtotime($horaActual);
+             if ($horaActualTimestamp - $horaPreguntaTimestamp > 60) {
+                $sql3 = "UPDATE partidas SET terminada = 'si' WHERE id_partida = " . $data[0]['id_partida'];
+                $this->database->execute($sql3);
+                 }
+        }
+
+    }
     public function getCrearPartida($usuario)
     {
-        $sql = "INSERT INTO partidas (id_jugador, resultado) VALUES ('$usuario', '0')";
+        date_default_timezone_set('America/Argentina/Buenos_Aires');
+        $horaActual = date("H:i:s");
+        $sql2="SELECT *
+        FROM partidas
+        WHERE id_jugador = ".$usuario. "
+        AND terminada = 'no'
+        ORDER BY hora_pregunta_recibida DESC
+        LIMIT 1;";
+
+        $data = $this->database->query($sql2);
+
+        if ($data != null && $data[0]['terminada'] == 'no') {
+            return $data[0];
+        }
+
+        $sql = "INSERT INTO partidas (id_jugador, resultado ) VALUES ('$usuario', '0')";
         if ($this->database->execute($sql) > 0) {
             $idPartida = $this->database->getLastInsertId();
 
@@ -24,47 +61,113 @@ class PartidaModel
         }
     }
 
-    public function getPregunta($id_partida)
-    {
-        //hay que revisar si la funcionalidad es por partida o por sesion!!! por ahora esta por partida
-        //$randomNumber = rand(1, 60); se anula porque que se rompia al intentaba buscar una pregunta que ya estaba utilizada y devolvia null
-        //sql1 se fija si hay preguntas sin responder en la partida -
-        //- cuenta la cantidad de preguntas en la tabla preguntas que no tengan coincidencia en la tabla preguntas_respondidas
+
+
+
+        public function getPregunta($id_partida, $idPregunta)
+        {
+        if ($idPregunta != null) {
+            $sql = "SELECT p.*, r.* 
+            FROM preguntas AS p
+            JOIN respuestas AS r ON p.id = r.id_pregunta
+            LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
+            WHERE pr.pregunta_id IS NULL 
+            AND p.id = $idPregunta
+            ORDER BY RAND() 
+            LIMIT 1;";
+
+            $pregunta = $this->database->query($sql);
+            return $pregunta;
+        }
+
+
+            $sql7="SELECT *
+                 FROM partidas
+                WHERE id_partida = ".$id_partida. "
+                AND terminada = 'no'
+                 ORDER BY hora_pregunta_recibida DESC
+                LIMIT 1;";
+            $data = $this->database->query($sql7);
+            if ($data[0]['id_ultima_pregunta'] != null) {
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                $horaActual = date("H:i:s");
+                $horaPreguntaTimestamp = strtotime($data[0]['hora_pregunta_recibida']);
+                $horaActualTimestamp = strtotime($horaActual);
+                if ($horaActualTimestamp - $horaPreguntaTimestamp < 80) {
+                    $sql5="SELECT p.*, o.*
+                        FROM partidas AS pa
+                        JOIN preguntas AS p ON pa.id_ultima_pregunta = p.id
+                         JOIN respuestas AS o ON o.id_pregunta = p.id
+                        WHERE pa.id_partida = $id_partida
+                         AND pa.terminada = 'no'
+                        ORDER BY pa.hora_pregunta_recibida ASC
+                         LIMIT 1;
+                            ";
+                    $data2 = $this->database->query($sql5);
+
+                    return $data2;
+                }
+            }
+        // SQL para contar preguntas no respondidas en la partida actual
         $sql1 = "SELECT COUNT(*) AS count FROM preguntas AS p
             LEFT JOIN preguntas_respondidas AS pr 
             ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
-            WHERE pr.pregunta_id IS NULL;
-        ";
+            WHERE pr.pregunta_id IS NULL;";
 
         $preguntasDisponibles = $this->database->query($sql1);
 
-        //Si el contador llega a 0 (osea quen o hay preguntas disponibles dado que se usaron todas) borra todas las pregutnas del "historial"
-        //y permite utilizarlas de nuevo
+        // Si no hay preguntas disponibles, borra el historial de preguntas respondidas para la partida
         if ($preguntasDisponibles[0]['count'] == 0) {
             $this->database->execute("DELETE FROM preguntas_respondidas WHERE partida_id = $id_partida");
         }
 
-        //sql2 selecciona una pregunta al azar con la variable randomNumber y la manda al controller
-        $sql2 = "SELECT p.*, r.* FROM preguntas AS p
-                 JOIN respuestas AS r ON p.id = r.id_pregunta
-                 LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = 1
-                 WHERE pr.pregunta_id IS NULL 
-                 ORDER BY RAND() LIMIT 1;
-        "; //ahora se usa RAND() porque $randomNumber no funcionaba bien
-        return $this->database->query($sql2);
+        // SQL para seleccionar una pregunta aleatoria que no haya sido respondida
+        $sql2 = "SELECT p.*, r.* 
+             FROM preguntas AS p
+             JOIN respuestas AS r ON p.id = r.id_pregunta
+             LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
+             WHERE pr.pregunta_id IS NULL 
+             ORDER BY RAND() 
+             LIMIT 1;";
+
+        $pregunta = $this->database->query($sql2); // Usa query en lugar de execute para obtener el resultado
+
+        // Verificar si se obtuvo una pregunta
+        if (!empty($pregunta)) {
+            $pregunta_id = $pregunta[0]['id'];
+            date_default_timezone_set('America/Argentina/Buenos_Aires');
+            $horaActual = date("Y-m-d H:i:s");
+
+            // Actualizar la partida con la hora y el ID de la última pregunta
+            $sql3 = "UPDATE partidas 
+                 SET hora_pregunta_recibida = '$horaActual', id_ultima_pregunta = '$pregunta_id' 
+                 WHERE id_partida = $id_partida";
+
+            $this->database->execute($sql3);
+            return $pregunta; // Retorna la pregunta obtenida
+        }
+
+        // En caso de que no haya preguntas disponibles, retornar null o manejar el caso apropiadamente
+        return null;
     }
 
-    public function verificarPregunta($preguntaId, $repuestaSeleccionada)
+
+    public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida)
     {
         $sql = "SELECT * FROM preguntas AS p
          JOIN respuestas AS r on p.id = r.id_pregunta
          WHERE p.id = " . $preguntaId;
         $data = $this->database->query($sql);
+
         if ($data[0]['opcion_correcta'] == $repuestaSeleccionada) {
-            $this->database->execute("UPDATE partidas SET resultado = resultado + 1 WHERE id_partida = " . $_SESSION['partidaActual']['id_partida']);
-            $this->database->execute("INSERT INTO preguntas_respondidas (partida_id, pregunta_id) VALUES (" . $_SESSION['partidaActual']['id_partida'] . ", $preguntaId)");
+            $this->database->execute("UPDATE partidas SET resultado = resultado + 1 WHERE id_partida = " . $idPartida);
+            $this->database->execute("INSERT INTO preguntas_respondidas (partida_id, pregunta_id) VALUES (" . $idPartida . ", $preguntaId)");
+            $this->database->execute("UPDATE partidas SET id_ultima_pregunta = null  WHERE id_partida = " . $idPartida);
             return true;
         } else {
+            $this->database->execute("UPDATE partidas
+            SET terminada = 'si'
+            WHERE id_partida = ". $idPartida);
             return false;
         }
     }
@@ -97,6 +200,5 @@ class PartidaModel
         $this->database->execute($sqlActualizarPregunta);
     }
 
-// metodo reportar modificado
 
 }

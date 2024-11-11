@@ -19,6 +19,9 @@
                     <button type="submit" class="btn text-primary" name="usuario" value="{{nombre_usuario}}">{{nombre_usuario}}</button>
                 </form> </td>
                 <td><p>{{resultado}}</p></td>
+                <td>
+                    <img src="/usuario/search2?qr=true&usuario={{nombre_usuario}}" alt="QR de perfil de {{nombre_usuario}}" style="width: 100px; height: 100px;">
+                </td>
             </tr>
         {{/rankings}}
         </tbody>

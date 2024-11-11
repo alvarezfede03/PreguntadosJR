@@ -124,7 +124,7 @@ class EditorController
 
             if ($id) {
                 $this->model->aprobarPregunta($id);
-                header("Location: /editor/verPreguntasSugeridas");
+                header("Location: ../usuario/home");
             }
         } else {
             $data['gif'] = true;
@@ -134,5 +134,5 @@ class EditorController
         }
     }
 
-}
 
+}

@@ -30,49 +30,12 @@ SET time_zone = "+00:00";
 CREATE TABLE `partidas` (
   `id_partida` int(11) NOT NULL,
   `id_jugador` int(11) NOT NULL,
+  `id_ultima_pregunta` int(11) DEFAULT NULL,
   `resultado` varchar(50) DEFAULT NULL,
-  `fecha_creacion` datetime DEFAULT current_timestamp()
+  `fecha_creacion` datetime DEFAULT current_timestamp(),
+  `hora_pregunta_recibida` time DEFAULT NULL,
+  `terminada` enum('si','no') DEFAULT 'no'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `partidas`
---
-
-INSERT INTO `partidas` (`id_partida`, `id_jugador`, `resultado`, `fecha_creacion`) VALUES
-(1, 7, '1', '2024-10-29 21:31:31'),
-(2, 5, '3', '2024-10-29 21:31:31'),
-(3, 6, '8', '2024-10-29 21:31:31'),
-(4, 7, '0', '2024-10-29 21:31:31'),
-(5, 7, '1', '2024-10-29 21:31:31'),
-(6, 7, '1', '2024-10-29 21:31:37'),
-(7, 7, '0', '2024-10-29 21:32:01'),
-(8, 7, '0', '2024-10-29 21:32:10'),
-(9, 7, '4', '2024-10-30 19:41:32'),
-(10, 7, '4', '2024-10-30 20:00:08'),
-(11, 7, '0', '2024-10-30 20:19:02'),
-(12, 7, '3', '2024-10-30 20:30:32'),
-(13, 7, '7', '2024-10-30 20:32:13'),
-(14, 7, '0', '2024-11-04 15:31:21'),
-(15, 7, '0', '2024-11-04 15:32:08'),
-(16, 7, '1', '2024-11-04 15:32:37'),
-(17, 7, '2', '2024-11-04 15:32:48'),
-(18, 7, '0', '2024-11-06 11:17:39'),
-(19, 7, '0', '2024-11-06 11:24:19'),
-(20, 7, '0', '2024-11-06 11:24:26'),
-(21, 7, '0', '2024-11-06 11:24:32'),
-(22, 7, '0', '2024-11-06 11:24:39'),
-(23, 7, '0', '2024-11-06 11:24:47'),
-(24, 7, '0', '2024-11-06 11:24:59'),
-(25, 7, '3', '2024-11-06 11:26:18'),
-(26, 7, '0', '2024-11-06 11:33:45'),
-(27, 7, '0', '2024-11-06 11:33:57'),
-(28, 7, '0', '2024-11-06 11:34:01'),
-(29, 7, '0', '2024-11-06 11:34:07'),
-(30, 7, '0', '2024-11-07 20:45:05'),
-(31, 7, '0', '2024-11-07 20:45:12'),
-(32, 7, '0', '2024-11-07 20:45:17'),
-(33, 7, '1', '2024-11-07 20:45:22'),
-(34, 7, '0', '2024-11-09 19:44:13');
 
 -- --------------------------------------------------------
 
@@ -158,8 +121,8 @@ INSERT INTO `preguntas` (`id`, `pregunta`, `reportada`, `aprobada`, `usada`, `re
 (58, '¿Qué personaje es famoso por decir \"Hakuna Matata\"?', 'no', 'si', 0, 0, 20, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
 (59, '¿Cuál de estos cantantes es conocido como \"El Rey del Pop\"?', 'no', 'si', 0, 0, 50, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
 (60, '¿En qué película se escucha la frase \"Yo soy tu padre\"?', 'no', 'si', 0, 0, 25, 'Entretenimiento', 'no', '2024-11-02 15:33:14'),
-(63, '¿Cuál de estos actores no ha interpretado al personaje de Batman en una película de acción real?', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-02 15:52:34'),
-(65, '¿Cuál de estos actores interpretó al personaje de Tony Stark/Iron Man en las películas del Universo Cinematográfico de Marvel?', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-04 15:41:40');
+(61, '¿Cuál de estos actores no ha interpretado al personaje de Batman en una película de acción real?', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-02 15:52:34'),
+(62, '¿Cuál de estos actores interpretó al personaje de Tony Stark/Iron Man en las películas del Universo Cinematográfico de Marvel?', 'no', 'no', 0, 0, 0, 'Entretenimiento', 'si', '2024-11-04 15:41:40');
 
 -- --------------------------------------------------------
 
@@ -172,51 +135,6 @@ CREATE TABLE `preguntas_respondidas` (
   `partida_id` int(11) NOT NULL,
   `pregunta_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `preguntas_respondidas`
---
-
-INSERT INTO `preguntas_respondidas` (`id`, `partida_id`, `pregunta_id`) VALUES
-(1, 1, 39),
-(2, 2, 38),
-(3, 2, 54),
-(4, 2, 18),
-(5, 3, 15),
-(6, 3, 1),
-(7, 3, 39),
-(8, 3, 36),
-(9, 3, 51),
-(10, 3, 13),
-(11, 3, 10),
-(12, 3, 60),
-(13, 5, 30),
-(14, 6, 40),
-(15, 9, 2),
-(16, 9, 7),
-(17, 9, 28),
-(18, 9, 23),
-(19, 10, 26),
-(20, 10, 49),
-(21, 10, 54),
-(22, 10, 59),
-(23, 12, 49),
-(24, 12, 41),
-(25, 12, 36),
-(26, 13, 13),
-(27, 13, 55),
-(28, 13, 24),
-(29, 13, 9),
-(30, 13, 56),
-(31, 13, 58),
-(32, 13, 12),
-(33, 16, 47),
-(34, 17, 24),
-(35, 17, 57),
-(36, 25, 27),
-(37, 25, 28),
-(38, 25, 21),
-(39, 33, 4);
 
 -- --------------------------------------------------------
 
@@ -231,15 +149,6 @@ CREATE TABLE `reportes` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `estado` enum('pendiente','resuelto') DEFAULT 'pendiente'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `reportes`
---
-
-INSERT INTO `reportes` (`id`, `pregunta_id`, `motivo`, `fecha`, `estado`) VALUES
-(1, 52, 'En la primer pelicula es Loki', '2024-10-30 23:33:36', 'pendiente'),
-(3, 20, 'test2', '2024-11-07 23:45:39', 'pendiente'),
-(4, 26, 'se practican todos', '2024-11-09 22:44:38', 'pendiente');
 
 -- --------------------------------------------------------
 
@@ -321,8 +230,8 @@ INSERT INTO `respuestas` (`id_pregunta`, `opcion_1`, `opcion_2`, `opcion_3`, `op
 (58, 'Simba', 'Timón y Pumba', 'Rafiki', 'Scar', 'Timón y Pumba'),
 (59, 'Elvis Presley', 'Michael Jackson', 'Prince', 'Freddie Mercury', 'Michael Jackson'),
 (60, 'Titanic', 'Matrix', 'Star Wars', 'Jurassic Park', 'Star Wars'),
-(63, 'Christian Bale', 'Robert Pattinson', 'Tom Cruise', 'Ben Affleck', 'Tom Cruise'),
-(65, 'Chris Evans', 'Robert Downey Jr.', 'Chris Hemsworth', 'Mark Ruffalo', 'Robert Downey Jr.');
+(61, 'Christian Bale', 'Robert Pattinson', 'Tom Cruise', 'Ben Affleck', 'Tom Cruise'),
+(62, 'Chris Evans', 'Robert Downey Jr.', 'Chris Hemsworth', 'Mark Ruffalo', 'Robert Downey Jr.');
 
 -- --------------------------------------------------------
 
@@ -371,7 +280,8 @@ INSERT INTO `usuarios` (`id`, `UUID`, `nombre_usuario`, `contrasenia`, `nombre_c
 --
 ALTER TABLE `partidas`
   ADD PRIMARY KEY (`id_partida`),
-  ADD KEY `id_jugador` (`id_jugador`);
+  ADD KEY `id_jugador` (`id_jugador`),
+  ADD KEY `fk_id_ultima_pregunta` (`id_ultima_pregunta`);
 
 --
 -- Indices de la tabla `preguntas`
@@ -414,31 +324,31 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `partidas`
 --
 ALTER TABLE `partidas`
-  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_partida` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT de la tabla `reportes`
 --
 ALTER TABLE `reportes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas
@@ -448,13 +358,15 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `partidas`
 --
 ALTER TABLE `partidas`
+  ADD CONSTRAINT `fk_id_ultima_pregunta` FOREIGN KEY (`id_ultima_pregunta`) REFERENCES `preguntas` (`id`),
   ADD CONSTRAINT `partidas_ibfk_1` FOREIGN KEY (`id_jugador`) REFERENCES `usuarios` (`id`);
 
 --
 -- Filtros para la tabla `preguntas_respondidas`
 --
 ALTER TABLE `preguntas_respondidas`
-  ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`);
+  ADD CONSTRAINT `preguntas_respondidas_ibfk_1` FOREIGN KEY (`partida_id`) REFERENCES `partidas` (`id_partida`),
+  ADD CONSTRAINT `preguntas_respondidas_ibfk_2` FOREIGN KEY (`pregunta_id`) REFERENCES `preguntas` (`id`);
 
 --
 -- Filtros para la tabla `reportes`
