@@ -94,7 +94,7 @@ class EditorModel
                r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
         FROM preguntas p
         JOIN respuestas r ON p.id = r.id_pregunta
-        WHERE p.creada = 'si' AND p.aprobada = 'no'";
+        WHERE p.creada = 'si' AND p.aprobada = 'no'"; // Agrega la condición para solo obtener preguntas no aprobadas
 
         return $this->database->query($sql);
     }
@@ -102,13 +102,13 @@ class EditorModel
 
     public function aprobarPregunta($id)
     {
-
+        // Actualizar la pregunta como aprobada y quitar el estado de "reportada"
         $sql = "UPDATE preguntas SET aprobada = 'si', reportada = 'no' WHERE id = ?";
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
 
-
+        // Actualizar el estado de los reportes relacionados a "resuelto"
         $sqlReporte = "UPDATE reportes SET estado = 'resuelto' WHERE pregunta_id = ?";
         $stmtReporte = $this->database->prepare($sqlReporte);
         $stmtReporte->bind_param("i", $id);
