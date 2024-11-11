@@ -97,6 +97,6 @@ class PartidaModel
         $this->database->execute($sqlActualizarPregunta);
     }
 
-
+// metodo reportar modificado
 
 }
