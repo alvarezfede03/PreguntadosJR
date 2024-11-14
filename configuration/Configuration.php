@@ -47,7 +47,7 @@ class Configuration
         return new EditorController($this->getEditorModel(), $this->getPresenter());
     }
 
-    private function getPresenter()
+    public function getPresenter()
     {
         return new MustachePresenter("./view");
     }

@@ -16,18 +16,27 @@
         <div class="container-fluid">
             <div class="d-flex align-items-center flex-grow-1">
                 <div class="d-flex flex-row align-items-center">
-                    <a class="navbar-brand d-flex align-items-center" href="/usuario/home">
-                        <img src="/public/logo/question.png" alt="Logo" height="40">
-                        <span class="ms-3">PreguntadosJR</span>
-                    </a>
-
+                    {{#logged_in}}
+                        <a class="navbar-brand d-flex align-items-center" href="/usuario/home">
+                            <img src="/public/logo/question.png" alt="Logo" height="40">
+                            <span class="ms-3">PreguntadosJR</span>
+                        </a>
+                    {{/logged_in}}
+                    {{^logged_in}}
+                        <div class="navbar-brand d-flex align-items-center">
+                            <img src="/public/logo/question.png" alt="Logo" height="40">
+                            <span class="ms-3">PreguntadosJR</span>
+                        </div>
+                    {{/logged_in}}
                     <div class="dropdown d-lg-none me-1">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                             Menú
                         </button>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a class="dropdown-item" href="/partida/nueva">Juego</a></li>
+                            {{#jugador}}
+                                <li><a class="dropdown-item" href="/partida/nueva">Juego</a></li>
+                            {{/jugador}}
                             <li><a class="dropdown-item" href="#">Instrucciones</a></li>
                             <li><a class="dropdown-item" href="#">Contacto</a></li>
                             {{#logged_in}}
@@ -39,7 +48,9 @@
                 </div>
 
                 <div class="navbar-nav d-none d-lg-flex flex-row ms-4" style="gap: 10px;">
-                    <a class="nav-link" href="/partida/nueva">Juego</a>
+                    {{#jugador}}
+                        <a class="nav-link" href="/partida/nueva">Juego</a>
+                    {{/jugador}}
                     <a class="nav-link" href="#">Instrucciones</a>
                     <a class="nav-link" href="#">Contacto</a>
                     {{#logged_in}}

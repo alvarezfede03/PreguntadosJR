@@ -15,7 +15,7 @@ class MustachePresenter{
     public function show($contentFile , $data = array() ){
         if (isset($_SESSION['user'])) {
             $data['logged_in'] = true;
-            //print_r($_SESSION);
+            print_r($_SESSION);
         } else {
             $data['logged_in'] = false;
         }
@@ -26,6 +26,9 @@ class MustachePresenter{
         if (isset($_SESSION['success'])) {
             $data['success'] = $_SESSION['success'];
             unset($_SESSION['success']);
+        }
+        if (isset($_SESSION['tipo_usuario'])) {
+            $data['tipo_usuario'] = $_SESSION['tipo_usuario'];
         }
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }
