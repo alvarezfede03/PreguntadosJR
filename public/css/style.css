@@ -24,6 +24,21 @@
     max-width: 80%;
     margin: auto;
 }
+.card-container{
+    background-color: white;
+}
+
+.button-container{
+    background-color: white;
+}
+
+.history-container{
+    background-color: white;
+}
+
+.chart-container{
+    background-color: rgba(255, 255, 255, 0.7);
+}
 
 .btn-center {
     display: flex;
@@ -58,6 +73,15 @@ body {
 }
 
 .dashboard-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.game-container {
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -74,6 +98,243 @@ body {
 
 }
 
+.accordion-collapse, .accordion-button{
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
 #map {
     height: 500px;
+}
+/*///////////*/
+/* BOTON RGB */
+/*///////////*/
+
+#nueva_partida {
+    position: relative;
+    width: 160px;
+    height: 50px;
+    line-height: 48px;
+
+
+    text-decoration: none;
+    border-radius: 7px; /* Borde redondeado */
+}
+
+#nueva_partida::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #fb0094, #00f, #0f0, #ff0, #f00, #fb0094, #00f, #0f0, #ff0, #f00);
+    background-size: 400%;
+    opacity: 0;
+    filter: blur(20px);
+    transition: 0.5s;
+    border-radius: 5px; /* Mantén el borde redondeado */
+}
+
+#nueva_partida::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #fb0094, #00f, #0f0, #ff0, #f00, #fb0094, #00f, #0f0, #ff0, #f00);
+    background-size: 400%;
+    opacity: 0;
+    transition: 0.5s;
+    border-radius: 5px; /* Mantén el borde redondeado */
+}
+
+#nueva_partida:hover::before,
+#nueva_partida:hover::after {
+    opacity: 1;
+    animation: animate 20s linear infinite;
+}
+
+@keyframes animate {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 300% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+#nueva_partida span {
+    position: absolute;
+    display: flex; /* Flexbox para centrar */
+    align-items: center; /* Centrado vertical */
+    justify-content: center; /* Centrado horizontal */
+    top: 1px;
+    left: 1px;
+    right: 1px;
+    bottom: 1px;
+    color: white;
+    transition: 0.5s;
+    z-index: 1;
+    border-radius: 5px; /* Borde redondeado del fondo interno */
+}
+
+#nueva_partida span::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+/*///////////*/
+/* DARK MODE */
+/*///////////*/
+.form-check.form-switch {
+    margin: 0;
+    padding: 0;
+}
+
+.form-check-input:checked {
+    background-color: #3c0678; /* Fondo azul cuando está activado */
+    border-color: #3c0678; /* Borde azul cuando está activado */
+}
+
+#sun-icon, #moon-icon {
+    font-size: 1.5rem; /* Tamaño de los íconos */
+    color: #ffc107; /* Color amarillo para el sol */
+    transition: color 0.3s ease; /* Transición suave */
+}
+
+#moon-icon {
+    color: #000000; /* Gris oscuro para la luna */
+}
+
+/* Cambia el color según el modo */
+body.dark-mode #sun-icon {
+    color: #6c757d; /* Sol gris oscuro en modo oscuro */
+}
+
+body.dark-mode #moon-icon {
+    color: #f8f9fa; /* Luna blanca en modo oscuro */
+}
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+    background: url("../backgrounds/5137894.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body.dark-mode .navbar .nav-link,
+body.dark-mode .navbar .dropdown-item {
+    color: #ffffff;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+body.dark-mode .card {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+body.dark-mode .form-check-label {
+    color: #ffffff;
+}
+
+body.dark-mode .login-container {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode input {
+    background-color: #495057;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode select {
+    background-color: #495057;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode textarea {
+    background-color: #495057;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+
+body.dark-mode . {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .dashboard-container {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .card-container {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .button-container {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .history-container {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .form-container {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+.game-container {
+    color: #000000;
+}
+
+body.dark-mode .modal-content {
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .accordion-collapse,body.dark-mode .accordion-button{
+    background-color: #343a40 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .chart-container {
+    background-color: #121212 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+}
+
+body.dark-mode .dropdown-menu{
+    background-color: #121212 ;
+    color: #ffffff; /* Color del texto */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
 }
