@@ -1,6 +1,6 @@
 function initMapPerfil(country, city) {
-    /*fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${city},${country}&timestamp=${Date.now()}`)*/
-    fetch(`https://cors-anywhere.herokuapp.com/https://nominatim.openstreetmap.org/search?format=json&q=${city},${country}`)
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${city},${country}&timestamp=${Date.now()}`)
+    /*fetch(`https://cors-anywhere.herokuapp.com/https://nominatim.openstreetmap.org/search?format=json&q=${city},${country}`)*/
         .then(response => response.json())
         .then(data => {
             if (data.length > 0) {
