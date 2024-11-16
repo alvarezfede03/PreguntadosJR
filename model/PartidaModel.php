@@ -9,6 +9,55 @@ class PartidaModel
         $this->database = $database;
     }
 
+    public function calcularDificultadPreguntas()
+    {
+        $sql = "SELECT id, usada, respondida_correctamente FROM preguntas";
+        $resultado = $this->database->query($sql);
+        foreach ($resultado as $pregunta) {
+                $id = $pregunta['id'];
+                $usada = $pregunta['usada'];
+                $respondida_correctamente = $pregunta['respondida_correctamente'];
+
+                // Evitar división por cero
+                if ($usada == 0) {
+                    continue;
+                }
+
+                // Calcular el porcentaje de respuestas correctas
+                $porcentajeCorrectas = ($respondida_correctamente / $usada) * 100;
+
+                // Determinar la dificultad según el porcentaje
+                if ($porcentajeCorrectas > 70) {
+                    $dificultad = '1'; // Fácil
+                } else {
+                    $dificultad = '3'; // Difícil
+                }
+
+                // Actualizar la dificultad en la base de datos
+                $sqlUpdate = "UPDATE preguntas SET dificultad = $dificultad WHERE id = $id";
+                $this->database->execute($sqlUpdate) ;
+            }
+        }
+
+        public function calcularNivelJugador($idJugador)
+        {
+            $sql = "SELECT id, nivel, total_preguntas_aparecidas, respuestas_correctas FROM usuarios WHERE id =".$idJugador;
+            $resultado = $this->database->query($sql);
+            if ($resultado[0]['total_preguntas_aparecidas'] <= 10) {
+                $this->database->execute("UPDATE usuarios SET nivel = '1' WHERE id = $idJugador");
+                return;
+            }
+            $nivelJugador = ($resultado[0]['respuestas_correctas'] / $resultado[0]['total_preguntas_aparecidas']) * 100;
+            if ($nivelJugador > 70) {
+                $this->database->execute("UPDATE usuarios SET nivel = '3' WHERE id = $idJugador");
+            } else {
+                $this->database->execute("UPDATE usuarios SET nivel = '1' WHERE id = $idJugador");
+            }
+
+        }
+
+
+
 
     public function finalizadorPartidas($usuario)
     {
@@ -79,8 +128,11 @@ class PartidaModel
 
 
 
-        public function getPregunta($id_partida, $idPregunta)
+        public function getPregunta($id_partida, $idPregunta, $idJugador)
         {
+            $sql3 = "SELECT nivel FROM usuarios WHERE id = $idJugador";
+            $nivelJugador = $this->database->query($sql3);
+
         if ($idPregunta != null) {
             $sql = "SELECT p.*, r.* 
             FROM preguntas AS p
@@ -88,9 +140,9 @@ class PartidaModel
             LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
             WHERE pr.pregunta_id IS NULL 
             AND p.id = $idPregunta
+            AND p.nivel > $nivelJugador
             ORDER BY RAND() 
             LIMIT 1;";
-
             $pregunta = $this->database->query($sql);
             return $pregunta;
         }
@@ -100,7 +152,7 @@ class PartidaModel
                  FROM partidas
                 WHERE id_partida = ".$id_partida. "
                 AND terminada = 'no'
-                 ORDER BY hora_pregunta_recibida DESC
+                ORDER BY hora_pregunta_recibida DESC
                 LIMIT 1;";
             $data = $this->database->query($sql7);
             if ($data[0]['id_ultima_pregunta'] != null) {
@@ -115,11 +167,11 @@ class PartidaModel
                          JOIN respuestas AS o ON o.id_pregunta = p.id
                         WHERE pa.id_partida = $id_partida
                          AND pa.terminada = 'no'
+                         AND p.nivel > $nivelJugador
                         ORDER BY pa.hora_pregunta_recibida ASC
                          LIMIT 1;
                             ";
                     $data2 = $this->database->query($sql5);
-
                     return $data2;
                 }
             }
@@ -147,6 +199,8 @@ class PartidaModel
 
         $pregunta = $this->database->query($sql2); // Usa query en lugar de execute para obtener el resultado
 
+
+
         // Verificar si se obtuvo una pregunta
         if (!empty($pregunta)) {
             $pregunta_id = $pregunta[0]['id'];
@@ -167,14 +221,20 @@ class PartidaModel
     }
 
 
-    public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida)
+    public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida, $idJugador)
     {
         $sql = "SELECT * FROM preguntas AS p
          JOIN respuestas AS r on p.id = r.id_pregunta
          WHERE p.id = " . $preguntaId;
         $data = $this->database->query($sql);
+        $slq10= "UPDATE usuarios SET total_preguntas_aparecidas = total_preguntas_aparecidas + 1 WHERE id = $idJugador";
+        $slq11= "UPDATE preguntas SET usada = usada + 1 WHERE id = $preguntaId";
+        $this->database->execute($slq10);
+        $this->database->execute($slq11);
 
         if ($data[0]['opcion_correcta'] == $repuestaSeleccionada) {
+            $this->database->execute("UPDATE usuarios SET respuestas_correctas = respuestas_correctas + 1 WHERE id = ".$idJugador);
+            $this->database->execute("UPDATE preguntas SET respondida_correctamente = respondida_correctamente + 1 WHERE id = ".$preguntaId);
             $this->database->execute("UPDATE partidas SET resultado = resultado + 1 WHERE id_partida = " . $idPartida);
             $this->database->execute("INSERT INTO preguntas_respondidas (partida_id, pregunta_id) VALUES (" . $idPartida . ", $preguntaId)");
             $this->database->execute("UPDATE partidas SET id_ultima_pregunta = null  WHERE id_partida = " . $idPartida);
@@ -190,7 +250,7 @@ class PartidaModel
     public function getPuntaje($idPartida)
     {
         $sql = "SELECT resultado FROM partidas WHERE id_partida = " . $idPartida;
-        $result =$this->database->query($sql);
+        $result = $this->database->query($sql);
         return $result[0]['resultado'];
     }
 
