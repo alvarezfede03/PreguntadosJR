@@ -13,38 +13,23 @@ class EditorController
 
     public function verPreguntas()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $data['preguntas'] = $this->model->getTodasLasPreguntasConRespuestas();
             $this->presenter->show('editor', $data);
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
 
     public function editarPregunta()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $id = $_POST['id'] ?? null;
 
             if ($id) {
                 $data['pregunta'] = $this->model->getPreguntaById($id);
                 $this->presenter->show('editarPregunta', $data);
             }
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
 
 
     public function actualizarPregunta()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $id = $_POST['id'] ?? null;
 
             if ($id) {
@@ -62,77 +47,40 @@ class EditorController
 
                 header("Location: ../usuario/home");
             }
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
 
     public function eliminarPregunta()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $id = $_POST['id'] ?? null;
 
             if ($id) {
                 $this->model->eliminarPregunta($id);
                 header("Location: ../usuario/home");
             }
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
 
     public function verPreguntasReportadas()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $data['preguntas'] = $this->model->getPreguntasReportadas();
             $data['reportadas'] = true;
             $this->presenter->show('editor', $data);
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
-
 
     public function verPreguntasSugeridas()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $data['preguntas'] = $this->model->getPreguntasSugeridas();
             $data['sugeridas'] = true;
             $this->presenter->show('editor', $data);
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
-
 
     public function darDeAltaPregunta()
     {
-        if (isset($_SESSION['user']) && $_SESSION['tipo_usuario'] == "editor") {
             $id = $_POST['id'] ?? null;
 
             if ($id) {
                 $this->model->aprobarPregunta($id);
                 header("Location: ../usuario/home");
             }
-        } else {
-            $data['gif'] = true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank', $data);
-        }
     }
-
 
 }

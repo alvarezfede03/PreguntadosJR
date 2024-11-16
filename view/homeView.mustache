@@ -1,5 +1,5 @@
 <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center">
-    <div class="text-center mb-4 p-4 bg-white rounded shadow" style="max-width: 600px; width: 100%;">
+    <div class="card-container text-center mb-4 p-4 rounded shadow" style="max-width: 600px; width: 100%;">
         {{#usuario}}
             <h2>{{nombre_usuario}}</h2>
             <img src="{{foto_perfil}}" alt="Usuario" width="50" height="50" class="rounded-circle mb-3">
@@ -8,13 +8,13 @@
 
     {{#jugador}}
     <div class="d-flex flex-wrap p-2 w-100 justify-content-center align-items-start">
-    <div class="button-container d-flex flex-column align-items-center p-4 bg-white rounded shadow me-4"
+    <div class="button-container d-flex flex-column align-items-center p-4 rounded shadow me-4"
          style="max-width: 200px;">
         <button type="button" class="btn btn-danger mb-3 w-100" onclick="window.location.href='/usuario/search'">Ver
             perfil
         </button>
-        <button type="button" class="btn btn-primary mb-3 w-100" onclick="window.location.href='/partida/nueva'">Empezar
-            nueva partida
+        <button type="button" class="btn btn-primary mb-3 w-100" id="nueva_partida" onclick="window.location.href='/partida/nueva'">
+            <span>Nueva partida</span>
         </button>
         <button type="button" class="btn btn-success mb-3 w-100" onclick="window.location.href='/partida/ranking'">Ver
             ranking de usuarios
@@ -25,7 +25,7 @@
 
     {{/jugador}}
     {{#admin}}
-        <div class="dashboard-container shadow p-4 bg-light rounded">
+        <div class="dashboard-container shadow p-4 rounded">
             <div class="d-grid gap-1">
                 <button type="button" class="btn btn-danger mb-3 w-100"
                         onclick="window.location.href='/usuario/search'">Ver perfil
@@ -38,7 +38,7 @@
     {{/admin}}
 
     {{#editor}}
-        <div class="dashboard-container shadow p-4 bg-light rounded">
+        <div class="dashboard-container shadow p-4 rounded">
             <div class="d-grid gap-1">
                 <button type="button" class="btn btn-danger mb-3 w-100"
                         onclick="window.location.href='/usuario/search'">Ver perfil
@@ -58,7 +58,7 @@
 
 </div>
     {{#jugador}}
-        <div class="history-container p-4 bg-white rounded shadow mt-4 mt-sm-0" style="max-width: 400px;">
+        <div class="history-container p-4 rounded shadow mt-4 mt-sm-0" style="max-width: 400px;">
             <h3 class="text-center">Historial de partidas</h3>
             <div class="d-flex justify-content-center align-items-center mb-3">
                 <img src="../public/icons/cup.png" alt="Ranking" width="30" height="30" class="me-2">

@@ -10,16 +10,13 @@ class CrearPreguntasController {
     }
 
     public function form() {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $data = [
                 'categorias' => ['Geografia', 'Historia', 'Deportes', 'Arte', 'Ciencia', 'Entretenimiento']
             ];
             $this->presenter->show('crearPregunta', $data);
-        }
     }
 
     public function crear() {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $pregunta = $_POST['pregunta'];
             $opcion1 = $_POST['opcion1'];
             $opcion2 = $_POST['opcion2'];
@@ -38,8 +35,5 @@ class CrearPreguntasController {
             }
             $data = [];
             $this->presenter->show('crearPregunta', $data);
-            //header("Location: /home");
-            //exit();
-        }
     }
 }
