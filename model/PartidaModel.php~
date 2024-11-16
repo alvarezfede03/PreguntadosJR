@@ -29,8 +29,8 @@ class PartidaModel
                 $this->database->execute($sql3);
                  }
         }
-    }
 
+    }
     public function finalizadorPartidasViolento($usuario)
     {
         $sql2="SELECT *
