@@ -1,6 +1,7 @@
 <?php
 
-class UsuarioController{
+class UsuarioController
+{
     private $model;
     private $presenter;
 
@@ -45,10 +46,10 @@ class UsuarioController{
                 $data['partidas'] = $partidas;
                 $data['jugador'] = true;
                 $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
-            }else if($data['usuario'][0]['tipo_usuario'] == 'admin'){
+            } else if ($data['usuario'][0]['tipo_usuario'] == 'admin') {
                 $data['admin'] = true;
                 $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
-            }else{
+            } else {
                 $data['editor'] = true;
                 $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             }
@@ -61,20 +62,22 @@ class UsuarioController{
         }
     }
 
-    public function search(){
+    public function search()
+    {
         if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']);
             $this->presenter->show('perfilUsuario', $data);
         }
     }
 
-    public function search2(){
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")){
+    /*public function search2()
+    {
+        if ((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $user = $_POST['usuario'];
             $data = $this->model->filter($user);
             $this->presenter->show('perfilUsuario', $data);
         }
-    }
+    } */
 
     public function logout()
     {
@@ -85,14 +88,16 @@ class UsuarioController{
         exit();
     }
 
-    public function registrar() {
-        if (!isset($_SESSION['user'])){
+    public function registrar()
+    {
+        if (!isset($_SESSION['user'])) {
             $data = [];
             $this->presenter->show('registrar', $data);
         }
     }
 
-    public function procesarRegistro() {
+    public function procesarRegistro()
+    {
         if (!isset($_SESSION['user'])) {
             $uuid = uniqid(time(), true);
             $username = $_POST['username'];
@@ -139,7 +144,8 @@ class UsuarioController{
         }
     }
 
-    private function validarImagen($file) {
+    private function validarImagen($file)
+    {
         $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
@@ -152,7 +158,8 @@ class UsuarioController{
         return ['valid' => false, 'message' => $errorMessage];
     }
 
-    public function verificarCuenta() {
+    public function verificarCuenta()
+    {
         if (isset($_GET['token'])) {
             $token = $_GET['token'];
             $usuario = $this->model->buscarUsuarioPorToken($token);
@@ -186,7 +193,8 @@ class UsuarioController{
         }
     }
 
-    public function verificarUsername() {
+    public function verificarUsername()
+    {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $existe = $this->model->existeUsername($username);
@@ -195,4 +203,28 @@ class UsuarioController{
             exit();
         }
     }
+
+    public function search2()
+    {
+        if (isset($_GET['qr']) && $_GET['qr'] === 'true' && isset($_GET['usuario'])) {
+            $user = $_GET['usuario'];
+            $this->generarQR($user);
+            exit;
+        }
+        if($_SERVER['REQUEST_METHOD'] === 'POST')
+        {
+            $user = $_POST['usuario'];
+        }else if($_SERVER['REQUEST_METHOD'] === 'GET')
+        {
+            $user = $_GET['usuario'];
+        }
+        $data = $this->model->filter($user);
+        $this->presenter->show('perfilUsuario', $data);
+    }
+
+    private function generarQR($nombre_usuario) {
+        $urlPerfil = 'http://' . $_SERVER['HTTP_HOST'] . '/usuario/search2?usuario=' . urlencode($nombre_usuario);
+        QRcode::png($urlPerfil, false, QR_ECLEVEL_H, 10, 2);
+    }
+
 }

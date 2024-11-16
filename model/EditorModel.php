@@ -68,24 +68,24 @@ class EditorModel
     public function getPreguntasReportadas()
     {
         $sql = "
-        SELECT p.id, p.pregunta, p.categoria, 
-               r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta,
-               rep.motivo
-        FROM preguntas p
-        JOIN respuestas r ON p.id = r.id_pregunta
-        JOIN (
-            SELECT pregunta_id, motivo
-            FROM reportes
-            WHERE id IN (
-                SELECT MAX(id) 
-                FROM reportes 
-                GROUP BY pregunta_id
-            )
-        ) rep ON p.id = rep.pregunta_id
-        WHERE p.reportada = 'si'";
-
+    SELECT p.id, p.pregunta, p.categoria, 
+           r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta,
+           rep.motivo
+    FROM preguntas p
+    JOIN respuestas r ON p.id = r.id_pregunta
+    JOIN (
+        SELECT pregunta_id, motivo
+        FROM reportes
+        WHERE id IN (
+            SELECT MAX(id) 
+            FROM reportes 
+            GROUP BY pregunta_id
+        )
+    ) rep ON p.id = rep.pregunta_id
+    WHERE p.reportada = 'si'";
         return $this->database->query($sql);
     }
+
 
     public function getPreguntasSugeridas()
     {
@@ -94,19 +94,26 @@ class EditorModel
                r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
         FROM preguntas p
         JOIN respuestas r ON p.id = r.id_pregunta
-        WHERE p.creada = 'si'";
+        WHERE p.creada = 'si' AND p.aprobada = 'no'";
 
         return $this->database->query($sql);
     }
 
+
     public function aprobarPregunta($id)
     {
-        $sql = "UPDATE preguntas SET aprobada = 'si', creada = 'no' WHERE id = ?";
+
+        $sql = "UPDATE preguntas SET aprobada = 'si', reportada = 'no' WHERE id = ?";
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
-    }
 
+
+        $sqlReporte = "UPDATE reportes SET estado = 'resuelto' WHERE pregunta_id = ?";
+        $stmtReporte = $this->database->prepare($sqlReporte);
+        $stmtReporte->bind_param("i", $id);
+        $stmtReporte->execute();
+    }
 
 
 }

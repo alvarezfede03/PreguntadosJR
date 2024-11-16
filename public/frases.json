@@ -17,10 +17,6 @@
       "pelicula": "The Lord of the Rings"
     },
     {
-      "frase": "Este acceso es más exclusivo que la fiesta de Gatsby.",
-      "pelicula": "The Great Gatsby"
-    },
-    {
       "frase": "Lo siento, este acceso está protegido como el sistema de seguridad de Jurassic Park.",
       "pelicula": "Jurassic Park"
     },
@@ -45,16 +41,12 @@
       "pelicula": "Mission Impossible"
     },
     {
-      "frase": "Te he bloqueado más rápido que un DeLorean viajando en el tiempo.",
+      "frase": "Necesitas 1.21 Gigawatts para acceder a esta sección.",
       "pelicula": "Back to the Future"
     },
     {
       "frase": "No puedes pasar. Como diría Gandalf, 'You shall not pass'",
       "pelicula": "The Lord of the Rings"
-    },
-    {
-      "frase": "Es tan exclusivo como el *Club de la Pelea*... No hables de esto.",
-      "pelicula": "Fight Club"
     }
   ]
 }

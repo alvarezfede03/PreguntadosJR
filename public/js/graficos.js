@@ -130,11 +130,11 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         } else if (format === 'pdf') {
             html2pdf(element, {
-                margin: 3,
+                margin: [10, 40], // [Vertical, Horizontal]
                 filename: 'PreguntadosJR_Report.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'A4', orientation: 'landscape' }
+                jsPDF: { unit: 'mm', format: 'A4', orientation: 'portrait' } // portrait - landscape
             });
         }
     }

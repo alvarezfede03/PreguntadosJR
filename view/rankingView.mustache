@@ -2,25 +2,59 @@
     <img src="../public/icons/podium.png" alt="Ranking" style="width: 100px; height: auto; margin: auto;">
     <h2 class="mt-2">Ranking de Usuarios</h2>
 </div>
-<div class="table-responsive shadow" style="max-height: 600px; width: 800px; overflow-y: auto; margin: 20px auto 0;">
-    <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
-        <thead class="table-secondary">
-        <tr>
-            <th>Ranking</th>
-            <th>Usuario</th>
-            <th>Puntuación máxima</th>
-        </tr>
-        </thead>
-        <tbody>
-        {{#rankings}}
-            <tr>
-                <td><p>{{ranking}}</p></td>
-                <td><form method="post" action="/usuario/search2">
-                    <button type="submit" class="btn text-primary" name="usuario" value="{{nombre_usuario}}">{{nombre_usuario}}</button>
-                </form> </td>
-                <td><p>{{resultado}}</p></td>
-            </tr>
-        {{/rankings}}
-        </tbody>
-    </table>
+<div class="d-flex justify-content-center align-items-center mt-4">
+    <div class="mx-2" style="max-height: 600px; max-width: 800px; overflow-y: auto; width: 100%;">
+        <div class="table-responsive shadow">
+            <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
+                <thead class="table-secondary">
+                <tr class="align-middle">
+                    <th>Ranking</th>
+                    <th>Usuario</th>
+                    <th>Puntuación máxima</th>
+                    <th>QR</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#rankings}}
+                    <tr>
+                        <td><p>{{ranking}}</p></td>
+                        <td>
+                            <form method="post" action="/usuario/search2">
+                                <button type="submit" class="btn text-primary" name="usuario"
+                                        value="{{nombre_usuario}}">{{nombre_usuario}}</button>
+                            </form>
+                        </td>
+                        <td><p>{{resultado}}</p></td>
+                        <td>
+                            <img src="/usuario/search2?qr=true&usuario={{nombre_usuario}}" alt="QR de perfil
+                            de {{nombre_usuario}}" data-bs-toggle="modal"
+                            data-bs-target="#qrModal{{ranking}}" style="width: 100px; height: 100px;">
+                        </td>
+                    </tr>
+                {{/rankings}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+{{#rankings}}
+    <div class="modal fade" id="qrModal{{ranking}}" tabindex="-1" aria-labelledby="qrModalLabel{{ranking}}"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel{{ranking}}">QR de {{nombre_usuario}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="/usuario/search2?qr=true&usuario={{nombre_usuario}}"
+                    alt="QR de perfil de {{nombre_usuario}}"
+                    style="width: 300px; height: auto;">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{{/rankings}}

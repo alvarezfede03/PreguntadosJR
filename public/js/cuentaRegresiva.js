@@ -3,15 +3,18 @@ const progressBar = document.getElementById('progress-bar');
 const hiddenSubmit = document.getElementById('hiddenSubmit');
 
 const totalTime = 15;
-let timeLeft = totalTime;
-progressBar.style.width = '100%';
+let countdown;
 
-const countdown = setInterval(() => {
-    timeLeft--;
+function getTimeLeft() {
+    const storedTime = localStorage.getItem('timeLeft');
+    return storedTime !== null ? parseInt(storedTime, 10) : totalTime;
+}
 
+function updateProgressBar(timeLeft) {
     const progressPercentage = (timeLeft / totalTime) * 100;
     progressBar.style.width = `${progressPercentage}%`;
 
+    progressBar.classList.remove('bg-success', 'bg-warning', 'bg-danger');
     if (timeLeft <= 5) {
         progressBar.classList.remove('bg-success', 'bg-info');
         progressBar.classList.add('bg-warning');
@@ -20,11 +23,41 @@ const countdown = setInterval(() => {
         progressBar.classList.remove('bg-warning');
         progressBar.classList.add('bg-danger');
     }
-    if (timeLeft <= 0) {
-        clearInterval(countdown);
-        progressBar.style.width = '0%';
-        hiddenSubmit.click();
-    }
-}, 1000);
+}
 
+function startCountdown() {
+    let timeLeft = getTimeLeft();
 
+    updateProgressBar(timeLeft);
+
+    countdown = setInterval(() => {
+        timeLeft--;
+
+        updateProgressBar(timeLeft);
+
+        localStorage.setItem('timeLeft', timeLeft);
+
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+            localStorage.removeItem('timeLeft');
+            progressBar.style.width = '0%';
+            hiddenSubmit.click();
+        }
+    }, 1000);
+}
+
+function resetCountdown() {
+    clearInterval(countdown);
+    localStorage.setItem('timeLeft', totalTime);
+    startCountdown();
+}
+
+startCountdown();
+
+const buttons = document.querySelectorAll('form button[type="submit"]');
+
+buttons.forEach(button => {
+    button.addEventListener('click', (event) => {
+        resetCountdown();
+    });
+});
