@@ -66,20 +66,9 @@ class UsuarioController
 
     public function search()
     {
-        //if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']);
             $this->presenter->show('perfilUsuario', $data);
-        //}
     }
-
-    /*public function search2()
-    {
-        if ((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
-            $user = $_POST['usuario'];
-            $data = $this->model->filter($user);
-            $this->presenter->show('perfilUsuario', $data);
-        }
-    } */
 
     public function logout()
     {
