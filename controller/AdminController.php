@@ -11,73 +11,36 @@ class AdminController{
 
     public function informes()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")){
             $data = [];
             $this->presenter->show('informes',$data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadJugadores()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantJugadores'] = $this->model->getCantidadJugadores();
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadPartidasJugadas()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantPartidasJugadas'] = $this->model->getCantidadPartidasJugadas();
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadPreguntasCreadas()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantPreguntasCreadas'] = $this->model->getCantidadPreguntasCreadas();
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadUsuariosNuevos()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $data['cantUsuariosNuevos'] = $this->model->getCantidadUsuariosNuevos();
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadUsuariosXPais()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
-            // Revisar si esta bien la forma de pasar los datos por json (mustache para mostrar el total y ajax para filtrarlo)
             $fecha_inicio = $_POST['fecha_inicio'] ?? null;
             $fecha_fin = $_POST['fecha_fin'] ?? null;
 
@@ -102,21 +65,13 @@ class AdminController{
             $data['mostrarUsuariosXPais'] = true;
             $data['labels'] = json_encode($labels);
             $data['data'] = json_encode($dataValues);
-            //$data['chartLabel'] = "Cantidad de usuarios"; // "Hover" del grafico ya no se usa mas
-            $data['chartText'] = "Distribución de usuarios por pais";  // Titulo del grafico
+            $data['chartText'] = "Distribución de usuarios por pais";
             $data['nombreFuncion'] = "cantidadUsuariosXPais";
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadUsuariosXSexo()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $fecha_inicio = $_POST['fecha_inicio'] ?? null;
             $fecha_fin = $_POST['fecha_fin'] ?? null;
 
@@ -145,22 +100,14 @@ class AdminController{
             $data['chartText'] = "Distribución de usuarios por sexo";
             $data['nombreFuncion'] = "cantidadUsuariosXSexo";
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function cantidadUsuariosXGrupoEdad()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $fecha_inicio = $_POST['fecha_inicio'] ?? null;
             $fecha_fin = $_POST['fecha_fin'] ?? null;
 
             $data['cantUsuariosXGrupoEdad'] = $this->model->getCantidadUsuariosXGrupoEdad($fecha_inicio, $fecha_fin);
-
 
             $labels = [];
             $dataValues = [];
@@ -185,17 +132,10 @@ class AdminController{
             $data['chartText'] = "Distribución de usuarios por grupo de edad";
             $data['nombreFuncion'] = "cantidadUsuariosXGrupoEdad";
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function porcentajeDePreguntasCorrectas()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "admin")) {
             $fecha_inicio = $_POST['fecha_inicio'] ?? null;
             $fecha_fin = $_POST['fecha_fin'] ?? null;
             $data['porcentajePreguntasCorrectas'] = $this->model->getPorcentajePreguntasCorrectas($fecha_inicio, $fecha_fin);
@@ -224,11 +164,5 @@ class AdminController{
             $data['nombreFuncion'] = "porcentajeDePreguntasCorrectas";
             $data['mostrarPorcentaje'] = 'true';
             $this->presenter->show('informes', $data);
-        }else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 }
