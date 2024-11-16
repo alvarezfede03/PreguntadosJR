@@ -92,8 +92,6 @@ class PartidaController
                 }
                 $this->presenter->show('partidaNueva', $data);
             }catch(Exception $e){
-                $this->model->finalizadorPartidasViolento($_SESSION['id']);
-                unset($_SESSION['partidaActual']);
                 header("location:/usuario/home");
             }
         }
