@@ -13,24 +13,26 @@
             <img src="../public/icons/cup.png" alt="Ranking" width="30" height="30" class="me-2">
             <p class="mb-0">Tu mejor puntaje fue: <strong>{{userRanking}}</strong></p>
         </div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th scope="col">Partida</th>
-                <th scope="col">Puntaje</th>
-                <th scope="col">Fecha de partida</th>
-            </tr>
-            </thead>
-            <tbody>
-            {{#partidas}}
+        <div style="max-height: 400px; overflow-y: auto;">
+            <table class="table table-striped">
+                <thead>
                 <tr>
-                    <td>{{numero}}</td>
-                    <td>{{resultado}}</td>
-                    <td>{{fecha_creacion}}</td>
+                    <th scope="col">Partida</th>
+                    <th scope="col">Puntaje</th>
+                    <th scope="col">Fecha de partida</th>
                 </tr>
-            {{/partidas}}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {{#partidas}}
+                    <tr>
+                        <td>{{numero}}</td>
+                        <td>{{resultado}}</td>
+                        <td>{{fecha_creacion}}</td>
+                    </tr>
+                {{/partidas}}
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 
