@@ -3,7 +3,7 @@
 
 <!-- HACER FUNCIONAR BIEN EL RESPONSIVE! -->
 <main class="flex-grow-1 d-flex flex-wrap align-items-center justify-content-around">
-    <div class="dashboard-container shadow p-4 bg-light rounded">
+    <div class="dashboard-container shadow p-4 rounded">
         <h2 class="text-center mb-4">Seleccione una opción</h2>
         <div class="d-grid gap-3">
             <button type="button" class="btn btn-info" onclick="window.location.href='/admin/cantidadJugadores'">Ver
@@ -36,29 +36,29 @@
         </div>
     </div>
     {{#cantJugadores}}
-        <div class="dashboard-container shadow p-4 bg-light rounded">
+        <div class="dashboard-container shadow p-4 rounded">
             <h2 class="text-center mb-4">Cantidad de jugadores: {{cantJugadores}}</h2>
         </div>
     {{/cantJugadores}}
     {{#cantPartidasJugadas}}
-        <div class="dashboard-container shadow p-4 bg-light rounded">
+        <div class="dashboard-container shadow p-4 rounded">
             <h2 class="text-center mb-4">Cantidad de partidas jugadas en total: {{cantPartidasJugadas}}</h2>
         </div>
     {{/cantPartidasJugadas}}
     {{#cantPreguntasCreadas}}
-        <div class="dashboard-container shadow p-4 bg-light rounded">
+        <div class="dashboard-container shadow p-4 rounded">
             <h2 class="text-center mb-4">Cantidad de preguntas creadas en total: {{cantPreguntasCreadas}}</h2>
         </div>
     {{/cantPreguntasCreadas}}
     {{#cantUsuariosNuevos}}
-        <div class="dashboard-container shadow p-4 bg-light rounded">
+        <div class="dashboard-container shadow p-4 rounded">
             <h2 class="text-center mb-4">Cantidad de usuarios nuevos en el ultimo mes: {{cantUsuariosNuevos}}</h2>
         </div>
     {{/cantUsuariosNuevos}}
     {{#mostrarUsuariosXPais}}
         <div class="table-responsive shadow mt-4 mt-sm-0" style="max-width: 90%; max-height: 400px; overflow-y: auto;">
             <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
-                <thead class="table-secondary align-middle">
+                <thead class="align-middle">
                 <tr>
                     <th>Pais</th>
                     <th>Total de Usuarios</th>
@@ -75,7 +75,7 @@
             </table>
         </div>
 
-        <div class="chart-container shadow p-4 bg-light rounded mt-4 mt-sm-0" style="max-width: 90%;">
+        <div class="chart-container shadow p-4 rounded mt-4 mt-sm-0" style="max-width: 90%;">
             <div class="row mb-3 text-center">
                 <div class="col-12 col-md-4">
                     <label>Desde</label>
@@ -115,7 +115,7 @@
     {{#mostrarUsuariosXSexo}}
         <div class="table-responsive shadow mt-4 mt-sm-0" style="max-width: 90%; max-height: 400px; overflow-y: auto;">
             <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
-                <thead class="table-secondary align-middle">
+                <thead class="align-middle">
                 <tr>
                     <th>Pais</th>
                     <th>Total de Usuarios</th>
@@ -132,7 +132,7 @@
             </table>
         </div>
 
-        <div class="chart-container shadow p-4 bg-light rounded mt-4 mt-sm-0" style="max-width: 90%;">
+        <div class="chart-container shadow p-4 rounded mt-4 mt-sm-0" style="max-width: 90%;">
             <div class="row mb-3 text-center">
                 <div class="col-12 col-md-4">
                     <label>Desde</label>
@@ -172,7 +172,7 @@
     {{#mostrarUsuariosXGrupoEdad}}
         <div class="table-responsive shadow mt-4 mt-sm-0" style="max-width: 90%; max-height: 400px; overflow-y: auto;">
             <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
-                <thead class="table-secondary align-middle">
+                <thead class="align-middle">
                 <tr>
                     <th>Grupo de edad</th>
                     <th>Total de Usuarios</th>
@@ -189,7 +189,7 @@
             </table>
         </div>
 
-        <div class="chart-container shadow p-4 bg-light rounded mt-4 mt-sm-0" style="max-width: 90%;">
+        <div class="chart-container shadow p-4 rounded mt-4 mt-sm-0" style="max-width: 90%;">
             <div class="row mb-3 text-center">
                 <div class="col-12 col-md-4">
                     <label>Desde</label>
@@ -229,7 +229,7 @@
     {{#mostrarPorcentajePreguntasCorrectas}}
         <div class="table-responsive shadow mt-4 mt-sm-0" style="max-width: 90%; max-height: 400px; overflow-y: auto;">
             <table class="table table-striped table-hover text-center align-middle overflow-hidden table-bordered">
-                <thead class="table-secondary align-middle">
+                <thead class="align-middle">
                 <tr>
                     <th>Usuario</th>
                     <th>Total respuestas correctas</th>
@@ -247,7 +247,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="chart-container shadow p-4 bg-light rounded mt-4 mt-sm-0" style="max-width: 90%;">
+        <div class="chart-container shadow p-4 rounded mt-4 mt-sm-0" style="max-width: 90%;">
             <div class="row mb-3 text-center">
                 <div class="col-12 col-md-4">
                     <label>Desde</label>

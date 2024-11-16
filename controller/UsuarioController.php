@@ -20,13 +20,15 @@ class UsuarioController
 
         if ($validation === true) {
             $_SESSION['user'] = $user;
-            header('location: /home');
+            $data = $this->model->filter($_SESSION['user']);
+            $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
+            header('location: /usuario/home');
         } elseif ($validation === 'inactive') {
             $_SESSION['error'] = "Cuenta inactiva. Por favor, verifica tu correo para activarla.";
-            header('location: /login');
+            header('location: /usuario/login');
         } else {
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
-            header('location: /login');
+            header('location: /usuario/login');
         }
         exit();
     }
@@ -36,7 +38,7 @@ class UsuarioController
         $data = [];
         if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']);
-            if ($data['usuario'][0]['tipo_usuario'] == 'jugador') {
+            if ($_SESSION['tipo_usuario'] == 'jugador') {
                 $_SESSION['id'] = $data['usuario'][0]['id'];
                 $data['userRanking'] = $this->model->getUserRanking($data['usuario'][0]['id']);
                 $partidas = $this->model->getHistorial5Partida($data['usuario'][0]['id']);
@@ -45,13 +47,13 @@ class UsuarioController
                 }
                 $data['partidas'] = $partidas;
                 $data['jugador'] = true;
-                $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
-            } else if ($data['usuario'][0]['tipo_usuario'] == 'admin') {
+                //$_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
+            } else if ($_SESSION['tipo_usuario'] == 'admin') {
                 $data['admin'] = true;
-                $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
+                //$_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             } else {
                 $data['editor'] = true;
-                $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
+                //$_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             }
 
             $data['logged_in'] = true;
@@ -64,10 +66,10 @@ class UsuarioController
 
     public function search()
     {
-        if (isset($_SESSION['user'])) {
+        //if (isset($_SESSION['user'])) {
             $data = $this->model->filter($_SESSION['user']);
             $this->presenter->show('perfilUsuario', $data);
-        }
+        //}
     }
 
     /*public function search2()
@@ -84,7 +86,7 @@ class UsuarioController
         session_start();
         session_unset();
         session_destroy();
-        header('Location: /login');
+        header('Location: /');
         exit();
     }
 

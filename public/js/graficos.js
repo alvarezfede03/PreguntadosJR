@@ -42,7 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     position: 'top',
                     labels: {
                         font: {
-                            size: 18
+                            size: 18,
+                            color: '#D3D3D3'
                         }
                     }
                 },
@@ -51,7 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     text: chartText,
                     font: {
                         size: 24,
-                        weight: 'bold'
+                        weight: 'bold',
+                        color: '#D3D3D3'
                     }
                 },
                 tooltip: {
@@ -67,7 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         return mostrarPorcentajes ? `${value}%` : value;
                     },
                     font: {
-                        size: 16
+                        size: 16,
+                        color: '#D3D3D3'
                     }
                 }
             }
