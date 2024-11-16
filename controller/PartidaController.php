@@ -15,7 +15,9 @@ class PartidaController
     public function nueva()
     {
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
+            $this->model->calcularDificultadPreguntas();
             $usuario = $_SESSION['id'];
+            $this->model->calcularNivelJugador($_SESSION['id']);
             $this->model->finalizadorPartidas($usuario);
             $partida = $this->model->getCrearPartida($usuario);
             $_SESSION['partidaActual'] = $partida;
@@ -42,7 +44,7 @@ class PartidaController
     {
         if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $data['respuestaDada'] = false;
-            $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida'], ($_SESSION['partidaActual']['id_ultima_pregunta']));
+            $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida'], ($_SESSION['partidaActual']['id_ultima_pregunta']), $_SESSION['id']);
 
             $opciones = [
                 $data['pregunta'][0]['opcion_1'],
@@ -78,7 +80,7 @@ class PartidaController
                 $_SESSION['partidaActual']['id_ultima_pregunta'] = null;
                 $repuestaSeleccionada = $_POST['opcion'];
                 $pregunta = $_SESSION['pregunta'];
-                $data['correcta'] = $this->model->verificarPregunta($pregunta, $repuestaSeleccionada, $_SESSION['partidaActual']['id_partida']);
+                $data['correcta'] = $this->model->verificarPregunta($pregunta, $repuestaSeleccionada, $_SESSION['partidaActual']['id_partida'], $_SESSION['id']);
                 $data['respuestaDada'] = true;
                 $data['pregunta'] = $_SESSION['prueba'];
                 $data['puntaje'] = $this->model->getPuntaje($_SESSION['partidaActual']['id_partida']);
