@@ -22,7 +22,7 @@ class UsuarioController
             $_SESSION['user'] = $user;
             $data = $this->model->filter($_SESSION['user']);
             $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
-            header('location: /usuario/login');
+            header('location: /usuario/home');
         } elseif ($validation === 'inactive') {
             $_SESSION['error'] = "Cuenta inactiva. Por favor, verifica tu correo para activarla.";
             header('location: /usuario/login');
