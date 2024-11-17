@@ -28,7 +28,7 @@ class UsuarioController
             header('location: /usuario/login');
         } else {
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
-            header('location: /usuario/login');
+            header('location: /');
         }
         exit();
     }

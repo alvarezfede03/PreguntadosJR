@@ -32,7 +32,7 @@ $permissions = [
     'jugador' => [
         'usuario' => ['search', 'search2', 'login', 'home', 'logout', 'historial'],
         'partida' => ['ranking', 'nueva', 'traerPregunta', 'validarRespuesta', 'reportarPregunta'],
-        'crearpreguntas' => ['form', 'crear']
+        'crearPreguntas' => ['form', 'crear']
     ],
     'editor' => [
         'usuario' => ['search', 'login', 'home', 'logout'],

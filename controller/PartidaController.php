@@ -14,7 +14,6 @@ class PartidaController
 
     public function nueva()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $this->model->calcularDificultadPreguntas();
             $usuario = $_SESSION['id'];
             $this->model->calcularNivelJugador($_SESSION['id']);
@@ -27,22 +26,11 @@ class PartidaController
                 $_SESSION['partidaActual']['id_ultima_pregunta'] = null;
                 $this->traerPregunta();
             }
-
-            //$this->jugar($data);
-
-        }
-        else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
 
     public function traerPregunta()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $data['respuestaDada'] = false;
             $data['pregunta'] = $this->model->getPregunta($_SESSION['partidaActual']['id_partida'], ($_SESSION['partidaActual']['id_ultima_pregunta']), $_SESSION['id']);
 
@@ -64,18 +52,10 @@ class PartidaController
             $_SESSION['prueba'] = $data['pregunta'];
             $data['color'] = $this->getCategoriaColor($data['pregunta'][0]['categoria']);
             $this->presenter->show('partidaNueva', $data);
-        }
-        else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function validarRespuesta()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             try {
                 $_SESSION['partidaActual']['id_ultima_pregunta'] = null;
                 $repuestaSeleccionada = $_POST['opcion'];
@@ -94,30 +74,15 @@ class PartidaController
             }catch(Exception $e){
                 header("location:/usuario/home");
             }
-        }
-        else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function ranking()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $data['rankings'] = $this->model->getTopRankings();
             foreach ($data['rankings'] as $index => $row) {
                 $data['rankings'][$index]['ranking'] = $index + 1;
             }
             $this->presenter->show('ranking', $data);
-        }
-        else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 
     public function getCategoriaColor($categoria)
@@ -135,18 +100,10 @@ class PartidaController
 
     public function reportarPregunta()
     {
-        if((isset($_SESSION['user'])) && ($_SESSION['tipo_usuario'] == "jugador")) {
             $preguntaId = $_POST['pregunta_id'];
             $motivo = $_POST['motivo'];
 
             $this->model->guardarReporte($preguntaId, $motivo);
             header("Location: ../usuario/home");
-        }
-        else{
-            $data['gif']=true;
-            $frases = json_decode(file_get_contents('public/frases.json'), true)['frases'];
-            $data['frases'] = $frases[array_rand($frases)];
-            $this->presenter->show('blank',$data);
-        }
     }
 }
