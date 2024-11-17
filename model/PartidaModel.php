@@ -132,7 +132,8 @@ class PartidaModel
         {
             $sql3 = "SELECT nivel FROM usuarios WHERE id = $idJugador";
             $nivelJugador = $this->database->query($sql3);
-
+            $nivelJugador = $nivelJugador[0]['nivel'];
+            
         if ($idPregunta != null) {
             $sql = "SELECT p.*, r.* 
             FROM preguntas AS p
@@ -140,7 +141,7 @@ class PartidaModel
             LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
             WHERE pr.pregunta_id IS NULL 
             AND p.id = $idPregunta
-            AND p.nivel > $nivelJugador
+            AND p.dificultad > $nivelJugador
             ORDER BY RAND() 
             LIMIT 1;";
             $pregunta = $this->database->query($sql);
