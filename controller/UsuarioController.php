@@ -123,7 +123,7 @@ class UsuarioController
                 $emailExitoso = $emailSender->enviarMail($email, $token);
                 if ($emailExitoso) {
                     $_SESSION['success'] = "Usuario registrado exitosamente. Revisa tu correo para activar tu cuenta.";
-                    header("Location: /login");
+                    header("Location: /");
                 } else {
                     $_SESSION['error'] = "Error al enviar el correo de activación.";
                     header("Location: /registro");
@@ -158,14 +158,14 @@ class UsuarioController
             if ($usuario) {
                 $this->model->activarUsuario($usuario['uuid']);
                 $_SESSION['success'] = "Cuenta activada correctamente.";
-                header('location: /login');
+                header('location: /');
             } else {
                 $_SESSION['error'] = "Token inválido.";
-                header('location: /registro');
+                header('location: /');
             }
         } else {
             $_SESSION['error'] = "Token no proporcionado.";
-            header('location: /registro');
+            header('location: /');
         }
         exit();
     }

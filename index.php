@@ -26,6 +26,11 @@ if ($page === 'usuario' && (($methodName === 'registrar') || ($methodName === 'p
     exit;
 }
 
+if ($page === 'usuario' && $methodName === 'verificarCuenta' && isset($_GET['token'])) {
+    $router->route($page, $methodName);
+    exit;
+}
+
 $userRole = isset($_SESSION['tipo_usuario']) ? $_SESSION['tipo_usuario'] : '';
 
 $permissions = [
