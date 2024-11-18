@@ -166,7 +166,7 @@ class PartidaModel
                          JOIN respuestas AS o ON o.id_pregunta = p.id
                         WHERE pa.id_partida = $id_partida
                          AND pa.terminada = 'no'
-                         AND p.nivel > $nivelJugador
+                         AND p.dificultad > $nivelJugador
                         ORDER BY pa.hora_pregunta_recibida ASC
                          LIMIT 1;
                             ";
@@ -193,6 +193,7 @@ class PartidaModel
              JOIN respuestas AS r ON p.id = r.id_pregunta
              LEFT JOIN preguntas_respondidas AS pr ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
              WHERE pr.pregunta_id IS NULL 
+             AND p.dificultad > $nivelJugador
              ORDER BY RAND() 
              LIMIT 1;";
 
