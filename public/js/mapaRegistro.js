@@ -10,18 +10,16 @@ marker.on('dragend', function (e) {
     var lat = latlng.lat;
     var lon = latlng.lng;
 
-    // Photon no admite geocodificación inversa directa, pero podemos buscar lugares cercanos con un "approximated search".
+    // Photon no admite geocodificación inversa directa, pero se puede buscar lugares cercanos con un "approximated search".
     fetch(`https://photon.komoot.io/reverse?lon=${lon}&lat=${lat}`)
         .then(response => response.json())
         .then(data => {
             if (data.features && data.features.length > 0) {
-                // Tomamos el resultado más relevante
                 const properties = data.features[0].properties;
 
                 var country = properties.country || '';
                 var city = properties.city || properties.name || '';
 
-                // Actualizamos los campos en el DOM
                 document.getElementById('selectedCountry').value = country;
                 document.getElementById('selectedCity').value = city;
                 document.getElementById('country').value = country;
