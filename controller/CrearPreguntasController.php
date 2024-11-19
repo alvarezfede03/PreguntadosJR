@@ -35,5 +35,8 @@ class CrearPreguntasController {
             }
             $data = [];
             $this->presenter->show('crearPregunta', $data);
+            //header("Location: /home");
+            //exit();
+//        }
     }
 }
