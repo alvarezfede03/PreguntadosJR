@@ -1,15 +1,20 @@
 function initMapPerfil(country, city) {
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${city},${country}&timestamp=${Date.now()}`)
-    /*fetch(`https://cors-anywhere.herokuapp.com/https://nominatim.openstreetmap.org/search?format=json&q=${city},${country}`)*/
+    fetch(`https://photon.komoot.io/api?q=${city},${country}`)
         .then(response => response.json())
         .then(data => {
-            if (data.length > 0) {
-                var lat = data[0].lat;
-                var lon = data[0].lon;
-                var map = L.map('map').setView([lat, lon], 10);
+            if (data.features && data.features.length > 0) {
+                // Extraemos las coordenadas de la primera coincidencia
+                const [lon, lat] = data.features[0].geometry.coordinates;
+
+                // Inicializamos el mapa con las coordenadas
+                const map = L.map('map').setView([lat, lon], 10);
+
+                // Capa base de OpenStreetMap
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 }).addTo(map);
+
+                // Añadimos un marcador en la ubicación encontrada
                 L.marker([lat, lon]).addTo(map)
                     .bindPopup(`<b>${city}, ${country}</b>`)
                     .openPopup();
@@ -17,6 +22,5 @@ function initMapPerfil(country, city) {
                 console.error('Ubicación no encontrada.');
             }
         })
-        .catch(error => console.error('Error:', error));
+        .catch(error => console.error('Error al obtener la ubicación:', error));
 }
-
