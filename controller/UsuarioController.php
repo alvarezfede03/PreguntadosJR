@@ -25,7 +25,7 @@ class UsuarioController
             header('location: /usuario/home');
         } elseif ($validation === 'inactive') {
             $_SESSION['error'] = "Cuenta inactiva. Por favor, verifica tu correo para activarla.";
-            header('location: /usuario/login');
+            header('location: /usuario/login'); //verificar
         } else {
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
             header('location: /');
@@ -64,7 +64,7 @@ class UsuarioController
         }
     }
 
-    public function search()
+    public function verPerfil()
     {
             $data = $this->model->filter($_SESSION['user']);
             $this->presenter->show('perfilUsuario', $data);
@@ -195,7 +195,7 @@ class UsuarioController
         }
     }
 
-    public function search2()
+    public function verPerfilJugadores()
     {
         if (isset($_GET['qr']) && $_GET['qr'] === 'true' && isset($_GET['usuario'])) {
             $user = $_GET['usuario'];
@@ -214,7 +214,7 @@ class UsuarioController
     }
 
     private function generarQR($nombre_usuario) {
-        $urlPerfil = 'http://' . $_SERVER['HTTP_HOST'] . '/usuario/search2?usuario=' . urlencode($nombre_usuario);
+        $urlPerfil = 'http://' . $_SERVER['HTTP_HOST'] . '/usuario/verPerfilJugadores?usuario=' . urlencode($nombre_usuario);
         QRcode::png($urlPerfil, false, QR_ECLEVEL_H, 10, 2);
     }
 

@@ -19,14 +19,14 @@
                     <tr>
                         <td><p>{{ranking}}</p></td>
                         <td>
-                            <form method="post" action="/usuario/search2">
+                            <form method="post" action="/usuario/verPerfilJugadores">
                                 <button type="submit" class="btn text-primary" name="usuario"
                                         value="{{nombre_usuario}}">{{nombre_usuario}}</button>
                             </form>
                         </td>
                         <td><p>{{resultado}}</p></td>
                         <td>
-                            <img src="/usuario/search2?qr=true&usuario={{nombre_usuario}}" alt="QR de perfil
+                            <img src="/usuario/verPerfilJugadores?qr=true&usuario={{nombre_usuario}}" alt="QR de perfil
                             de {{nombre_usuario}}" data-bs-toggle="modal"
                             data-bs-target="#qrModal{{ranking}}" style="width: 100px; height: 100px;">
                         </td>
@@ -47,7 +47,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="/usuario/search2?qr=true&usuario={{nombre_usuario}}"
+                    <img src="/usuario/verPerfilJugadores?qr=true&usuario={{nombre_usuario}}"
                     alt="QR de perfil de {{nombre_usuario}}"
                     style="width: 300px; height: auto;">
                 </div>

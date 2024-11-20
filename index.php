@@ -35,17 +35,17 @@ $userRole = isset($_SESSION['tipo_usuario']) ? $_SESSION['tipo_usuario'] : '';
 
 $permissions = [
     'jugador' => [
-        'usuario' => ['search', 'search2', 'login', 'home', 'logout', 'historial'],
+        'usuario' => ['verPerfil', 'verPerfilJugadores', 'login', 'home', 'logout', 'historial'],
         'partida' => ['ranking', 'nueva', 'traerPregunta', 'validarRespuesta', 'reportarPregunta'],
         'crearPreguntas' => ['form', 'crear']
     ],
     'editor' => [
-        'usuario' => ['search', 'login', 'home', 'logout'],
+        'usuario' => ['verPerfil', 'login', 'home', 'logout'],
         'editor' => ['verPreguntas', 'editarPregunta', 'actualizarPregunta', 'eliminarPregunta', 'verPreguntasReportadas',
             'verPreguntasSugeridas', 'darDeAltaPregunta']
     ],
     'admin' => [
-        'usuario' => ['search', 'login', 'home', 'logout'],
+        'usuario' => ['verPerfil', 'login', 'home', 'logout'],
         'admin' => ['informes', 'cantidadJugadores', 'cantidadPartidasJugadas', 'cantidadPreguntasCreadas', 'cantidadUsuariosNuevos',
             'cantidadUsuariosXPais', 'cantidadUsuariosXSexo', 'cantidadUsuariosXGrupoEdad', 'porcentajeDePreguntasCorrectas']
     ]
