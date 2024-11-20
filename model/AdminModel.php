@@ -27,25 +27,14 @@ class AdminModel
     }
 
     public function getCantidadUsuariosNuevos(){
-        $sql = "SELECT DATE(fecha_registro) AS dia, COUNT(*) AS count
+        $sql = "SELECT DATE(fecha_registro) AS mes, COUNT(*) AS count
                 FROM usuarios
-                WHERE fecha_registro >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
-                GROUP BY DATE(fecha_registro)
-                ORDER BY dia;";
+                WHERE fecha_registro >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
         $resultado = $this->database->query($sql);
         return $resultado[0]['count'];
     }
 
     public function getCantidadUsuariosXPais($fecha_inicio = null, $fecha_fin = null){
-
-        /*$sql = "SELECT pais, COUNT(*) AS total_usuarios
-                FROM usuarios
-                GROUP BY pais
-                ORDER BY total_usuarios DESC;";
-        return $this->database->query($sql);*/
-
-        // Ver si tambien hay que filtrar por tipo de usuario!
-
         $sql = "SELECT pais, COUNT(*) AS total_usuarios
                 FROM usuarios";
 

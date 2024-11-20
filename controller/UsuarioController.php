@@ -23,9 +23,9 @@ class UsuarioController
             $data = $this->model->filter($_SESSION['user']);
             $_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             header('location: /usuario/home');
-        } elseif ($validation === 'inactive') {
+        } elseif ($validation === 'inactiva') {
             $_SESSION['error'] = "Cuenta inactiva. Por favor, verifica tu correo para activarla.";
-            header('location: /usuario/login'); //verificar
+            header('location: /');
         } else {
             $_SESSION['error'] = "Credenciales incorrectas. Intenta nuevamente.";
             header('location: /');
@@ -126,11 +126,11 @@ class UsuarioController
                     header("Location: /");
                 } else {
                     $_SESSION['error'] = "Error al enviar el correo de activación.";
-                    header("Location: /registro");
+                    header("Location: /");
                 }
             } else {
                 $_SESSION['error'] = "Hubo un problema al registrar el usuario.";
-                header("Location: /registrar");
+                header("Location: /");
             }
         }
     }

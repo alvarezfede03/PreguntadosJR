@@ -20,6 +20,8 @@ class EmailSender
 
             $mail->setFrom('alvarezfede159@gmail.com', 'PreguntadoJr');
             $mail->addAddress($email);
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
             $mail->isHTML(true);
             $mail->Subject = 'Activación de Cuenta';
 
