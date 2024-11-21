@@ -40,6 +40,10 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
+.game-container {
+    color: #000000;
+}
+
 .btn-center {
     display: flex;
     justify-content: center;
@@ -67,8 +71,7 @@ footer {
 }
 
 body {
-    background: url("../backgrounds/5134336.jpg");
-    background-repeat: no-repeat;
+    background: url("../backgrounds/5134336.jpg") no-repeat;
     background-size: cover;
 }
 
@@ -96,10 +99,6 @@ body {
     width: 50%;
     margin: auto;
 
-}
-
-.accordion-collapse, .accordion-button{
-    background-color: rgba(255, 255, 255, 0.7);
 }
 
 #map {
@@ -224,10 +223,8 @@ body.dark-mode #moon-icon {
 }
 
 body.dark-mode {
-    background-color: #121212;
     color: #ffffff;
-    background: url("../backgrounds/5137894.jpg");
-    background-repeat: no-repeat;
+    background: #121212 url("../backgrounds/5137894.jpg") no-repeat;
     background-size: cover;
 }
 
@@ -252,89 +249,42 @@ body.dark-mode .form-check-label {
 
 body.dark-mode .login-container {
     background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-body.dark-mode input {
-    background-color: #495057;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-body.dark-mode select {
-    background-color: #495057;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-body.dark-mode textarea {
-    background-color: #495057;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-
-body.dark-mode . {
-    background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .dashboard-container {
     background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .card-container {
     background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .button-container {
     background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .history-container {
     background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .form-container {
     background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-.game-container {
-    color: #000000;
-}
-
-body.dark-mode .modal-content {
-    background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-body.dark-mode .accordion-collapse,body.dark-mode .accordion-button{
-    background-color: #343a40 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .chart-container {
     background-color: #121212 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
-}
-
-body.dark-mode .dropdown-menu{
-    background-color: #121212 ;
-    color: #ffffff; /* Color del texto */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde ligero para visibilidad */
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }

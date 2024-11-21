@@ -43,7 +43,7 @@ $permissions = [
         'usuario' => ['verPerfil', 'login', 'home', 'logout'],
         'editor' => ['verPreguntas', 'editarPregunta', 'actualizarPregunta', 'eliminarPregunta', 'verPreguntasReportadas',
             'verPreguntasSugeridas', 'darDeAltaPregunta'],
-        'crearpreguntas' => ['form', 'crear']
+        'crearPreguntas' => ['form', 'crear']
     ],
     'admin' => [
         'usuario' => ['verPerfil', 'login', 'home', 'logout'],

@@ -6,14 +6,10 @@ const originalBackgroundImage = gameContainer ? gameContainer.style.backgroundIm
 
 if (localStorage.getItem('dark-mode') === 'enabled') {
     document.body.classList.add('dark-mode');
+    document.documentElement.setAttribute('data-bs-theme', 'dark');
 
     themeSwitches.forEach(switchElement => {
         switchElement.checked = true;
-    });
-
-    tables.forEach(table => {
-        table.classList.remove('table-light');
-        table.classList.add('table-dark');
     });
 
     if (gameContainer !== null) {
@@ -23,6 +19,7 @@ if (localStorage.getItem('dark-mode') === 'enabled') {
     themeSwitches.forEach(switchElement => {
         switchElement.checked = false;
     });
+    document.documentElement.setAttribute('data-bs-theme', 'light');
 }
 
 themeSwitches.forEach(switchElement => {
@@ -32,23 +29,15 @@ themeSwitches.forEach(switchElement => {
         if (isDarkMode) {
             document.body.classList.add('dark-mode');
             localStorage.setItem('dark-mode', 'enabled');
+            document.documentElement.setAttribute('data-bs-theme', 'dark');
         } else {
             document.body.classList.remove('dark-mode');
             localStorage.setItem('dark-mode', 'disabled');
+            document.documentElement.setAttribute('data-bs-theme', 'light');
         }
 
         themeSwitches.forEach(sw => {
             sw.checked = isDarkMode;
-        });
-
-        tables.forEach(table => {
-            if (isDarkMode) {
-                table.classList.remove('table-light');
-                table.classList.add('table-dark');
-            } else {
-                table.classList.remove('table-dark');
-                table.classList.add('table-light');
-            }
         });
 
         if (gameContainer !== null) {
