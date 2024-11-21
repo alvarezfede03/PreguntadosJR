@@ -63,6 +63,9 @@ class EditorController
     {
             $data['preguntas'] = $this->model->getPreguntasReportadas();
             $data['reportadas'] = true;
+            if(!$data['preguntas']){
+                $data['info'] = "No hay preguntas reportadas";
+            }
             $this->presenter->show('editor', $data);
     }
 
@@ -70,6 +73,9 @@ class EditorController
     {
             $data['preguntas'] = $this->model->getPreguntasSugeridas();
             $data['sugeridas'] = true;
+            if(!$data['preguntas']){
+                $data['info'] = "No hay preguntas sugeridas";
+            }
             $this->presenter->show('editor', $data);
     }
 

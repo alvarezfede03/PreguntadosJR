@@ -261,7 +261,7 @@ class PartidaModel
         return $this->database->query($sql);
     }
 
-    public function guardarReporte($preguntaId, $motivo)
+    /*public function guardarReporte($preguntaId, $motivo)
     {
         // Insertar el reporte en la tabla reportes
         $sqlReporte = "INSERT INTO reportes (pregunta_id, motivo) VALUES ('$preguntaId', '$motivo')";
@@ -270,6 +270,21 @@ class PartidaModel
         // Actualizar el campo reportada en la tabla preguntas
         $sqlActualizarPregunta = "UPDATE preguntas SET reportada = 'si' WHERE id = '$preguntaId'";
         $this->database->execute($sqlActualizarPregunta);
+    }*/
+
+    public function guardarReporte($preguntaId, $motivo)
+    {
+        $sqlReporte = "INSERT INTO reportes (pregunta_id, motivo) VALUES (?, ?)";
+        $stmt = $this->database->prepare($sqlReporte);
+        $stmt->bind_param('is', $preguntaId, $motivo);
+        $stmt->execute();
+        $stmt->close();
+
+        $sqlActualizarPregunta = "UPDATE preguntas SET reportada = 'si' WHERE id = ?";
+        $stmt = $this->database->prepare($sqlActualizarPregunta);
+        $stmt->bind_param('i', $preguntaId);
+        $stmt->execute();
+        $stmt->close();
     }
 
 
