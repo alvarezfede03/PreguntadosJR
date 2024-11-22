@@ -9,16 +9,29 @@ class EditorModel
         $this->database = $database;
     }
 
+//    public function getTodasLasPreguntasConRespuestas()
+//    {
+//        $sql = "
+//            SELECT p.id, p.pregunta, p.categoria,
+//                   r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
+//            FROM preguntas p
+//            JOIN respuestas r ON p.id = r.id_pregunta";
+//
+//        return $this->database->query($sql);
+//    }
+
     public function getTodasLasPreguntasConRespuestas()
     {
         $sql = "
-            SELECT p.id, p.pregunta, p.categoria, 
-                   r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
-            FROM preguntas p
-            JOIN respuestas r ON p.id = r.id_pregunta";
+        SELECT p.id, p.pregunta, p.categoria, 
+               r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
+        FROM preguntas p
+        JOIN respuestas r ON p.id = r.id_pregunta
+        WHERE p.eliminada = 'no'";
 
         return $this->database->query($sql);
     }
+
 
     public function getPreguntaById($id)
     {
@@ -53,19 +66,32 @@ class EditorModel
     }
 
 
+//    public function eliminarPregunta($idPregunta)
+//    {
+//        $actualizarEstadoReporte = $this->database->prepare("UPDATE reportes SET estado = 'resuelto' WHERE pregunta_id = ?");
+//        $actualizarEstadoReporte->bind_param("i", $idPregunta);
+//        $actualizarEstadoReporte->execute();
+//
+//        $eliminarRespuestas = $this->database->prepare("DELETE FROM respuestas WHERE id_pregunta = ?");
+//        $eliminarRespuestas->bind_param("i", $idPregunta);
+//        $eliminarRespuestas->execute([$idPregunta]);
+//
+//        $eliminarPregunta = $this->database->prepare("DELETE FROM preguntas WHERE id = ? ");
+//        $eliminarPregunta->bind_param("i", $idPregunta);
+//        $eliminarPregunta->execute();
+//    }
+
     public function eliminarPregunta($idPregunta)
     {
-        $actualizarEstadoReporte = $this->database->prepare("UPDATE reportes SET estado = 'resuelto' WHERE pregunta_id = ?");
-        $actualizarEstadoReporte->bind_param("i", $idPregunta);
-        $actualizarEstadoReporte->execute();
+        $sql = "UPDATE preguntas SET eliminada = 'si' WHERE id = ?";
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param("i", $idPregunta);
+        $stmt->execute();
 
-        $eliminarRespuestas = $this->database->prepare("DELETE FROM respuestas WHERE id_pregunta = ?");
-        $eliminarRespuestas->bind_param("i", $idPregunta);
-        $eliminarRespuestas->execute([$idPregunta]);
-
-        $eliminarPregunta = $this->database->prepare("DELETE FROM preguntas WHERE id = ? ");
-        $eliminarPregunta->bind_param("i", $idPregunta);
-        $eliminarPregunta->execute();
+        $sqlReporte = "UPDATE reportes SET estado = 'resuelto' WHERE pregunta_id = ?";
+        $stmtReporte = $this->database->prepare($sqlReporte);
+        $stmtReporte->bind_param("i", $idPregunta);
+        $stmtReporte->execute();
     }
 
 
@@ -86,22 +112,23 @@ class EditorModel
             GROUP BY pregunta_id
         )
     ) rep ON p.id = rep.pregunta_id
-    WHERE p.reportada = 'si'";
+    WHERE p.reportada = 'si' AND p.eliminada != 'si'";
         return $this->database->query($sql);
     }
+
 
 
     public function getPreguntasSugeridas()
     {
         $sql = "
-        SELECT p.id, p.pregunta, p.categoria, 
-               r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
-        FROM preguntas p
-        JOIN respuestas r ON p.id = r.id_pregunta
-        WHERE p.creada = 'si' AND p.aprobada = 'no'";
-
+    SELECT p.id, p.pregunta, p.categoria, 
+           r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
+    FROM preguntas p
+    JOIN respuestas r ON p.id = r.id_pregunta
+    WHERE p.creada = 'si' AND p.aprobada = 'no' AND p.eliminada != 'si'";
         return $this->database->query($sql);
     }
+
 
 
     public function aprobarPregunta($id)

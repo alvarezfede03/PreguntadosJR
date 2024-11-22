@@ -164,6 +164,7 @@ class PartidaModel
                          AND pa.terminada = 'no'
                          AND p.dificultad = $nivelJugador
                          AND p.aprobada = 'si'
+                         AND p.eliminada != 'si'
                         ORDER BY pa.hora_pregunta_recibida ASC
                          LIMIT 1;
                             ";
@@ -192,6 +193,7 @@ class PartidaModel
              WHERE pr.pregunta_id IS NULL 
              AND p.dificultad = $nivelJugador
              AND p.aprobada = 'si'
+             AND p.eliminada != 'si'
              ORDER BY RAND() 
              LIMIT 1;";
 
