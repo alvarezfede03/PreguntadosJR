@@ -34,9 +34,15 @@ class UsuarioModel
     public function filter($user)
     {
         $sql = "SELECT id, nombre_usuario, nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil, tipo_usuario
-                FROM usuarios 
-                WHERE nombre_usuario = '" . $user. "'";
-        $data["usuario"] =$this->database->query($sql);
+            FROM usuarios 
+            WHERE nombre_usuario = ?";
+
+        $stmt = $this->database->prepare($sql);
+        $stmt->bind_param('s', $user);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data["usuario"] = $result->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
         return $data;
     }
 

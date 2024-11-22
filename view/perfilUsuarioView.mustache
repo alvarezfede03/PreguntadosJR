@@ -9,7 +9,7 @@
                 <p class="card-text"><strong>País:</strong> {{pais}}</p>
                 <p class="card-text"><strong>Ciudad:</strong> {{ciudad}}</p>
                 <img src="{{foto_perfil}}" alt="Foto de perfil" class="img-fluid rounded-circle" style="max-width: 200px;">
-                <div id="map"></div>
+                <div class="mt-4" id="map"></div>
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         initMapPerfil("{{pais}}", "{{ciudad}}");

@@ -23,6 +23,10 @@ class EditorController
 
             if ($id) {
                 $data['pregunta'] = $this->model->getPreguntaById($id);
+                for ($i = 1; $i <= 4; $i++) {
+                    $key = "opcion_{$i}";
+                    $data["opcion_{$i}_seleccionada"] = ($data['pregunta']['opcion_correcta'] == $data['pregunta'][$key]);
+                }
                 $this->presenter->show('editarPregunta', $data);
             }
     }

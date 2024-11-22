@@ -29,6 +29,8 @@ class MustachePresenter{
         }
         if (isset($_SESSION['tipo_usuario'])) {
             $data['tipo_usuario'] = $_SESSION['tipo_usuario'];
+            if($data['tipo_usuario'] == "jugador")
+                $data['jugador'] = true;
         }
         echo  $this->generateHtml(  $this->partialsPathLoader . '/' . $contentFile . "View.mustache" , $data);
     }

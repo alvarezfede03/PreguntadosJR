@@ -59,7 +59,11 @@ class EditorModel
         $actualizarEstadoReporte->bind_param("i", $idPregunta);
         $actualizarEstadoReporte->execute();
 
-        $eliminarPregunta = $this->database->prepare("DELETE FROM preguntas WHERE id = ?");
+        $eliminarRespuestas = $this->database->prepare("DELETE FROM respuestas WHERE id_pregunta = ?");
+        $eliminarRespuestas->bind_param("i", $idPregunta);
+        $eliminarRespuestas->execute([$idPregunta]);
+
+        $eliminarPregunta = $this->database->prepare("DELETE FROM preguntas WHERE id = ? ");
         $eliminarPregunta->bind_param("i", $idPregunta);
         $eliminarPregunta->execute();
     }
