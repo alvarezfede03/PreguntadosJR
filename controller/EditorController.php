@@ -93,4 +93,14 @@ class EditorController
             }
     }
 
+    public function verPreguntasEliminadas()
+    {
+        $data['preguntas'] = $this->model->getPreguntasEliminadas();
+        $data['eliminadas'] = true;
+        if(!$data['preguntas']){
+            $data['info'] = "No hay preguntas eliminadas";
+        }
+        $this->presenter->show('editor', $data);
+    }
+
 }

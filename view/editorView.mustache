@@ -26,35 +26,37 @@
                                 <li><strong>Motivo del reporte:</strong> {{motivo}}</li>
                             {{/motivo}}
                         </ul>
-
-                        <form action="/editor/editarPregunta" method="POST" style="display: inline;">
-                            <input type="hidden" name="id" value="{{id}}">
-                            <button type="submit" class="btn btn-primary me-2">Editar</button>
-                        </form>
-
-                        <form action="/editor/eliminarPregunta" method="POST" style="display: inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta pregunta?');">
-                            <input type="hidden" name="id" value="{{id}}">
-                            <button type="submit" class="btn btn-danger me-2">Eliminar</button>
-                        </form>
-
-                        {{#sugeridas}}
-                            <form action="/editor/darDeAltaPregunta" method="POST" style="display: inline;">
+                        {{^eliminadas}}
+                            <form action="/editor/editarPregunta" method="POST" style="display: inline;">
                                 <input type="hidden" name="id" value="{{id}}">
-                                <button type="submit" class="btn btn-success">Dar de alta</button>
+                                <button type="submit" class="btn btn-primary me-2">Editar</button>
                             </form>
-                        {{/sugeridas}}
-                        {{#reportadas}}
-                            <form action="/editor/darDeAltaPregunta" method="POST" style="display: inline;">
+
+                            <form action="/editor/eliminarPregunta" method="POST" style="display: inline;" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta pregunta?');">
                                 <input type="hidden" name="id" value="{{id}}">
-                                <input type="hidden" name="es_reportada" value="true">
-                                <button type="submit" class="btn btn-success">Dar de alta</button>
+                                <button type="submit" class="btn btn-danger me-2">Eliminar</button>
                             </form>
-                        {{/reportadas}}
+
+                            {{#sugeridas}}
+                                <form action="/editor/darDeAltaPregunta" method="POST" style="display: inline;">
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <button type="submit" class="btn btn-success">Dar de alta</button>
+                                </form>
+                            {{/sugeridas}}
+                            {{#reportadas}}
+                                <form action="/editor/darDeAltaPregunta" method="POST" style="display: inline;">
+                                    <input type="hidden" name="id" value="{{id}}">
+                                    <input type="hidden" name="es_reportada" value="true">
+                                    <button type="submit" class="btn btn-success">Dar de alta</button>
+                                </form>
+                            {{/reportadas}}
+                        {{/eliminadas}}
                     </div>
                 </div>
             </div>
         {{/preguntas}}
     </div>
 </div>
+
 
 

@@ -147,4 +147,15 @@ class EditorModel
     }
 
 
+    public function getPreguntasEliminadas()
+    {
+        $sql = "
+    SELECT p.id, p.pregunta, p.categoria, 
+           r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
+    FROM preguntas p
+    JOIN respuestas r ON p.id = r.id_pregunta
+    WHERE  p.eliminada = 'si'";
+        return $this->database->query($sql);
+    }
+
 }
