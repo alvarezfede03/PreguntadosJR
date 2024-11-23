@@ -9,17 +9,6 @@ class EditorModel
         $this->database = $database;
     }
 
-//    public function getTodasLasPreguntasConRespuestas()
-//    {
-//        $sql = "
-//            SELECT p.id, p.pregunta, p.categoria,
-//                   r.opcion_1, r.opcion_2, r.opcion_3, r.opcion_4, r.opcion_correcta
-//            FROM preguntas p
-//            JOIN respuestas r ON p.id = r.id_pregunta";
-//
-//        return $this->database->query($sql);
-//    }
-
     public function getTodasLasPreguntasConRespuestas()
     {
         $sql = "
@@ -64,22 +53,6 @@ class EditorModel
         $stmtRespuestas->bind_param("sssssi", $opcion1, $opcion2, $opcion3, $opcion4, $opcionCorrecta, $id);
         $stmtRespuestas->execute();
     }
-
-
-//    public function eliminarPregunta($idPregunta)
-//    {
-//        $actualizarEstadoReporte = $this->database->prepare("UPDATE reportes SET estado = 'resuelto' WHERE pregunta_id = ?");
-//        $actualizarEstadoReporte->bind_param("i", $idPregunta);
-//        $actualizarEstadoReporte->execute();
-//
-//        $eliminarRespuestas = $this->database->prepare("DELETE FROM respuestas WHERE id_pregunta = ?");
-//        $eliminarRespuestas->bind_param("i", $idPregunta);
-//        $eliminarRespuestas->execute([$idPregunta]);
-//
-//        $eliminarPregunta = $this->database->prepare("DELETE FROM preguntas WHERE id = ? ");
-//        $eliminarPregunta->bind_param("i", $idPregunta);
-//        $eliminarPregunta->execute();
-//    }
 
     public function eliminarPregunta($idPregunta)
     {
