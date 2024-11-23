@@ -2,11 +2,13 @@
     <div class="form-container">
         {{#error}}
             <div class="alert alert-danger text-center" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
                 {{error}}
             </div>
         {{/error}}
         {{#success}}
             <div class="alert alert-success text-center" role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
                 {{success}}
             </div>
         {{/success}}
@@ -15,31 +17,60 @@
 
             <div class="mb-3">
                 <label for="pregunta" class="form-label">Pregunta</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">quiz</i>
+            </span>
                 <input type="text" class="form-control" id="pregunta" name="pregunta" required>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="opcion1" class="form-label">Opción 1</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">filter_1</i>
+            </span>
                 <input type="text" class="form-control" id="opcion1" name="opcion1" required>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="opcion2" class="form-label">Opción 2</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">filter_2</i>
+            </span>
                 <input type="text" class="form-control" id="opcion2" name="opcion2" required>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="opcion3" class="form-label">Opción 3</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">filter_3</i>
+            </span>
                 <input type="text" class="form-control" id="opcion3" name="opcion3" required>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="opcion4" class="form-label">Opción 4</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">filter_4</i>
+            </span>
                 <input type="text" class="form-control" id="opcion4" name="opcion4" required>
+                </div>
             </div>
 
             <div class="mb-3">
                 <label for="opcionCorrecta" class="form-label">Opción Correcta</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">library_add_check</i>
+            </span>
                 <select class="form-select" id="opcionCorrecta" name="opcionCorrecta" required>
                     <option value="" selected disabled>Seleccione la opción correcta</option>
                     <option value="1">Opción 1</option>
@@ -48,15 +79,21 @@
                     <option value="4">Opción 4</option>
                 </select>
             </div>
+            </div>
 
             <div class="mb-3">
                 <label for="categoria" class="form-label">Categoría</label>
+                <div class="input-group">
+            <span class="input-group-text">
+                <i class="material-symbols-outlined">category</i>
+            </span>
                 <select class="form-select" id="categoria" name="categoria" required>
                     <option value="" selected disabled>Seleccione la categoría</option>
                     {{#categorias}}
                         <option value="{{.}}">{{.}}</option>
                     {{/categorias}}
                 </select>
+            </div>
             </div>
 
             <input type="hidden" id="opcionCorrectaTexto" name="opcionCorrectaTexto">
