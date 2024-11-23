@@ -48,7 +48,7 @@ class EditorController
 
 
                 $this->model->actualizarPregunta($id, $nuevaPregunta, $nuevaCategoria, $opcion1, $opcion2, $opcion3, $opcion4, $opcionCorrecta);
-
+                $_SESSION['success'] = "Pregunta actualizada correctamente";
                 header("Location: ../usuario/home");
             }
     }
@@ -59,6 +59,7 @@ class EditorController
 
             if ($id) {
                 $this->model->eliminarPregunta($id);
+                $_SESSION['success'] = "Pregunta eliminada correctamente";
                 header("Location: ../usuario/home");
             }
     }
@@ -89,6 +90,7 @@ class EditorController
 
             if ($id) {
                 $this->model->aprobarPregunta($id);
+                $_SESSION['success'] = "Pregunta dada de alta correctamente";
                 header("Location: ../usuario/home");
             }
     }

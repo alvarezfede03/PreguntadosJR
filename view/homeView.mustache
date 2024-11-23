@@ -1,4 +1,18 @@
 <main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+    {{#error}}
+        <div id="alert-error" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{error}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {{/error}}
+    {{#success}}
+        <div id="alert-success" class="alert alert-success alert-dismissible fade show text-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            {{success}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {{/success}}
     <div class="card-container text-center mb-4 p-4 rounded shadow" style="max-width: 600px; width: 100%;">
         {{#usuario}}
             <h2>{{nombre_usuario}}</h2>
@@ -135,3 +149,4 @@
     {{/jugador}}
 </div>
 </main>
+<script src="../public/js/alerts.js"></script>

@@ -60,5 +60,3 @@ if (isset($permissions[$userRole][$page]) && in_array($methodName, $permissions[
     $data['frases'] = $frases[array_rand($frases)];
     $presenter->show('blank',$data);
 }
-
-//$router->route($page, $methodName);
