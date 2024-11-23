@@ -113,8 +113,6 @@ body {
     width: 160px;
     height: 50px;
     line-height: 48px;
-
-
     text-decoration: none;
     border-radius: 7px; /* Borde redondeado */
 }
@@ -127,9 +125,9 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(45deg, #fb0094, #00f, #0f0, #ff0, #f00, #fb0094, #00f, #0f0, #ff0, #f00);
-    background-size: 400%;
+    background-size: 200%;
     opacity: 0;
-    filter: blur(20px);
+    filter: blur(20px) brightness(0.9);;
     transition: 0.5s;
     border-radius: 5px; /* Mantén el borde redondeado */
 }
@@ -142,8 +140,9 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(45deg, #fb0094, #00f, #0f0, #ff0, #f00, #fb0094, #00f, #0f0, #ff0, #f00);
-    background-size: 400%;
+    background-size: 200%;
     opacity: 0;
+    filter: brightness(0.8);
     transition: 0.5s;
     border-radius: 5px; /* Mantén el borde redondeado */
 }
@@ -151,18 +150,15 @@ body {
 #nueva_partida:hover::before,
 #nueva_partida:hover::after {
     opacity: 1;
-    animation: animate 20s linear infinite;
+    animation: animate 8s linear infinite; /* Animación continua */
 }
 
 @keyframes animate {
     0% {
-        background-position: 0 0;
-    }
-    50% {
-        background-position: 300% 0;
+        background-position: 0% 0;
     }
     100% {
-        background-position: 0 0;
+        background-position: 100% 0;
     }
 }
 
@@ -189,6 +185,7 @@ body {
     width: 100%;
     height: 50%;
 }
+
 
 /*///////////*/
 /* DARK MODE */
