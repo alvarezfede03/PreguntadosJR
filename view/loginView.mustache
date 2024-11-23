@@ -12,21 +12,24 @@
             </div>-->
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">
-                    <img class="me-0" src="../public/icons/person.svg" alt="person" width="24" style="filter: invert(0.5)">
+                    <!--<img class="me-0" src="../public/icons/person.svg" alt="person" width="24" style="filter: invert(0.5)">-->
+                    <i class="material-symbols-outlined">person</i>
                 </span>
                 <input type="text" class="form-control" placeholder="Usuario" id="username" name="username" required>
             </div>
             <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1">
-                    <img class="me-0" src="../public/icons/key.svg" alt="key" width="24" style="filter: invert(0.5)">
+                    <!--<img class="me-0" src="../public/icons/key.svg" alt="key" width="24" style="filter: invert(0.5)">-->
+                    <i class="material-symbols-outlined">key</i>
                 </span>
                 <input type="password" class="form-control" placeholder="Contraseña" id="password" name="password" required>
             </div>
             <div class="d-grid gap-2">
                 <button type="submit" class="btn btn-primary d-flex align-items-center justify-content-center">
-                    <img class="me-1" src="../public/icons/login.svg" alt="login" width="24">Ingresar</button>
+                    <i class="material-symbols-outlined me-1">login</i>Ingresar</button>
+
                 <button type="button" class="btn btn-success d-flex align-items-center justify-content-center" onclick="window.location.href='/usuario/registrar'">
-                    <img class="me-1" src="../public/icons/person_add.svg" alt="person_add" width="24">Registrarse</button>
+                    <i class="material-symbols-outlined me-1">person_add</i>Registrarse</button>
             </div>
             {{#error}}
                 <div class="alert alert-danger mt-4" role="alert">
