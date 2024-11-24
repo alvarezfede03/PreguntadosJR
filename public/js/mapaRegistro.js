@@ -3,7 +3,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-var marker = L.marker([-34.6037, -58.3816], { draggable: true }).addTo(map);
+var marker = L.marker([-34.6037, -58.3816], {draggable: true}).addTo(map);
 
 marker.on('dragend', function (e) {
     var latlng = marker.getLatLng();

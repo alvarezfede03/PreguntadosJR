@@ -1,29 +1,38 @@
 <?php
-class MysqlObjectDatabase{
+
+class MysqlObjectDatabase
+{
     private $conn;
+
     public function __construct($host, $port, $username, $password, $database)
     {
         $this->conn = new mysqli($host, $username, $password, $database, $port);
     }
 
-    public function query($sql){
+    public function query($sql)
+    {
         $result = $this->conn->query($sql);
-        return  $result->fetch_all( MYSQLI_ASSOC );
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function execute($sql){
+    public function execute($sql)
+    {
         $this->conn->query($sql);
         return $this->conn->affected_rows;
     }
+
     public function __destruct()
     {
         $this->conn->close();
     }
-    public function prepare($sql) {
+
+    public function prepare($sql)
+    {
         return $this->conn->prepare($sql);
     }
 
-    public function getLastInsertId() {
+    public function getLastInsertId()
+    {
         return $this->conn->insert_id;
     }
 }

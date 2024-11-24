@@ -13,6 +13,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {{/success}}
+    {{#warning}}
+        <div id="alert-warning" class="alert alert-warning alert-dismissible fade show text-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            {{warning}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {{/warning}}
     <div class="card-container text-center mb-4 p-4 rounded shadow" style="max-width: 600px; width: 100%;">
         {{#usuario}}
             <h2>{{nombre_usuario}}</h2>
@@ -26,7 +33,6 @@
          style="max-width: 200px;">
         <button type="button" class="btn btn-danger mb-3 w-100 d-flex align-items-center justify-content-center"
                 onclick="window.location.href='/usuario/verPerfil'">
-            <!--<img class="me-1" src="../public/icons/person.svg" alt="person" width="24">-->
             <i class="material-symbols-outlined me-1">person</i>
             Ver perfil
         </button>
@@ -36,29 +42,26 @@
         </button>
         <button type="button" class="btn btn-success mb-3 w-100 d-flex align-items-center justify-content-center"
                 onclick="window.location.href='/partida/ranking'">
-            <!--<img class="me-1" src="../public/icons/leaderboard.svg" alt="leaderboard" width="24">-->
             <i class="material-symbols-outlined me-1">leaderboard</i>
             Ver ranking de usuarios
         </button>
         <button type="button" class="btn btn-info mb-3 w-100 d-flex align-items-center justify-content-center"
                 onclick="window.location.href='/crearPreguntas/form'">
-            <!--<img class="me-0" src="../public/icons/list_add.svg" alt="list_add" width="24">-->
             <i class="material-symbols-outlined me-1">list_alt_add</i>
             Crear Pregunta
         </button>
-
     {{/jugador}}
+
     {{#admin}}
         <div class="dashboard-container shadow p-4 rounded">
             <div class="d-grid gap-1">
                 <button type="button" class="btn btn-danger mb-3 w-100 d-flex align-items-center justify-content-center"
                         onclick="window.location.href='/usuario/verPerfil'">
-                    <!--<img class="me-1" src="../public/icons/person.svg" alt="person" width="24">-->
                     <i class="material-symbols-outlined me-1">person</i>
                     Ver perfil
                 </button>
-                <button type="button" class="btn btn-info d-flex align-items-center justify-content-center" onclick="window.location.href='/admin/informes'">
-                    <!--<img class="me-1" src="../public/icons/monitoring.svg" alt="monitoring" width="24">-->
+                <button type="button" class="btn btn-info d-flex align-items-center justify-content-center"
+                        onclick="window.location.href='/admin/informes'">
                     <i class="material-symbols-outlined me-1">monitoring</i>
                     Ir a informes
                 </button>
@@ -71,47 +74,38 @@
             <div class="d-grid gap-1">
                 <button type="button" class="btn btn-danger mb-3 w-100 d-flex align-items-center justify-content-center"
                         onclick="window.location.href='/usuario/verPerfil'">
-                    <!--<img class="me-1" src="../public/icons/person.svg" alt="person" width="24">-->
                     <i class="material-symbols-outlined me-1">person</i>
                     Ver perfil
                 </button>
-                <button type="button" class="btn btn-info d-flex align-items-center justify-content-center" onclick="window.location.href='/editor/verPreguntas'">
-                    <!--<img class="me-1" src="../public/icons/list_alt.svg" alt="list_alt" width="24">-->
+                <button type="button" class="btn btn-info d-flex align-items-center justify-content-center"
+                        onclick="window.location.href='/editor/verPreguntas'">
                     <i class="material-symbols-outlined me-1">list_alt</i>
                     Todas las Preguntas
                 </button>
                 <button type="button" class="btn btn-info d-flex align-items-center justify-content-center"
                         onclick="window.location.href='/editor/verPreguntasReportadas'">
-                    <!--<img class="me-1" src="../public/icons/report.svg" alt="report" width="24">-->
                     <i class="material-symbols-outlined me-1">report</i>
                     Preguntas Reportdas
                 </button>
                 <button type="button" class="btn btn-info d-flex align-items-center justify-content-center"
                         onclick="window.location.href='/editor/verPreguntasSugeridas'">
-                    <!--<img class="me-1" src="../public/icons/lightbulb.svg" alt="lightbulb" width="24">-->
                     <i class="material-symbols-outlined me-1">lightbulb</i>
                     Preguntas Sugeridas
                 </button>
                 <button type="button" class="btn btn-info d-flex align-items-center justify-content-center"
                         onclick="window.location.href='/editor/verPreguntasEliminadas'">
-                    <!--<img class="me-1" src="../public/icons/basurero.svg" alt="report" width="20">-->
                     <i class="material-symbols-outlined me-1">delete</i>
                     Preguntas Eliminadas
                 </button>
                 <button type="button"
                         class="btn btn-success mt-3 w-100 d-flex align-items-center justify-content-center"
                         onclick="window.location.href='/crearPreguntas/form'">
-                    <!--<img class="me-1" src="../public/icons/list_add.svg" alt="list_add" width="24"
-                         style="filter: invert(1);">-->
                     <i class="material-symbols-outlined me-1">list_alt_add</i>
                     Crear Pregunta
                 </button>
-
-
             </div>
         </div>
     {{/editor}}
-
 </div>
     {{#jugador}}
         <div class="history-container p-4 rounded shadow mt-4 mt-sm-0" style="max-width: 400px;">
@@ -141,7 +135,6 @@
             </table>
             <button type="button" class="btn btn-warning w-100 d-flex align-items-center justify-content-center"
                     onclick="window.location.href='/usuario/historial'">
-                <!--<img class="me-1" src="../public/icons/history.svg" alt="history" width="24">-->
                 <i class="material-symbols-outlined me-1">history</i>
                 Ver historial completo
             </button>

@@ -18,22 +18,18 @@ class PartidaModel
             $usada = $pregunta['usada'];
             $respondida_correctamente = $pregunta['respondida_correctamente'];
 
-            // Evitar división por cero
             if ($usada == 0) {
                 continue;
             }
 
-            // Calcular el porcentaje de respuestas correctas
             $porcentajeCorrectas = ($respondida_correctamente / $usada) * 100;
 
-            // Determinar la dificultad según el porcentaje
             if ($porcentajeCorrectas > 70) {
                 $dificultad = '1'; // Fácil
             } else {
                 $dificultad = '3'; // Difícil
             }
 
-            // Actualizar la dificultad en la base de datos
             $sqlUpdate = "UPDATE preguntas SET dificultad = $dificultad WHERE id = $id";
             $this->database->execute($sqlUpdate);
         }
@@ -55,7 +51,6 @@ class PartidaModel
         }
 
     }
-
 
     public function finalizadorPartidas($usuario)
     {
@@ -89,8 +84,6 @@ class PartidaModel
         $sql3 = "UPDATE partidas SET terminada = 'si' WHERE id_partida = " . $data[0]['id_partida'];
         $this->database->execute($sql3);
         $this->database->execute("UPDATE partidas SET id_ultima_pregunta = null  WHERE id_partida = " . $data[0]['id_partida']);
-
-
     }
 
     public function getCrearPartida($usuario)
@@ -123,9 +116,12 @@ class PartidaModel
         }
     }
 
-
     public function getPregunta($id_partida, $idPregunta, $idJugador)
     {
+        /*///////////////////////////////////////*/
+        // SQL para obtener el nivel del usuario //
+        /*///////////////////////////////////////*/
+
         $sql3 = "SELECT nivel FROM usuarios WHERE id = $idJugador";
         $nivelJugador = $this->database->query($sql3);
         $nivelJugador = $nivelJugador[0]['nivel'];
@@ -141,7 +137,6 @@ class PartidaModel
             $pregunta = $this->database->query($sql);
             return $pregunta;
         }
-
 
         $sql7 = "SELECT *
                  FROM partidas
@@ -172,7 +167,11 @@ class PartidaModel
                 return $data2;
             }
         }
-        // SQL para contar preguntas no respondidas en la partida actual
+
+        /*///////////////////////////////////////////////////////////////*/
+        // SQL para contar preguntas no respondidas en la partida actual //
+        /*///////////////////////////////////////////////////////////////*/
+
         $sql1 = "SELECT COUNT(*) AS count FROM preguntas AS p
             LEFT JOIN preguntas_respondidas AS pr 
             ON p.id = pr.pregunta_id AND pr.partida_id = $id_partida
@@ -185,7 +184,10 @@ class PartidaModel
             $this->database->execute("DELETE FROM preguntas_respondidas WHERE partida_id = $id_partida");
         }
 
-        // SQL para seleccionar una pregunta aleatoria que no haya sido respondida
+        /*/////////////////////////////////////////////////////////////////////////*/
+        // SQL para seleccionar una pregunta aleatoria que no haya sido respondida //
+        /*/////////////////////////////////////////////////////////////////////////*/
+
         $sql2 = "SELECT p.*, r.* 
              FROM preguntas AS p
              JOIN respuestas AS r ON p.id = r.id_pregunta
@@ -197,8 +199,7 @@ class PartidaModel
              ORDER BY RAND() 
              LIMIT 1;";
 
-        $pregunta = $this->database->query($sql2); // Usa query en lugar de execute para obtener el resultado
-
+        $pregunta = $this->database->query($sql2);
 
         // Verificar si se obtuvo una pregunta
         if (!empty($pregunta)) {
@@ -215,10 +216,9 @@ class PartidaModel
             return $pregunta; // Retorna la pregunta obtenida
         }
 
-        // En caso de que no haya preguntas disponibles, retornar null o manejar el caso apropiadamente
+        // Si no hay preguntas disponibles se retorna null
         return null;
     }
-
 
     public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida, $idJugador)
     {
@@ -239,9 +239,7 @@ class PartidaModel
             $this->database->execute("UPDATE partidas SET id_ultima_pregunta = null  WHERE id_partida = " . $idPartida);
             return true;
         } else {
-            $this->database->execute("UPDATE partidas
-            SET terminada = 'si'
-            WHERE id_partida = " . $idPartida);
+            $this->database->execute("UPDATE partidas SET terminada = 'si' WHERE id_partida = " . $idPartida);
             return false;
         }
     }
@@ -263,17 +261,6 @@ class PartidaModel
         return $this->database->query($sql);
     }
 
-    /*public function guardarReporte($preguntaId, $motivo)
-    {
-        // Insertar el reporte en la tabla reportes
-        $sqlReporte = "INSERT INTO reportes (pregunta_id, motivo) VALUES ('$preguntaId', '$motivo')";
-        $this->database->execute($sqlReporte);
-
-        // Actualizar el campo reportada en la tabla preguntas
-        $sqlActualizarPregunta = "UPDATE preguntas SET reportada = 'si' WHERE id = '$preguntaId'";
-        $this->database->execute($sqlActualizarPregunta);
-    }*/
-
     public function guardarReporte($preguntaId, $motivo)
     {
         $sqlReporte = "INSERT INTO reportes (pregunta_id, motivo) VALUES (?, ?)";
@@ -288,6 +275,5 @@ class PartidaModel
         $stmt->execute();
         $stmt->close();
     }
-
 
 }

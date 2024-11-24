@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const ctx = document.getElementById('miGraficoTorta');
     const labels = JSON.parse(ctx.getAttribute('data-labels'));
     const data = JSON.parse(ctx.getAttribute('data-data'));
-    //const chartLabel = ctx.dataset.chartLabel;
     const chartText = ctx.dataset.chartText;
     const mostrarPorcentajes = ctx.dataset.mostrarPorcentajes === "true";
     const nombreFuncion = ctx.dataset.nombreFuncion;
@@ -14,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         data: {
             labels: labels,
             datasets: [{
-                //label: chartLabel,
                 data: data,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.2)',
@@ -75,10 +73,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
         },
-            plugins: [ChartDataLabels]
+        plugins: [ChartDataLabels]
     };
 
-    // Agregar alert de boostrap para mostrar los errores en caso de que ocurran
     let miGraficoTorta = new Chart(ctx, config);
 
     document.getElementById('filtrar_btn').addEventListener('click', function () {
@@ -92,15 +89,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log(fechaInicio, fechaFin);
         console.log(`/admin/${nombreFuncion}`);
-        //console.log(data.labels);
-        //console.log(data.data);
         fetch(`/admin/${nombreFuncion}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
-            /*body = 'fecha_inicio=' + encodeURIComponent(fechaInicio) +
-                     '&fecha_fin=' + encodeURIComponent(fechaFin);*/
             body: `fecha_inicio=${encodeURIComponent(fechaInicio)}&fecha_fin=${encodeURIComponent(fechaFin)}`
         })
             .then(response => response.json())
@@ -120,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
             downloadChart(format);
         });
     });
+
     function downloadChart(format) {
         const element = document.getElementById('contenidoPDF');
 
@@ -135,9 +129,9 @@ document.addEventListener("DOMContentLoaded", function () {
             html2pdf(element, {
                 margin: [10, 40], // [Vertical, Horizontal]
                 filename: 'PreguntadosJR_Report.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'A4', orientation: 'portrait' } // portrait - landscape
+                image: {type: 'jpeg', quality: 0.98},
+                html2canvas: {scale: 2},
+                jsPDF: {unit: 'mm', format: 'A4', orientation: 'portrait'} // portrait - landscape
             });
         }
     }

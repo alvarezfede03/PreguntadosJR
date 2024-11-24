@@ -24,19 +24,20 @@
     max-width: 100%;
     margin: auto;
 }
-.card-container{
+
+.card-container {
     background-color: white;
 }
 
-.button-container{
+.button-container {
     background-color: white;
 }
 
-.history-container{
+.history-container {
     background-color: white;
 }
 
-.chart-container{
+.chart-container {
     background-color: rgba(255, 255, 255, 0.7);
 }
 
@@ -104,6 +105,7 @@ body {
 #map {
     height: 500px;
 }
+
 /*///////////*/
 /* BOTON RGB */
 /*///////////*/
@@ -245,43 +247,43 @@ body.dark-mode .form-check-label {
 }
 
 body.dark-mode .login-container {
-    background-color: #343a40 ;
+    background-color: #343a40;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .dashboard-container {
-    background-color: #343a40 ;
+    background-color: #343a40;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .card-container {
-    background-color: #343a40 ;
+    background-color: #343a40;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .button-container {
-    background-color: #343a40 ;
+    background-color: #343a40;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .history-container {
-    background-color: #343a40 ;
+    background-color: #343a40;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .form-container {
-    background-color: #343a40 ;
+    background-color: #343a40;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 body.dark-mode .chart-container {
-    background-color: #121212 ;
+    background-color: #121212;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.2);
 }

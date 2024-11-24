@@ -1,16 +1,20 @@
 <div class="container my-5 ">
     <div class="form-container">
         <h2 class="text-center mb-4">Formulario de Registro</h2>
-        <form action="/usuario/procesarRegistro" method="POST" enctype="multipart/form-data" onsubmit="return validateForm();">
+        <form action="/usuario/procesarRegistro" method="POST" enctype="multipart/form-data"
+              onsubmit="return validateForm();">
             <div class="mb-3">
                 <label for="username" class="form-label">Nombre de Usuario</label>
                 <div class="input-group">
-            <span class="input-group-text">
-                <i class="material-symbols-outlined">person</i>
-            </span>
-                    <input type="text" class="form-control" id="username" name="username" required oninput="checkUsername();">
+                    <span class="input-group-text">
+                        <i class="material-symbols-outlined">person</i>
+                    </span>
+                    <input type="text" class="form-control" id="username" name="username" required
+                           oninput="checkUsername();">
                 </div>
-                <div id="usernameError" class="text-danger mt-2" style="display:none;">Este nombre de usuario ya está en uso.</div>
+                <div id="usernameError" class="text-danger mt-2" style="display:none;">Este nombre de usuario ya está en
+                    uso.
+                </div>
             </div>
 
             <div class="mb-3">
@@ -31,7 +35,8 @@
             </span>
                     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
                 </div>
-                <div id="passwordError" class="text-danger mt-2" style="display:none;">Las contraseñas no coinciden.</div>
+                <div id="passwordError" class="text-danger mt-2" style="display:none;">Las contraseñas no coinciden.
+                </div>
             </div>
 
             <div class="mb-3">
@@ -50,7 +55,8 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">calendar_today</i>
             </span>
-                    <input type="date" class="form-control" id="birthyear" name="birthyear" min="1900-01-01" max="2024-12-31" required>
+                    <input type="date" class="form-control" id="birthyear" name="birthyear" min="1900-01-01"
+                           max="2024-12-31" required>
                 </div>
             </div>
 
@@ -121,9 +127,12 @@
 
             <div class="btn-center">
                 <button type="submit" class="btn btn-primary mx-2 mb-2" id="submitButton">
-                    <span id="buttonSpinner" class="spinner-border spinner-border-sm me-2" style="display: none;" role="status" aria-hidden="true"></span>
-                    Registrarse</button>
-                <button type="button" class="btn btn-secondary mx-2 mb-2" onclick="window.location.href='/'">Volver</button>
+                    <span id="buttonSpinner" class="spinner-border spinner-border-sm me-2" style="display: none;"
+                          role="status" aria-hidden="true"></span>
+                    Registrarse
+                </button>
+                <button type="button" class="btn btn-secondary mx-2 mb-2" onclick="window.location.href='/'">Volver
+                </button>
             </div>
         </form>
 

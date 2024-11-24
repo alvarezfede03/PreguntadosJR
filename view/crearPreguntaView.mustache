@@ -21,7 +21,7 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">quiz</i>
             </span>
-                <input type="text" class="form-control" id="pregunta" name="pregunta" required>
+                    <input type="text" class="form-control" id="pregunta" name="pregunta" required>
                 </div>
             </div>
 
@@ -31,7 +31,7 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">filter_1</i>
             </span>
-                <input type="text" class="form-control" id="opcion1" name="opcion1" required>
+                    <input type="text" class="form-control" id="opcion1" name="opcion1" required>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">filter_2</i>
             </span>
-                <input type="text" class="form-control" id="opcion2" name="opcion2" required>
+                    <input type="text" class="form-control" id="opcion2" name="opcion2" required>
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">filter_3</i>
             </span>
-                <input type="text" class="form-control" id="opcion3" name="opcion3" required>
+                    <input type="text" class="form-control" id="opcion3" name="opcion3" required>
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">filter_4</i>
             </span>
-                <input type="text" class="form-control" id="opcion4" name="opcion4" required>
+                    <input type="text" class="form-control" id="opcion4" name="opcion4" required>
                 </div>
             </div>
 
@@ -71,14 +71,14 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">library_add_check</i>
             </span>
-                <select class="form-select" id="opcionCorrecta" name="opcionCorrecta" required>
-                    <option value="" selected disabled>Seleccione la opción correcta</option>
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
-                    <option value="3">Opción 3</option>
-                    <option value="4">Opción 4</option>
-                </select>
-            </div>
+                    <select class="form-select" id="opcionCorrecta" name="opcionCorrecta" required>
+                        <option value="" selected disabled>Seleccione la opción correcta</option>
+                        <option value="1">Opción 1</option>
+                        <option value="2">Opción 2</option>
+                        <option value="3">Opción 3</option>
+                        <option value="4">Opción 4</option>
+                    </select>
+                </div>
             </div>
 
             <div class="mb-3">
@@ -87,13 +87,13 @@
             <span class="input-group-text">
                 <i class="material-symbols-outlined">category</i>
             </span>
-                <select class="form-select" id="categoria" name="categoria" required>
-                    <option value="" selected disabled>Seleccione la categoría</option>
-                    {{#categorias}}
-                        <option value="{{.}}">{{.}}</option>
-                    {{/categorias}}
-                </select>
-            </div>
+                    <select class="form-select" id="categoria" name="categoria" required>
+                        <option value="" selected disabled>Seleccione la categoría</option>
+                        {{#categorias}}
+                            <option value="{{.}}">{{.}}</option>
+                        {{/categorias}}
+                    </select>
+                </div>
             </div>
 
             <input type="hidden" id="opcionCorrectaTexto" name="opcionCorrectaTexto">

@@ -47,15 +47,11 @@ class UsuarioController
                 }
                 $data['partidas'] = $partidas;
                 $data['jugador'] = true;
-                //$_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             } else if ($_SESSION['tipo_usuario'] == 'admin') {
                 $data['admin'] = true;
-                //$_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             } else {
                 $data['editor'] = true;
-                //$_SESSION['tipo_usuario'] = $data['usuario'][0]['tipo_usuario'];
             }
-
             $data['logged_in'] = true;
             $this->presenter->show('home', $data);
         } else {
@@ -66,8 +62,8 @@ class UsuarioController
 
     public function verPerfil()
     {
-            $data = $this->model->filter($_SESSION['user']);
-            $this->presenter->show('perfilUsuario', $data);
+        $data = $this->model->filter($_SESSION['user']);
+        $this->presenter->show('perfilUsuario', $data);
     }
 
     public function logout()
@@ -118,7 +114,7 @@ class UsuarioController
             }
 
             $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
-            if ($token && $token!='existe') {
+            if ($token && $token != 'existe') {
                 $emailSender = new EmailSender();
                 $emailExitoso = $emailSender->enviarMail($email, $token);
                 if ($emailExitoso) {
@@ -202,18 +198,17 @@ class UsuarioController
             $this->generarQR($user);
             exit;
         }
-        if($_SERVER['REQUEST_METHOD'] === 'POST')
-        {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $user = $_POST['usuario'];
-        }else if($_SERVER['REQUEST_METHOD'] === 'GET')
-        {
+        } else if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $user = $_GET['usuario'];
         }
         $data = $this->model->filter($user);
         $this->presenter->show('perfilUsuario', $data);
     }
 
-    private function generarQR($nombre_usuario) {
+    private function generarQR($nombre_usuario)
+    {
         $urlPerfil = 'http://' . $_SERVER['HTTP_HOST'] . '/usuario/verPerfilJugadores?usuario=' . urlencode($nombre_usuario);
         QRcode::png($urlPerfil, false, QR_ECLEVEL_H, 10, 2);
     }

@@ -35,19 +35,16 @@ function validateForm() {
     return true;
 }
 
-document.getElementById("formPreguntas").addEventListener("submit", function(event) {
+document.getElementById("formPreguntas").addEventListener("submit", function (event) {
     event.preventDefault();
 
-    // Obtener los valores de los inputs de opciones
     const opcion1 = document.getElementById("opcion1").value.trim();
     const opcion2 = document.getElementById("opcion2").value.trim();
     const opcion3 = document.getElementById("opcion3").value.trim();
     const opcion4 = document.getElementById("opcion4").value.trim();
 
-    // Obtener la opción seleccionada en el select
     const selectedOption = document.getElementById("opcionCorrecta").value;
 
-    // Determinar el contenido del input correspondiente
     let correctAnswer = "";
     switch (selectedOption) {
         case "1":

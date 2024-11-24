@@ -31,13 +31,11 @@ class EditorController
             }
     }
 
-
     public function actualizarPregunta()
     {
             $id = $_POST['id'] ?? null;
 
             if ($id) {
-
                 $nuevaPregunta = $_POST['pregunta'];
                 $nuevaCategoria = $_POST['categoria'];
                 $opcion1 = $_POST['opcion_1'];
@@ -45,7 +43,6 @@ class EditorController
                 $opcion3 = $_POST['opcion_3'];
                 $opcion4 = $_POST['opcion_4'];
                 $opcionCorrecta = $_POST['opcion_correcta'];
-
 
                 $this->model->actualizarPregunta($id, $nuevaPregunta, $nuevaCategoria, $opcion1, $opcion2, $opcion3, $opcion4, $opcionCorrecta);
                 $_SESSION['success'] = "Pregunta actualizada correctamente";
@@ -56,7 +53,6 @@ class EditorController
     public function eliminarPregunta()
     {
             $id = $_POST['id'] ?? null;
-
             if ($id) {
                 $this->model->eliminarPregunta($id);
                 $_SESSION['success'] = "Pregunta eliminada correctamente";
@@ -87,7 +83,6 @@ class EditorController
     public function darDeAltaPregunta()
     {
             $id = $_POST['id'] ?? null;
-
             if ($id) {
                 $this->model->aprobarPregunta($id);
                 $_SESSION['success'] = "Pregunta dada de alta correctamente";

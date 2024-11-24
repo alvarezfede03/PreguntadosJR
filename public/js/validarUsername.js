@@ -10,7 +10,7 @@ function checkUsername() {
         xhr.onload = function () {
             if (xhr.status === 200) {
                 const response = JSON.parse(xhr.responseText);
-                isUsernameDuplicate = response.existe; // Actualizar el estado global
+                isUsernameDuplicate = response.existe;
                 if (response.existe) {
                     usernameError.style.display = 'block';
                 } else {

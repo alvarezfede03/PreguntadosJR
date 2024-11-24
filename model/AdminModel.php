@@ -1,4 +1,5 @@
 <?php
+
 class AdminModel
 {
     private $database;
@@ -8,25 +9,29 @@ class AdminModel
         $this->database = $database;
     }
 
-    public function getCantidadJugadores(){
+    public function getCantidadJugadores()
+    {
         $sql = "SELECT COUNT(*) AS count FROM usuarios WHERE tipo_usuario = 'jugador';";
         $resultado = $this->database->query($sql);
         return $resultado[0]['count'];
     }
 
-    public function getCantidadPartidasJugadas(){
+    public function getCantidadPartidasJugadas()
+    {
         $sql = "SELECT COUNT(*) AS count FROM partidas;";
         $resultado = $this->database->query($sql);
         return $resultado[0]['count'];
     }
 
-    public function getCantidadPreguntasCreadas(){
+    public function getCantidadPreguntasCreadas()
+    {
         $sql = "SELECT COUNT(*) AS count FROM preguntas WHERE creada = 'si';";
         $resultado = $this->database->query($sql);
         return $resultado[0]['count'];
     }
 
-    public function getCantidadUsuariosNuevos(){
+    public function getCantidadUsuariosNuevos()
+    {
         $sql = "SELECT DATE(fecha_registro) AS mes, COUNT(*) AS count
                 FROM usuarios
                 WHERE fecha_registro >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)";
@@ -34,7 +39,8 @@ class AdminModel
         return $resultado[0]['count'];
     }
 
-    public function getCantidadUsuariosXPais($fecha_inicio, $fecha_fin){
+    public function getCantidadUsuariosXPais($fecha_inicio, $fecha_fin)
+    {
         $sql = "SELECT pais, COUNT(*) AS total_usuarios
                 FROM usuarios";
 
@@ -46,7 +52,8 @@ class AdminModel
         return $this->database->query($sql);
     }
 
-    public function getCantidadUsuariosXSexo($fecha_inicio, $fecha_fin){
+    public function getCantidadUsuariosXSexo($fecha_inicio, $fecha_fin)
+    {
         $sql = "SELECT sexo, COUNT(*) AS total_usuarios
                 FROM usuarios";
 
@@ -58,7 +65,8 @@ class AdminModel
         return $this->database->query($sql);
     }
 
-    public function getCantidadUsuariosXGrupoEdad($fecha_inicio, $fecha_fin){
+    public function getCantidadUsuariosXGrupoEdad($fecha_inicio, $fecha_fin)
+    {
         $sql = "SELECT 
                 CASE 
                     WHEN YEAR(CURDATE()) - YEAR(anio_nacimiento) < 18 THEN 'Menores'
@@ -76,7 +84,8 @@ class AdminModel
         return $this->database->query($sql);
     }
 
-    public function getPorcentajePreguntasCorrectas($fecha_inicio, $fecha_fin){
+    public function getPorcentajePreguntasCorrectas($fecha_inicio, $fecha_fin)
+    {
         $sql = "SELECT u.nombre_usuario AS usuario,
                 COUNT(pr.pregunta_id) AS total_correctas,
                 ROUND(COUNT(pr.pregunta_id) * 100.0 / (SELECT COUNT(*) FROM preguntas), 2) AS porcentaje_correctas
@@ -86,7 +95,7 @@ class AdminModel
 
         if ($fecha_inicio && $fecha_fin) {
             $sql .= " WHERE u.tipo_usuario = 'jugador' 
-                  AND p.fecha_creacion BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
+                      AND p.fecha_creacion BETWEEN '" . $fecha_inicio . "' AND '" . $fecha_fin . "'";
         } else {
             $sql .= " WHERE u.tipo_usuario = 'jugador'";
         }

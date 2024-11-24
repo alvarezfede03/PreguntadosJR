@@ -34,8 +34,8 @@ class UsuarioModel
     public function filter($user)
     {
         $sql = "SELECT id, nombre_usuario, nombre_completo, anio_nacimiento, sexo, pais, ciudad, foto_perfil, tipo_usuario
-            FROM usuarios 
-            WHERE nombre_usuario = ?";
+                FROM usuarios 
+                WHERE nombre_usuario = ?";
 
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param('s', $user);
@@ -56,7 +56,7 @@ class UsuarioModel
         $activo = 0;
 
         $sql = "INSERT INTO usuarios (uuid, nombre_usuario, contrasenia, nombre_completo, anio_nacimiento, sexo, mail, pais, ciudad, foto_perfil, token, activo) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $this->database->prepare($sql);
         $stmt->bind_param(
             'sssssssssssi',
@@ -111,14 +111,11 @@ class UsuarioModel
 
     public function getHistorial5Partida($usuario)
     {
-        $sql = "SELECT *
-        FROM partidas
-        WHERE id_jugador = " . $usuario . "
-        ORDER BY fecha_creacion DESC
-        LIMIT 5"
-        ;
-        $result =$this->database->query($sql);
-        return $result;
+        $sql = "SELECT * FROM partidas
+                WHERE id_jugador = " . $usuario . "
+                ORDER BY fecha_creacion DESC
+                LIMIT 5";
+        return $this->database->query($sql);
     }
 
     public function getHistorialPartidas($usuario)
@@ -126,10 +123,8 @@ class UsuarioModel
         $sql = "SELECT *
         FROM partidas
         WHERE id_jugador = " . $usuario . "
-        ORDER BY fecha_creacion DESC"
-        ;
-        $result =$this->database->query($sql);
-        return $result;
+        ORDER BY fecha_creacion DESC";
+        return $this->database->query($sql);
     }
 
     public function existeUsername($username) {
