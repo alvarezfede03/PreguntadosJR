@@ -40,6 +40,7 @@ class PartidaModel
         $sql = "SELECT id, nivel, total_preguntas_aparecidas, respuestas_correctas FROM usuarios WHERE id =" . $idJugador;
         $resultado = $this->database->query($sql);
         if ($resultado[0]['total_preguntas_aparecidas'] <= 10) {
+            // total_preguntas_aparecidads es el total de pregunas que vio el usuario.
             $this->database->execute("UPDATE usuarios SET nivel = '1' WHERE id = $idJugador");
             return;
         }
@@ -53,6 +54,7 @@ class PartidaModel
     }
 
     public function finalizadorPartidas($usuario)
+        // Finaliza las partidas en las cuales paso mas de 60 segundos.
     {
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $horaActual = date("H:i:s");
@@ -88,6 +90,7 @@ class PartidaModel
 
     public function getCrearPartida($usuario)
     {
+        // Primero se fija si hay una partida sin terminar
         date_default_timezone_set('America/Argentina/Buenos_Aires');
         $horaActual = date("H:i:s");
         $sql2 = "SELECT *
@@ -103,6 +106,7 @@ class PartidaModel
             return $data[0];
         }
 
+        // Si no hay partidas sin terminar...
         $sql = "INSERT INTO partidas (id_jugador, resultado ) VALUES ('$usuario', '0')";
         if ($this->database->execute($sql) > 0) {
             $idPartida = $this->database->getLastInsertId();
@@ -126,6 +130,10 @@ class PartidaModel
         $nivelJugador = $this->database->query($sql3);
         $nivelJugador = $nivelJugador[0]['nivel'];
 
+        /*/////////////////////////////////////////////////////////////////////////////*/
+        // SQL para ver si habia una partida en curso y trarla devuelta (Anticheat F5) //
+        /*/////////////////////////////////////////////////////////////////////////////*/
+
         if ($idPregunta != null) {
             $sql = "SELECT p.*, r.* 
             FROM preguntas AS p
@@ -138,6 +146,10 @@ class PartidaModel
             return $pregunta;
         }
 
+        /*//////////////////////////////////////////////*/
+        // SQL para ver si la partida no esta terminada //
+        /*//////////////////////////////////////////////*/
+
         $sql7 = "SELECT *
                  FROM partidas
                 WHERE id_partida = " . $id_partida . "
@@ -145,6 +157,7 @@ class PartidaModel
                 ORDER BY hora_pregunta_recibida DESC
                 LIMIT 1;";
         $data = $this->database->query($sql7);
+
         if ($data[0]['id_ultima_pregunta'] != null) {
             date_default_timezone_set('America/Argentina/Buenos_Aires');
             $horaActual = date("H:i:s");
