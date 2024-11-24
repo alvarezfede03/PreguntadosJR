@@ -21,7 +21,7 @@ if ($page === 'usuario' && $methodName === 'auth') {
     exit;
 }
 
-if ($page === 'usuario' && (($methodName === 'registrar') || ($methodName === 'procesarRegistro'))) {
+if ($page === 'usuario' && (($methodName === 'registrar') || ($methodName === 'procesarRegistro') || ($methodName === 'verificarUsername'))) {
     $router->route($page, $methodName);
     exit;
 }
@@ -30,6 +30,8 @@ if ($page === 'usuario' && $methodName === 'verificarCuenta' && isset($_GET['tok
     $router->route($page, $methodName);
     exit;
 }
+
+
 
 $userRole = isset($_SESSION['tipo_usuario']) ? $_SESSION['tipo_usuario'] : '';
 

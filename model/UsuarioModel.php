@@ -48,6 +48,10 @@ class UsuarioModel
 
     public function crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $rutaImagen)
     {
+        $existingUser = $this->filter($username);
+        if (!empty($existingUser['usuario'])) {
+            return 'existe';
+        }
         $token = bin2hex(random_bytes(16));
         $activo = 0;
 

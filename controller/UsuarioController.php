@@ -118,7 +118,7 @@ class UsuarioController
             }
 
             $token = $this->model->crearUsuario($uuid, $username, $password, $fullname, $birthyear, $sexo, $email, $country, $city, $urlImagen);
-            if ($token) {
+            if ($token && $token!='existe') {
                 $emailSender = new EmailSender();
                 $emailExitoso = $emailSender->enviarMail($email, $token);
                 if ($emailExitoso) {

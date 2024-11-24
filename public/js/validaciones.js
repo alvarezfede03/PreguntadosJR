@@ -24,11 +24,14 @@ function validateLocation() {
 function validateForm() {
     if (!validatePasswords()) return false;
     if (!validateLocation()) return false;
-    // Mostrar el spinner y desactivar el botón
+    if (isUsernameDuplicate) {
+        alert('El nombre de usuario ya está en uso. Por favor, elige otro.');
+        return false;
+    }
     const spinner = document.getElementById('buttonSpinner');
     const submitButton = document.getElementById('submitButton');
-    spinner.style.display = 'inline-block'; // Mostrar el spinner
-    submitButton.disabled = true; // Desactivar el botón
+    spinner.style.display = 'inline-block';
+    submitButton.disabled = true;
     return true;
 }
 
