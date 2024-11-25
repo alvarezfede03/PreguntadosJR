@@ -106,7 +106,7 @@ class PartidaModel
             return $data[0];
         }
 
-        // Si no hay partidas sin terminar...
+        // Si no hay partidas sin terminar creo una nueva
         $sql = "INSERT INTO partidas (id_jugador, resultado ) VALUES ('$usuario', '0')";
         if ($this->database->execute($sql) > 0) {
             $idPartida = $this->database->getLastInsertId();
@@ -120,7 +120,7 @@ class PartidaModel
         }
     }
 
-    public function getPregunta($id_partida, $idPregunta, $idJugador)
+    public function getPregunta($id_partida, $idPregunta, $idJugador) // id_partrida, id_uiltima_pregunta. idjugador
     {
         /*///////////////////////////////////////*/
         // SQL para obtener el nivel del usuario //
@@ -159,11 +159,14 @@ class PartidaModel
         $data = $this->database->query($sql7);
 
         if ($data[0]['id_ultima_pregunta'] != null) {
+            // Toda esta parte es para verificar si la partida ya expiro por tiempo de incactividad (80 seg)
             date_default_timezone_set('America/Argentina/Buenos_Aires');
             $horaActual = date("H:i:s");
             $horaPreguntaTimestamp = strtotime($data[0]['hora_pregunta_recibida']);
             $horaActualTimestamp = strtotime($horaActual);
+
             if ($horaActualTimestamp - $horaPreguntaTimestamp < 80) {
+                // si se cumple que es menor a 80 segundos, devuelvo la ultima partida pendiente.
                 $sql5 = "SELECT p.*, o.*
                         FROM partidas AS pa
                         JOIN preguntas AS p ON pa.id_ultima_pregunta = p.id
@@ -236,8 +239,8 @@ class PartidaModel
     public function verificarPregunta($preguntaId, $repuestaSeleccionada, $idPartida, $idJugador)
     {
         $sql = "SELECT * FROM preguntas AS p
-         JOIN respuestas AS r on p.id = r.id_pregunta
-         WHERE p.id = " . $preguntaId;
+                JOIN respuestas AS r on p.id = r.id_pregunta
+                WHERE p.id = " . $preguntaId;
         $data = $this->database->query($sql);
         $slq10 = "UPDATE usuarios SET total_preguntas_aparecidas = total_preguntas_aparecidas + 1 WHERE id = $idJugador";
         $slq11 = "UPDATE preguntas SET usada = usada + 1 WHERE id = $preguntaId";
