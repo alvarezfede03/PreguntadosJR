@@ -1,3 +1,11 @@
+<main class="flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+{{#error}}
+    <div id="alert-error" class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+        {{error}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+{{/error}}
 <div class="container my-5 ">
     <div class="form-container">
         <h2 class="text-center mb-4">Formulario de Registro</h2>
@@ -138,7 +146,9 @@
 
     </div>
 </div>
+</main>
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 <script src="../public/js/mapaRegistro.js"></script>
 <script src="../public/js/validaciones.js"></script>
 <script src="../public/js/validarUsername.js"></script>
+<script src="../public/js/alerts.js"></script>

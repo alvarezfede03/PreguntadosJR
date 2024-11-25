@@ -106,7 +106,7 @@ class UsuarioController
                     move_uploaded_file($_FILES['image']['tmp_name'], $rutaImagenCompleta);
                 } else {
                     $_SESSION['error'] = $resultadoImagen['message'];
-                    header("Location: /registro");
+                    header("Location: ../usuario/registrar");
                     exit();
                 }
             } else {
