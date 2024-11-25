@@ -27,7 +27,7 @@ class CrearPreguntasController
         $opcion3 = $_POST['opcion3'];
         $opcion4 = $_POST['opcion4'];
         $reportada = 'no';
-        $dificultad = $_POST['dificultad'] ?? 0;
+        $dificultad = $_POST['dificultad'] ?? 1;
         $categoria = $_POST['categoria'];
         $opcionCorrecta = $_POST['opcionCorrectaTexto'];
 
